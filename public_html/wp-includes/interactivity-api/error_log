@@ -1,0 +1,4 @@
+[24-Feb-2026 06:04:37 UTC] PHP Fatal error:  Uncaught Error: Class "WP_HTML_Tag_Processor" not found in /home/kortadesign/public_html/wp-includes/interactivity-api/class-wp-interactivity-api-directives-processor.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/kortadesign/public_html/wp-includes/interactivity-api/class-wp-interactivity-api-directives-processor.php on line 18

@@ -1,0 +1,24 @@
+[24-Feb-2026 06:10:55 UTC] PHP Fatal error:  Uncaught Error: Class "WP_REST_Search_Handler" not found in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-post-format-search-handler.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-post-format-search-handler.php on line 17
+[24-Feb-2026 06:10:55 UTC] PHP Fatal error:  Uncaught Error: Class "WP_REST_Search_Handler" not found in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-post-search-handler.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-post-search-handler.php on line 17
+[24-Feb-2026 06:10:58 UTC] PHP Fatal error:  Uncaught Error: Class "WP_REST_Search_Handler" not found in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-term-search-handler.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-term-search-handler.php on line 17
+[20-Mar-2026 15:24:40 UTC] PHP Fatal error:  Uncaught Error: Class "WP_REST_Search_Handler" not found in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-post-format-search-handler.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-post-format-search-handler.php on line 17
+[20-Mar-2026 15:24:40 UTC] PHP Fatal error:  Uncaught Error: Class "WP_REST_Search_Handler" not found in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-post-search-handler.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-post-search-handler.php on line 17
+[20-Mar-2026 15:24:41 UTC] PHP Fatal error:  Uncaught Error: Class "WP_REST_Search_Handler" not found in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-term-search-handler.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/kortadesign/public_html/wp-includes/rest-api/search/class-wp-rest-term-search-handler.php on line 17
