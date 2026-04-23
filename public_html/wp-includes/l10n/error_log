@@ -1,8 +1,0 @@
-[24-Feb-2026 06:08:43 UTC] PHP Fatal error:  Uncaught Error: Class "WP_Translation_File" not found in /home/kortadesign/public_html/wp-includes/l10n/class-wp-translation-file-mo.php:15
-Stack trace:
-#0 {main}
-  thrown in /home/kortadesign/public_html/wp-includes/l10n/class-wp-translation-file-mo.php on line 15
-[24-Feb-2026 06:08:44 UTC] PHP Fatal error:  Uncaught Error: Class "WP_Translation_File" not found in /home/kortadesign/public_html/wp-includes/l10n/class-wp-translation-file-php.php:15
-Stack trace:
-#0 {main}
-  thrown in /home/kortadesign/public_html/wp-includes/l10n/class-wp-translation-file-php.php on line 15
