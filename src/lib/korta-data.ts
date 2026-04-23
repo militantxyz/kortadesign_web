@@ -1,6 +1,8 @@
 import { blogContentMap } from "@/lib/blog-content";
+import { wpAssetRemap } from "@/lib/generated/wp-asset-remap";
 
-export const asset = (path: string) => `/wp-content/uploads/${path}`;
+export const asset = (assetPath: string) =>
+  `/assets/uploads/${wpAssetRemap[assetPath] ?? assetPath}`;
 
 export type Zone = "AQUA" | "FUOCO" | "ARIA";
 
