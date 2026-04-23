@@ -3,6 +3,7 @@ import { FileText } from "lucide-react";
 import { DesignerSection } from "@/components/korta/designer-section";
 import { KortaButton } from "@/components/korta/korta-button";
 import { PageHero } from "@/components/korta/page-hero";
+import { ProductConfigurator } from "@/components/korta/product-configurator";
 import { ProductCard } from "@/components/korta/product-card";
 import { QuoteForm } from "@/components/korta/quote-form";
 import { SectionHeading } from "@/components/korta/section-heading";
@@ -60,6 +61,7 @@ export function ProductPage({ product }: { product: Product }) {
             </div>
           ))}
         </div>
+        <ProductConfigurator product={product} />
       </section>
 
       <QuoteForm product={product} />

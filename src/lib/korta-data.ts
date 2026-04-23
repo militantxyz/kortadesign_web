@@ -4,6 +4,23 @@ export const asset = (path: string) => `/wp-content/uploads/${path}`;
 
 export type Zone = "AQUA" | "FUOCO" | "ARIA";
 
+export type ConfiguratorFinish = {
+  label: string;
+  swatchImage: string;
+  previewImage?: string;
+};
+
+export type ConfiguratorGroup = {
+  title: string;
+  finishes: ConfiguratorFinish[];
+};
+
+export type ProductConfigurator = {
+  buttonLabel: string;
+  fallbackPreviewImage: string;
+  groups: ConfiguratorGroup[];
+};
+
 export type Product = {
   slug: string;
   title: string;
@@ -23,6 +40,7 @@ export type Product = {
     label: string;
     href: string;
   }[];
+  configurator?: ProductConfigurator;
   designedBy?: boolean;
 };
 
@@ -152,7 +170,193 @@ const furnitureMaterials = [
   { title: "Marazzi Porcelain Stoneware", items: porcelainFinishes },
 ];
 
-export const products: Product[] = [
+type FinishPreviewMap = Partial<Record<string, string>>;
+
+const finishSwatchByName: Record<string, string> = {
+  Brushed: asset("2025/11/Brushed.png"),
+  "Flamed Brushed": asset("2025/01/flamed-brushed.png"),
+  "Sandblasted Brushed": asset("2025/01/sandblasted-brushed.png"),
+  "Bush Hammered Brushed": asset("2025/02/bush-hammered-brushed.png"),
+  Rigato: asset("2025/11/Rigato.png"),
+  "Golden White": asset("2025/11/Golden-White.png"),
+  Statuario: asset("2025/11/statuario.png"),
+  "Saint Laurent": asset("2025/11/saint-laurent.png"),
+  "Sahara Noir": asset("2025/01/sahara-noir.png"),
+  Smoke: asset("2025/11/smoke-1.png"),
+  "Grigio Carnico": asset("2025/01/grigio-carnico.png"),
+  "Rovere Francese": asset("2025/02/rovere-francese.png"),
+  "Limestone Ivory": asset("2025/02/limestone-ivory.png"),
+  "Verde Aver": asset("2025/02/verde-aver.png"),
+  "Sodalite Blu": asset("2025/02/sodalite-blu.png"),
+  Corten: asset("2025/11/Corten.png"),
+  Inox: asset("2025/02/inox.png"),
+  Graphite: asset("2025/02/graphite.png"),
+  GunMetal: asset("2025/02/gunmetal.png"),
+  Gold: asset("2025/02/Gold.png"),
+  Bronze: asset("2025/02/bronzo.png"),
+  Anthracite: asset("2025/02/anthracite.png"),
+  Black: asset("2025/02/black.png"),
+  Champagne: asset("2025/02/champagne.png"),
+  BHB: asset("2025/02/bhb.png"),
+  IceChrome: asset("2025/02/ice-chrome.png"),
+  Blue: asset("2025/02/blue.png"),
+  Rame: asset("2025/02/rame.png"),
+  Nichel: asset("2025/02/nichel.png"),
+  MultiColor: asset("2025/02/multicolor.png"),
+};
+
+const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
+  odino: {
+    Brushed: asset("2025/01/ODINO-POLISHED-min-1-e1739133710562.png"),
+    "Flamed Brushed": asset("2025/01/ODINO-FLAMED-e1739041656680.png"),
+    "Sandblasted Brushed": asset("2025/01/ODINO-SANDBLASTED-min-1-e1739134306202.png"),
+    "Bush Hammered Brushed": asset("2025/09/Odino_Kanfanar-bush-hammered-brushed-scaled.png"),
+    Rigato: asset("2025/09/Odino_Kanfanar-rigato-scaled.png"),
+    "Golden White": asset("2025/01/ODINO-GW-e1739178545991.png"),
+    Statuario: asset("2025/01/ODINO-STATUARIO-e1739178692512.png"),
+    "Saint Laurent": asset("2025/01/ODINO-SL-e1739178736196.png"),
+    "Sahara Noir": asset("2025/01/ODINO-SAHARA-e1739178786526.png"),
+    Smoke: asset("2025/01/ODINO-Smoke-e1739178975492.png"),
+    "Grigio Carnico": asset("2025/01/ODINO-grigio-min-e1739179071287.png"),
+    "Rovere Francese": asset("2025/09/Odino_Marazzi-Rovere-Francese-scaled.png"),
+    "Limestone Ivory": asset("2025/09/Odino_Marazzi-Limestone-Ivory-scaled.png"),
+    "Verde Aver": asset("2025/09/Odino_Marazzi-Verde-Aver-scaled.png"),
+    "Sodalite Blu": asset("2025/09/Odino_Marazzi-Sodalite-Blu-scaled.png"),
+    Corten: asset("2025/09/Odino_Marazzi-Corten-scaled.png"),
+  },
+  marbella: {
+    Brushed: asset("2025/01/marbela-polished-e1739195123289.png"),
+    "Flamed Brushed": asset("2025/01/marbela-flamed-e1739194855361.png"),
+    "Sandblasted Brushed": asset("2025/01/marbela-sandblasted-e1739195562400.png"),
+    Rigato: asset("2025/02/PRODUCT-OUTDOOR-SHOWER-MARBELLA-MATERIAL-LIMESTONE-KANFANAR-SAMPLE-RIGATO-PROJECT-LOCATION-CROATIA-CLIENT-VILLA-PANORAMICA-11.jpg"),
+    "Golden White": asset("2025/01/marbella-gw-e1739195705827.png"),
+    Statuario: asset("2025/01/marbela-statuario-e1739195764340.png"),
+    "Saint Laurent": asset("2025/01/marbela-sl-e1739195857398.png"),
+    "Sahara Noir": asset("2025/01/marbela-sahara-e1739195895407.png"),
+    Smoke: asset("2025/01/marbella-smoke-e1739195928910.png"),
+    "Grigio Carnico": asset("2025/01/marbella-grigio-e1739195972122.png"),
+  },
+  minimo: {
+    Brushed: asset("2025/01/MINIMO-POLISHED-e1739042011520.png"),
+    "Flamed Brushed": asset("2025/01/MINIMO-FLAMED-e1739196865522.png"),
+    "Sandblasted Brushed": asset("2025/01/MINIMO-SANDBLASTED-e1739196948169.png"),
+    "Golden White": asset("2025/01/MINIMO-GW-e1739197024655.png"),
+    Statuario: asset("2025/01/MINIMO-STATUARIO-e1739197159418.png"),
+    "Saint Laurent": asset("2025/01/MINIMO-SL-e1739197239624.png"),
+    "Sahara Noir": asset("2025/01/MINIMO-SAHARA-e1739197283962.png"),
+    Smoke: asset("2025/01/MINIMO-SMOKE-e1739197381711.png"),
+    "Grigio Carnico": asset("2025/01/MINIMO-GRIGIO-e1739197435481.png"),
+  },
+  malla: {
+    Brushed: asset("2025/11/MALLA_01.jpg"),
+    "Sandblasted Brushed": asset("2025/11/MALLA-_-kanfanar-sandblasted-scaled.jpg"),
+    "Saint Laurent": asset("2026/01/MALLA-_-saint-laurent-scaled-e1768845042803.jpg"),
+  },
+  minno: {
+    Brushed: asset("2025/02/minno-polished-scaled-e1740472265391.jpg"),
+    "Flamed Brushed": asset("2025/02/minno-flamed-scaled-e1740472214836.jpg"),
+    "Sandblasted Brushed": asset("2025/02/minno-sandblasted-scaled-e1740472410594.jpg"),
+    "Bush Hammered Brushed": asset("2026/01/Minno_Kanfanar-bush-hammeredbrushed-scaled-e1769070844902.png"),
+    Rigato: asset("2026/01/Minno_Kanfanar-rigato-scaled-e1769070666754.png"),
+    "Golden White": asset("2025/02/minno-gw-scaled-e1740472469639.jpg"),
+    Statuario: asset("2025/02/minno-statuario-scaled-e1740472538691.jpg"),
+    "Saint Laurent": asset("2025/02/minno-sl-scaled-e1740472593209.jpg"),
+    "Sahara Noir": asset("2025/02/minno-sahara-scaled-e1740472673330.jpg"),
+    Smoke: asset("2025/02/minno-smoke-scaled-e1740472731547.jpg"),
+    "Grigio Carnico": asset("2025/02/minno-grigio-scaled-e1740472804493.jpg"),
+    "Rovere Francese": asset("2026/01/Minno_Marazzi-Rovere-Francese-scaled-e1769071080217.png"),
+    "Limestone Ivory": asset("2026/01/Minno_Marazzi-Limestone-Ivory-scaled-e1769071098559.png"),
+    "Verde Aver": asset("2026/01/Minno_Marazzi-Verde-Aver-scaled-e1769071046825.png"),
+    "Sodalite Blu": asset("2026/01/Minno_Marazzi-Sodalite-Blu-scaled-e1769071063863.png"),
+    Corten: asset("2026/01/Minno_Marazzi-Corten-scaled-e1769071117702.png"),
+  },
+  ponte: {
+    Brushed: asset("2025/01/PONTE-POLISHED-e1739222710984.png"),
+    "Flamed Brushed": asset("2025/01/PONTE-FLAMED-e1739222781932.png"),
+    "Sandblasted Brushed": asset("2025/01/PONTE-SAND-e1739222911722.png"),
+    "Golden White": asset("2025/01/PONTE-GW-e1739222964156.png"),
+    Statuario: asset("2025/01/STATUARIO-1-e1739223022885.png"),
+    "Saint Laurent": asset("2025/01/PONTE-SL-e1739223075947.png"),
+    "Sahara Noir": asset("2025/01/PONTE-SAHARA-e1739223127734.png"),
+    Smoke: asset("2025/01/PONTE-SMOKE-e1739223218702.png"),
+    "Grigio Carnico": asset("2025/01/PONTE-GRIGIO-e1739223316511.png"),
+  },
+  dipinto: {
+    Brushed: asset("2025/01/DIPINTO-POLISHED-e1739198405370.png"),
+    "Flamed Brushed": asset("2025/01/DIPINTO-flamed-e1739198260545.png"),
+    "Sandblasted Brushed": asset("2025/01/DIPINTO-SAND-e1739198590896.png"),
+    "Golden White": asset("2025/01/DIPINTO-GW-e1739198948815.png"),
+    Statuario: asset("2025/01/DIPINTO-STATUARIO-e1739199186657.png"),
+    "Saint Laurent": asset("2025/01/DIPINTO-SL-e1739199004558.png"),
+    "Sahara Noir": asset("2025/01/DIPINTO-SAHARA-e1739199316590.png"),
+    Smoke: asset("2025/01/DIPINTO-SMOKE-e1739199722105.png"),
+    "Grigio Carnico": asset("2025/01/DIPINTO-GRIGIO-e1739199823597.png"),
+  },
+  cara: {
+    Brushed: asset("2025/01/CARA-POLISHED-e1739224206580.png"),
+    "Flamed Brushed": asset("2025/01/CARA-FLAMED-e1739224335667.png"),
+    "Sandblasted Brushed": asset("2025/01/CARA-SAND-e1739224396466.png"),
+    "Golden White": asset("2025/02/CARA-GW-e1739224767345.png"),
+    Statuario: asset("2025/01/CARA-STAT-1-e1739224809262.png"),
+    "Saint Laurent": asset("2025/01/CARA-SL-e1739224888783.png"),
+    "Sahara Noir": asset("2025/01/CARA-SAHARA-e1739224938292.png"),
+    Smoke: asset("2025/01/CARA-SMOKE-e1739224988478.png"),
+    "Grigio Carnico": asset("2025/01/CARA-GRIGIO-e1739225030206.png"),
+  },
+};
+
+function buildProductConfigurator(product: Product): ProductConfigurator | undefined {
+  const previews = configuratorPreviewsBySlug[product.slug];
+
+  if (!previews) {
+    return undefined;
+  }
+
+  const groups = product.materials
+    .map((group) => {
+      if (group.title === "Handle Finishes (PVD Coating)") {
+        return null;
+      }
+
+      const finishes = group.items
+        .map((item) => {
+          const swatchImage = finishSwatchByName[item] ?? previews[item];
+
+          if (!swatchImage) {
+            return null;
+          }
+
+          return {
+            label: item,
+            swatchImage,
+            previewImage: previews[item],
+          } satisfies ConfiguratorFinish;
+        })
+        .filter((finish): finish is ConfiguratorFinish => finish !== null);
+
+      if (!finishes.length) {
+        return null;
+      }
+
+      return {
+        title: group.title,
+        finishes,
+      } satisfies ConfiguratorGroup;
+    })
+    .filter((group): group is ConfiguratorGroup => group !== null);
+
+  if (!groups.length) {
+    return undefined;
+  }
+
+  return {
+    buttonLabel: "Start Configurator",
+    fallbackPreviewImage: product.cardImage,
+    groups,
+  };
+}
+
+const baseProducts: Product[] = [
   {
     slug: "odino",
     title: "ODINO",
@@ -439,6 +643,11 @@ export const products: Product[] = [
     docs: [{ label: "Spec Sheet", href: asset("2025/01/CARA-spec-sheet-1.pdf") }],
   },
 ];
+
+export const products: Product[] = baseProducts.map((product) => ({
+  ...product,
+  configurator: buildProductConfigurator(product),
+}));
 
 export const productMap = new Map(products.map((product) => [product.slug, product]));
 

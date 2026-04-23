@@ -1,15 +1,19 @@
+import { cn } from "@/lib/utils";
+
 export function PageHero({
   eyebrow,
   title,
   copy,
   image,
   meta,
+  titleClassName,
 }: {
   eyebrow?: string;
   title: string;
   copy?: string;
   image: string;
   meta?: string[];
+  titleClassName?: string;
 }) {
   return (
     <section
@@ -22,7 +26,14 @@ export function PageHero({
       <div className="relative z-10 flex items-end px-[8%] pb-[8vh] pt-32 max-md:px-[4%]">
         <div className="max-w-5xl">
           {eyebrow ? <span className="mb-4 block text-[11px] font-bold uppercase tracking-[0.32em] text-[#d6b08b]">{eyebrow}</span> : null}
-          <h1 className="font-heading max-w-4xl text-[clamp(3.2rem,8vw,9.8rem)] font-normal leading-[0.82] tracking-normal">{title}</h1>
+          <h1
+            className={cn(
+              "font-heading max-w-4xl text-[clamp(3.2rem,8vw,9.8rem)] font-normal leading-[0.82] tracking-normal",
+              titleClassName
+            )}
+          >
+            {title}
+          </h1>
           {copy ? <p className="mt-7 max-w-2xl text-lg leading-8 text-white/85 md:text-xl">{copy}</p> : null}
           {meta?.length ? (
             <div className="mt-10 flex flex-wrap gap-3">

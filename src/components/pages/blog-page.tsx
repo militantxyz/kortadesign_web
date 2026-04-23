@@ -31,7 +31,12 @@ export function BlogPage() {
 export function BlogArticlePage({ post }: { post: (typeof blogPosts)[number] }) {
   return (
     <>
-      <PageHero title={post.title} eyebrow={post.date} image={post.image} />
+      <PageHero
+        title={post.title}
+        eyebrow={post.date}
+        image={post.image}
+        titleClassName="max-w-5xl text-[clamp(2.3rem,5.6vw,6.4rem)] leading-[0.9]"
+      />
       <section className="mx-auto max-w-5xl px-[8%] py-[8%] max-md:px-[4%]">
         <p className="mb-5 text-lg leading-8 text-[#4a433e]">{post.excerpt}</p>
         {post.content.map((paragraph, index) => (
