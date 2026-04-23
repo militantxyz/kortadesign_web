@@ -49,7 +49,7 @@ export function SiteFooter() {
 
       <div className="grid grid-cols-[1.15fr_repeat(4,1fr)] gap-9 px-[8%] py-[6%] max-xl:grid-cols-2 max-md:grid-cols-1 max-md:px-[4%]">
         <div>
-          <Link href="/" className="font-heading text-5xl font-normal leading-none tracking-normal text-white">
+          <Link href="/" className="font-heading text-5xl font-light uppercase leading-none tracking-[0.2em] text-[#94582C]">
             KORTA
           </Link>
           <p className="mt-5 max-w-xs text-sm leading-7 text-white/60">Handmade outdoor wellness objects in natural stone, designed for villas, resorts and architectural gardens.</p>

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowDownToLine, ArrowRight } from "lucide-react";
 
+import { ClienteleBand } from "@/components/korta/clientele-band";
 import { KortaButton } from "@/components/korta/korta-button";
 import { ProductCard } from "@/components/korta/product-card";
-import { ProjectsBand } from "@/components/korta/projects-band";
 import { SectionHeading } from "@/components/korta/section-heading";
 import { asset, blogPosts, products } from "@/lib/korta-data";
 
@@ -66,7 +66,7 @@ export function HomePage() {
             <span className="mb-5 block text-[11px] font-bold uppercase tracking-[0.34em] text-[#d6b08b]">
               Handmade in natural stone
             </span>
-            <h1 className="font-heading max-w-5xl text-[clamp(4rem,10vw,11rem)] font-normal leading-[0.78] tracking-normal">
+            <h1 className="font-heading max-w-5xl text-[clamp(3.4rem,9vw,10rem)] font-normal leading-[0.84] tracking-normal">
               Outdoor wellness carved for stillness.
             </h1>
             <p className="mt-8 max-w-2xl text-lg leading-8 text-white/78 md:text-xl">
@@ -142,7 +142,7 @@ export function HomePage() {
               <span className="mb-4 text-[11px] font-bold uppercase tracking-[0.34em] text-[#d6b08b]">
                 {card.label}
               </span>
-              <h2 className="font-heading text-6xl font-normal leading-[0.85] tracking-normal">
+              <h2 className="font-heading text-5xl font-normal leading-[0.9] tracking-normal">
                 {card.title}
               </h2>
               <p className="mt-5 max-w-sm leading-7 text-white/74">
@@ -214,7 +214,7 @@ export function HomePage() {
           <span className="mb-4 block text-[11px] font-bold uppercase tracking-[0.3em] text-[#d6b08b]">
             Inspired by nature
           </span>
-          <h2 className="font-heading text-[clamp(3rem,7vw,8rem)] font-normal leading-[0.84] tracking-normal">
+          <h2 className="font-heading text-[clamp(2.6rem,6.3vw,7rem)] font-normal leading-[0.9] tracking-normal">
             Designed for villas, resorts and garden sanctuaries.
           </h2>
           <p className="mt-7 max-w-xl text-lg leading-8 text-white/68">
@@ -234,7 +234,7 @@ export function HomePage() {
         />
       </section>
 
-      <ProjectsBand />
+      <ClienteleBand />
 
       <section className="px-[8%] py-[8%] max-md:px-[4%]">
         <SectionHeading

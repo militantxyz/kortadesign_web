@@ -1,3 +1,5 @@
+import { blogContentMap } from "@/lib/blog-content";
+
 export const asset = (path: string) => `/wp-content/uploads/${path}`;
 
 export type Zone = "AQUA" | "FUOCO" | "ARIA";
@@ -30,6 +32,7 @@ export type BlogPost = {
   date: string;
   image: string;
   excerpt: string;
+  content: string[];
 };
 
 export const socials = [
@@ -462,6 +465,7 @@ export const blogPosts: BlogPost[] = [
       "2026/02/00_PRODUCT-OUTDOOR-SHOWER-MARBELLA-MATERIAL-PORCELAIN-MARAZZI-SAMPLE-SAINT-LAURENT-PROJECT-LOCATION-SAUDI-ARABIA-CLIENT-PRIVATE-VILLA--1024x768.jpg"
     ),
     excerpt: "A look at outdoor showers as sculptural, architectural wellness pieces.",
+    content: blogContentMap["changing-the-way-you-see-outdoor-showers-forever"],
   },
   {
     slug: "luxury-showers",
@@ -469,6 +473,7 @@ export const blogPosts: BlogPost[] = [
     date: "July 25, 2025",
     image: asset("2025/07/luxury-showers-by-korta-1024x683.jpg"),
     excerpt: "How KORTA turns outdoor bathing into a refined daily ritual.",
+    content: blogContentMap["luxury-showers"],
   },
   {
     slug: "where-is-the-best-place-to-put-an-outdoor-shower",
@@ -476,6 +481,7 @@ export const blogPosts: BlogPost[] = [
     date: "February 27, 2025",
     image: asset("2025/01/IMG_0180-scaled-1-1024x683.jpg"),
     excerpt: "Practical considerations for placing a shower near pools, gardens or spa zones.",
+    content: blogContentMap["where-is-the-best-place-to-put-an-outdoor-shower"],
   },
   {
     slug: "what-is-the-minimum-space-for-an-outdoor-shower",
@@ -483,6 +489,7 @@ export const blogPosts: BlogPost[] = [
     date: "February 27, 2025",
     image: asset("2025/01/IMG_20240501_112428-461x1024.jpg"),
     excerpt: "Compact planning notes for outdoor shower installations.",
+    content: blogContentMap["what-is-the-minimum-space-for-an-outdoor-shower"],
   },
   {
     slug: "does-an-outdoor-shower-add-value",
@@ -490,6 +497,7 @@ export const blogPosts: BlogPost[] = [
     date: "February 27, 2025",
     image: asset("2025/01/CAP-SPA-34-1024x819.jpg"),
     excerpt: "Why outdoor wellness features can elevate a property experience.",
+    content: blogContentMap["does-an-outdoor-shower-add-value"],
   },
   {
     slug: "do-outdoor-showers-require-a-drain",
@@ -499,6 +507,7 @@ export const blogPosts: BlogPost[] = [
       "2025/01/PRODUCT-OUTDOOR-SHOWER-ODINO-MATERIAL-PORCELAIN-MARAZZI-SAMPLE-GOLDEN-WHITE-PROJECT-LOCATION-CROATIA-CLIENT-GRAND-PARK-HOTEL-1-1024x684.jpg"
     ),
     excerpt: "Drainage, location and installation basics for exterior showers.",
+    content: blogContentMap["do-outdoor-showers-require-a-drain"],
   },
   {
     slug: "can-an-outdoor-shower-have-hot-water",
@@ -506,6 +515,7 @@ export const blogPosts: BlogPost[] = [
     date: "February 26, 2025",
     image: asset("2025/01/421375002-1024x683.jpg"),
     excerpt: "Options for heating and comfort in outdoor wellness zones.",
+    content: blogContentMap["can-an-outdoor-shower-have-hot-water"],
   },
   {
     slug: "how-outdoor-living-spaces-can-boost-your-propertys-value",
@@ -513,6 +523,7 @@ export const blogPosts: BlogPost[] = [
     date: "February 18, 2025",
     image: asset("2025/02/Pool-Area-1024x576.jpg"),
     excerpt: "A guide to outdoor living investments with long-term appeal.",
+    content: blogContentMap["how-outdoor-living-spaces-can-boost-your-propertys-value"],
   },
   {
     slug: "outdoor-wellness-the-ultimate-guide",
@@ -520,6 +531,7 @@ export const blogPosts: BlogPost[] = [
     date: "February 18, 2025",
     image: asset("2025/01/DSC9674-min-1024x683.jpg"),
     excerpt: "Foundational ideas for calm, elegant outdoor wellness spaces.",
+    content: blogContentMap["outdoor-wellness-the-ultimate-guide"],
   },
   {
     slug: "explore-exclusive-stone-shower-ideas",
@@ -527,6 +539,7 @@ export const blogPosts: BlogPost[] = [
     date: "February 18, 2025",
     image: asset("2025/01/457191069_18238192813287149_6995055244974915748_n-1024x622.jpg"),
     excerpt: "Inspiration for stone, landscape and architectural detail.",
+    content: blogContentMap["explore-exclusive-stone-shower-ideas"],
   },
   {
     slug: "why-choose-an-outdoor-stone-shower",
@@ -534,6 +547,16 @@ export const blogPosts: BlogPost[] = [
     date: "February 18, 2025",
     image: asset("2025/01/IMG_9111-_IG-scaled-1-e1737540591816-1024x681.jpg"),
     excerpt: "The material case for natural stone in exterior bathing.",
+    content: blogContentMap["why-choose-an-outdoor-stone-shower"],
+  },
+  {
+    slug: "how-to-enhance-poolside-experience-with-kortas-stylish-poolside-showers",
+    title: "How To Enhance Poolside Experience With Korta's Stylish Poolside Showers",
+    date: "February 14, 2025",
+    image: asset("2025/02/Italiana-wellbeing-shower-Goldenwhite-LUx-2-scaled-2.jpg"),
+    excerpt: "How a well-designed poolside shower improves comfort, hygiene and visual impact.",
+    content:
+      blogContentMap["how-to-enhance-poolside-experience-with-kortas-stylish-poolside-showers"],
   },
 ];
 
@@ -545,4 +568,3 @@ export const designerCopy = [
   "In 2023, he wrote a piece of American history by redesigning Delmonico's Restaurant in Manhattan, New York, the first fine dining restaurant in the US and a New York landmark.",
   "Now he is actively pursuing the ideal of perfection in technical solutions by exploring unexpected and innovative paths of creativity.",
 ];
-

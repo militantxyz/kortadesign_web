@@ -33,7 +33,7 @@ export function ProductPage({ product }: { product: Product }) {
             ))}
           </div>
         </div>
-        <div className="border border-[#d8cec3] bg-[#e7dfd4] p-10">
+        <div className="border border-[#d8cec3] bg-white p-10">
           <img className="m-auto max-h-[620px] object-contain" src={product.cardImage} alt={product.title} />
         </div>
       </section>

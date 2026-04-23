@@ -23,7 +23,7 @@ function itemHref(slug: string) {
 export function SiteHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex h-[86px] items-center justify-between border-b border-white/15 bg-[#151411]/35 px-[8%] text-white backdrop-blur-md transition-colors duration-200 hover:bg-[#151411]/85 max-md:px-[4%]">
-      <Link className="font-heading text-4xl font-normal leading-none tracking-normal text-white" href="/" aria-label="KORTA home">
+      <Link className="font-heading text-[2.35rem] font-light uppercase leading-none tracking-[0.22em] text-[#94582C]" href="/" aria-label="KORTA home">
         KORTA
       </Link>
 

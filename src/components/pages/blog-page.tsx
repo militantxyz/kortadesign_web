@@ -34,8 +34,11 @@ export function BlogArticlePage({ post }: { post: (typeof blogPosts)[number] }) 
       <PageHero title={post.title} eyebrow={post.date} image={post.image} />
       <section className="mx-auto max-w-5xl px-[8%] py-[8%] max-md:px-[4%]">
         <p className="mb-5 text-lg leading-8 text-[#4a433e]">{post.excerpt}</p>
-        <p className="mb-4 leading-8">Outdoor wellness begins with the balance between architecture, landscape and material. KORTA pieces are designed to feel permanent without becoming loud, using natural stone, clean lines and carefully considered proportions.</p>
-        <p className="mb-5 leading-8">Whether the project is a private villa, boutique hotel or resort, the goal remains the same: to make outdoor rituals feel calmer, more tactile and more memorable.</p>
+        {post.content.map((paragraph, index) => (
+          <p className="mb-5 leading-8 text-[#4a433e]" key={`${post.slug}-${index}`}>
+            {paragraph}
+          </p>
+        ))}
         <Link className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#8f6747]" href="/blog">
           Back to Blog
           <ArrowRight aria-hidden="true" size={16} />
