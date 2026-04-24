@@ -348,24 +348,31 @@ function buildProductConfigurator(product: Product): ProductConfigurator | undef
   }
 
   const groups = product.materials
-    .map((group) => {
+    .map<ConfiguratorGroup | null>((group) => {
       if (group.title === "Handle Finishes (PVD Coating)") {
         return null;
       }
 
       const finishes = group.items
-        .map((item) => {
+        .map<ConfiguratorFinish | null>((item) => {
           const swatchImage = finishSwatchByName[item] ?? previews[item];
 
           if (!swatchImage) {
             return null;
           }
 
-          return {
-            label: item,
-            swatchImage,
-            previewImage: previews[item],
-          } satisfies ConfiguratorFinish;
+          const previewImage = previews[item];
+
+          return previewImage
+            ? {
+                label: item,
+                swatchImage,
+                previewImage,
+              }
+            : {
+                label: item,
+                swatchImage,
+              };
         })
         .filter((finish): finish is ConfiguratorFinish => finish !== null);
 
@@ -376,7 +383,7 @@ function buildProductConfigurator(product: Product): ProductConfigurator | undef
       return {
         title: group.title,
         finishes,
-      } satisfies ConfiguratorGroup;
+      };
     })
     .filter((group): group is ConfiguratorGroup => group !== null);
 
