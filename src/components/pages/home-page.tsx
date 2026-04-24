@@ -101,7 +101,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="grid grid-cols-[0.85fr_1fr] gap-[8%] px-[8%] py-[8%] max-lg:grid-cols-1 max-md:px-[4%]">
+      <section className="grid grid-cols-[0.85fr_1fr] gap-[8%] px-[8%] py-[8%] max-lg:grid-cols-1 max-md:px-[4%] max-md:pb-12">
         <div>
           <SectionHeading
             eyebrow="Outdoor wellness design"
@@ -109,7 +109,7 @@ export function HomePage() {
             copy="Every KORTA piece is designed as a quiet architectural object: precise in silhouette, tactile in material, and made to age with the landscape."
           />
         </div>
-        <div className="grid content-start gap-4 text-base leading-8 text-[#5b554f] md:text-lg">
+        <div className="flex flex-col gap-4 pb-4 text-base leading-8 text-[#5b554f] max-md:pb-8 md:text-lg">
           <p className="font-semibold text-[#151411]">Dear Client,</p>
           <p>
             Welcome to KORTA, where your search for the perfect outdoor shower

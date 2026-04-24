@@ -36,7 +36,7 @@ const footerGroups = [
 export function SiteFooter() {
   return (
     <footer className="bg-[#151411] text-white">
-      <section className="grid min-h-80 grid-cols-[1fr_auto] items-end gap-8 border-y border-white/12 px-[8%] py-[7%] max-md:grid-cols-1 max-md:px-[4%]">
+      <section className="grid min-h-80 grid-cols-[1fr_auto] items-end gap-8 border-y border-white/12 px-[8%] py-[7%] max-md:grid-cols-1 max-md:px-[4%] max-md:pt-14">
         <div>
           <span className="mb-4 block text-[11px] font-bold uppercase tracking-[0.28em] text-[#d6b08b]">Visit the atelier</span>
           <p className="font-heading max-w-5xl text-[clamp(3rem,7vw,8rem)] font-normal leading-[0.84] tracking-normal">Discover your closest distributor.</p>

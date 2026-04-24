@@ -116,7 +116,7 @@ export function ProductConfigurator({
           <div
             aria-label={`${product.title} configurator`}
             aria-modal="true"
-            className="mx-auto grid h-full max-w-7xl grid-rows-[auto_minmax(0,1fr)] overflow-hidden border border-[#d8cec3] bg-[#f8f5ef]"
+            className="mx-auto grid h-full max-w-7xl grid-rows-[auto_minmax(0,1fr)] overflow-y-auto border border-[#d8cec3] bg-[#f8f5ef] lg:overflow-hidden"
             role="dialog"
           >
             <header className="flex items-center justify-between border-b border-[#d8cec3] px-5 py-4 md:px-7">
@@ -146,7 +146,7 @@ export function ProductConfigurator({
                 <h4 className="text-2xl text-[#151411] md:text-3xl">
                   {selectedFinish.label}
                 </h4>
-                <div className="mt-5 grid h-[clamp(420px,62vh,820px)] place-items-center border border-[#d8cec3] bg-white p-3">
+                <div className="mt-5 grid h-[clamp(280px,46vh,560px)] place-items-center border border-[#d8cec3] bg-white p-3 md:h-[clamp(420px,62vh,820px)]">
                   <img
                     alt={`${product.title} in ${selectedFinish.label}`}
                     className="h-full w-full object-contain object-center"
@@ -167,7 +167,7 @@ export function ProductConfigurator({
                 ) : null}
               </div>
 
-              <div className="min-h-0 overflow-y-auto p-5 md:p-7">
+              <div className="p-5 md:p-7 lg:min-h-0 lg:overflow-y-auto">
                 {configurator.groups.map((group) => (
                   <section className="mb-8 last:mb-0" key={group.title}>
                     <h4 className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-[#8f6747]">

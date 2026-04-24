@@ -19,7 +19,7 @@ export function ContactPage() {
   return (
     <>
       <PageHero title="General Contacts" eyebrow="Contact" copy="Tell us about the site, the atmosphere and the outdoor ritual you want to create." image={asset("2025/01/CAP-ACC-EXT-21-scaled.jpg")} />
-      <section className="grid grid-cols-[0.8fr_1fr] gap-[7%] px-[8%] py-[8%] max-lg:grid-cols-1 max-md:px-[4%]">
+      <section className="bg-[#f8f5ef] px-[8%] py-[8%] max-md:px-[4%] max-md:pb-16 lg:grid lg:grid-cols-[0.8fr_1fr] lg:gap-[7%]">
         <div>
           <span className="mb-4 block text-[11px] font-bold uppercase tracking-[0.28em] text-[#8f6747]">Project assistance</span>
           <h2 className="font-heading mb-6 text-[clamp(2.8rem,6vw,6.8rem)] font-normal leading-[0.88] tracking-normal text-[#151411]">Do you need assistance?</h2>
@@ -42,7 +42,7 @@ export function ContactPage() {
             </KortaButton>
           </form>
         </div>
-        <div className="grid grid-cols-2 gap-px bg-[#d8cec3] max-md:grid-cols-1">
+        <div className="mt-10 grid grid-cols-2 gap-px bg-[#d8cec3] max-md:grid-cols-1 lg:mt-0">
           {contacts.map(([title, ...lines]) => (
             <article className="bg-[#f8f5ef] p-6" key={title}>
               <h3 className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-[#8f6747]">{title}</h3>

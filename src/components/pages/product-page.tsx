@@ -107,7 +107,7 @@ export function ProductPage({ product }: { product: Product }) {
       <QuoteForm product={product} />
 
       {pairs.length ? (
-        <section className="px-[8%] py-[8%] max-md:px-[4%]">
+        <section className="px-[8%] py-[8%] max-md:px-[4%] max-md:pt-14">
           <SectionHeading title={`Pair ${product.title} With`} />
           <div className="grid grid-cols-3 gap-7 max-xl:grid-cols-2 max-md:grid-cols-1">
             {pairs.map((pair) => (
