@@ -136,3 +136,112 @@
     transform: scale(1);
   }
 }
+
+.korta-store-map .leaflet-container {
+  font-family: "Montserrat", var(--font-geist-sans), Arial, sans-serif;
+  position: relative;
+  z-index: 1;
+  background: #e9dfd3;
+}
+
+.korta-store-map {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+.korta-store-map .leaflet-map-pane {
+  z-index: 10;
+}
+
+.korta-store-map .leaflet-tile-pane {
+  z-index: 11;
+}
+
+.korta-store-map .leaflet-overlay-pane {
+  z-index: 12;
+}
+
+.korta-store-map .leaflet-marker-pane {
+  z-index: 13;
+}
+
+.korta-store-map .leaflet-tooltip-pane {
+  z-index: 14;
+}
+
+.korta-store-map .leaflet-popup-pane {
+  z-index: 15;
+}
+
+.korta-store-map .leaflet-top,
+.korta-store-map .leaflet-bottom,
+.korta-store-map .leaflet-control {
+  z-index: 16;
+}
+
+.korta-store-map .leaflet-tile.korta-store-tile {
+  filter: saturate(0.42) sepia(0.3) hue-rotate(-8deg) brightness(1.03) contrast(0.9);
+}
+
+.korta-store-map .leaflet-control-zoom a {
+  border-radius: 0;
+  border-color: #cbb9a9;
+  background: #f4eee7;
+  color: #151411;
+}
+
+.korta-store-map .leaflet-control-attribution {
+  background: rgba(248, 245, 239, 0.9);
+  color: #5b554f;
+}
+
+.korta-store-map .leaflet-control-attribution a {
+  color: #8f6747;
+}
+
+.korta-store-map .leaflet-popup-content-wrapper {
+  border-radius: 0;
+  border: 1px solid #d8cec3;
+  box-shadow: 0 22px 60px -30px rgba(21, 20, 17, 0.55);
+}
+
+.korta-store-map .leaflet-popup-content {
+  margin: 0;
+}
+
+.korta-store-popup {
+  min-width: 220px;
+  max-width: 290px;
+  padding: 14px 16px;
+}
+
+.korta-store-popup__name {
+  margin: 0;
+  color: #151411;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.korta-store-popup__list {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.korta-store-popup__list li,
+.korta-store-popup__empty {
+  margin: 0;
+  color: #5b554f;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.korta-store-popup__link {
+  color: #8f6747;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
