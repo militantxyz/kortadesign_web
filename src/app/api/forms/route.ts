@@ -4,7 +4,9 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-let cachedTransporter: nodemailer.Transporter | null = null;
+type MailTransporter = ReturnType<typeof nodemailer.createTransport>;
+
+let cachedTransporter: MailTransporter | null = null;
 
 function getEnv(name: string) {
   const value = process.env[name];
