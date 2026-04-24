@@ -24,7 +24,16 @@ export function ContactPage() {
           <span className="mb-4 block text-[11px] font-bold uppercase tracking-[0.28em] text-[#8f6747]">Project assistance</span>
           <h2 className="font-heading mb-6 text-[clamp(2.8rem,6vw,6.8rem)] font-normal leading-[0.88] tracking-normal text-[#151411]">Do you need assistance?</h2>
           <p className="mb-8 text-lg leading-8 text-[#5b554f]">If you need assistance or wish to request information, we invite you to fill out our contact form.</p>
-          <form action="mailto:info@kortadesign.com" className="grid gap-3.5" method="post">
+          <form action="/api/forms" className="relative grid gap-3.5" method="post">
+            <input type="hidden" name="form-type" value="contact" />
+            <input
+              aria-hidden="true"
+              autoComplete="off"
+              className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
+              name="website"
+              tabIndex={-1}
+              type="text"
+            />
             <Field label="Name and Surname" />
             <Field label="Email" type="email" />
             <Field label="Message" as="textarea" />

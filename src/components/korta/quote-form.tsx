@@ -51,7 +51,17 @@ export function QuoteForm({ product }: { product: Product }) {
           Tell us what you are planning and the KORTA team will help define the right finish, configuration and next steps.
         </p>
       </div>
-      <form action="mailto:info@kortadesign.com" className="grid gap-4" method="post">
+      <form action="/api/forms" className="relative grid gap-4" method="post">
+        <input type="hidden" name="form-type" value="quote" />
+        <input type="hidden" name="product" value={product.slug} />
+        <input
+          aria-hidden="true"
+          autoComplete="off"
+          className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
+          name="website"
+          tabIndex={-1}
+          type="text"
+        />
         <Field label="Name" tone="light" />
         <Field label="Email" type="email" tone="light" />
         <Field label="Phone Number" tone="light" />

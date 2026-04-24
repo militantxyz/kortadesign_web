@@ -15,7 +15,16 @@ export function JoinPage() {
           <p className="mb-4 text-lg leading-8 text-[#5b554f]">At KORTA, you are not just taking on a job - you are becoming part of a legacy.</p>
           <p className="text-lg leading-8 text-[#5b554f]">We look forward to welcoming you to our team.</p>
         </div>
-        <form action="mailto:info@kortadesign.com" className="grid gap-3.5" method="post">
+        <form action="/api/forms" className="relative grid gap-3.5" method="post">
+          <input type="hidden" name="form-type" value="join" />
+          <input
+            aria-hidden="true"
+            autoComplete="off"
+            className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
+            name="website"
+            tabIndex={-1}
+            type="text"
+          />
           <Field label="Name and Surname" />
           <Field label="Email" type="email" />
           <select aria-label="Department" className="min-h-12 w-full border-b border-[#151411]/35 bg-transparent px-0 py-3 text-[#151411] outline-none focus:border-[#8f6747]" defaultValue="" name="department">

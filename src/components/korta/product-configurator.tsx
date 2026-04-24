@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { KortaButton } from "@/components/korta/korta-button";
+import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/korta-data";
 
 type FlattenedFinish = {
@@ -18,7 +19,13 @@ function defaultSelectionKey(finishes: FlattenedFinish[]) {
   return finishes.find((finish) => finish.previewImage)?.key ?? finishes[0]?.key ?? "";
 }
 
-export function ProductConfigurator({ product }: { product: Product }) {
+export function ProductConfigurator({
+  product,
+  buttonClassName,
+}: {
+  product: Product;
+  buttonClassName?: string;
+}) {
   const configurator = product.configurator;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKey, setSelectedKey] = useState("");
@@ -86,7 +93,10 @@ export function ProductConfigurator({ product }: { product: Product }) {
   return (
     <>
       <KortaButton
-        className="mt-8 w-full border-[#151411] text-sm tracking-[0.12em]"
+        className={cn(
+          "mt-8 w-full border-[#151411] text-sm tracking-[0.12em]",
+          buttonClassName
+        )}
         onClick={() => setIsOpen(true)}
         type="button"
         variant="outline"

@@ -20,6 +20,7 @@
 # production
 /build
 /public_html/
+/assets_for_codex/
 
 # misc
 .DS_Store

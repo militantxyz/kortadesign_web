@@ -73,7 +73,16 @@ export function SiteFooter() {
           </nav>
         ))}
 
-        <form className="grid content-start gap-3.5">
+        <form action="/api/forms" className="relative grid content-start gap-3.5" method="post">
+          <input type="hidden" name="form-type" value="newsletter" />
+          <input
+            aria-hidden="true"
+            autoComplete="off"
+            className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
+            name="website"
+            tabIndex={-1}
+            type="text"
+          />
           <h3 className="mb-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#d6b08b]">Newsletter</h3>
           <input className="min-h-12 border-b border-white/30 bg-transparent px-0 py-3 text-white outline-none placeholder:text-white/45 focus:border-[#d6b08b]" aria-label="Name and Surname" name="name" placeholder="Name and Surname" />
           <input className="min-h-12 border-b border-white/30 bg-transparent px-0 py-3 text-white outline-none placeholder:text-white/45 focus:border-[#d6b08b]" aria-label="Email" name="email" placeholder="Email" type="email" />
