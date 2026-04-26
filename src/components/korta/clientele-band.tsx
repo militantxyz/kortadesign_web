@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { asset } from "@/lib/korta-data";
 
 const clientele = [
@@ -20,7 +22,15 @@ export function ClienteleBand() {
       <div className="grid grid-cols-4 gap-px bg-[#cfd6ca] max-xl:grid-cols-2 max-md:grid-cols-1">
         {clientele.map((client) => (
           <div className="grid min-h-48 place-items-center bg-[#f8f5ef] p-8 transition hover:bg-white" key={client.name}>
-            <img className="max-h-24 max-w-[82%] object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0" src={client.image} alt={client.name} />
+            <div className="relative h-24 w-[82%] max-w-[220px]">
+              <Image
+                alt={client.name}
+                className="object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0"
+                fill
+                sizes="220px"
+                src={client.image}
+              />
+            </div>
           </div>
         ))}
       </div>

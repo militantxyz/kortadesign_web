@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FileText } from "lucide-react";
 
 import { DesignerSection } from "@/components/korta/designer-section";
@@ -37,14 +38,30 @@ export function ProductPage({ product }: { product: Product }) {
           </div>
         </div>
         <div className="border border-[#d8cec3] bg-white p-10">
-          <img className="m-auto max-h-[620px] object-contain" src={product.cardImage} alt={product.title} />
+          <div className="relative m-auto aspect-square w-full max-w-[620px]">
+            <Image
+              alt={product.title}
+              className="object-contain"
+              fill
+              sizes="(max-width: 1024px) 92vw, (max-width: 1280px) 44vw, 620px"
+              src={product.cardImage}
+            />
+          </div>
         </div>
       </section>
 
       {showGallery ? (
         <section className="grid grid-cols-4 gap-px bg-[#d8cec3] max-lg:grid-cols-2 max-md:grid-cols-1">
           {product.gallery.map((image, index) => (
-            <img className={`${index === 0 ? "lg:col-span-2 lg:row-span-2" : ""} aspect-square size-full object-cover`} src={image} alt={`${product.title} view ${index + 1}`} key={image} />
+            <div className={`${index === 0 ? "lg:col-span-2 lg:row-span-2" : ""} relative aspect-square size-full`} key={image}>
+              <Image
+                alt={`${product.title} view ${index + 1}`}
+                className="object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                src={image}
+              />
+            </div>
           ))}
         </section>
       ) : null}
@@ -80,9 +97,11 @@ export function ProductPage({ product }: { product: Product }) {
                     <figure className="group" key={item}>
                       <div className="relative aspect-[5/2] overflow-hidden border border-[#d8cec3] bg-white">
                         {swatch ? (
-                          <img
+                          <Image
                             alt={item}
-                            className="size-full object-cover transition duration-300 group-hover:scale-[1.04]"
+                            className="object-cover transition duration-300 group-hover:scale-[1.04]"
+                            fill
+                            sizes="(max-width: 768px) 42vw, (max-width: 1280px) 22vw, 190px"
                             src={swatch}
                           />
                         ) : (

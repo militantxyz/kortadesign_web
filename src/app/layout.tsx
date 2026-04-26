@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import { FloatingContact } from "@/components/korta/floating-contact";
 import { JsonLd } from "@/components/seo/json-ld";
 import { SiteFooter } from "@/components/site-footer";
@@ -21,6 +21,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+});
+
 const organizationJsonLd = buildOrganizationJsonLd();
 const websiteJsonLd = buildWebSiteJsonLd();
 
@@ -35,7 +40,7 @@ export default function RootLayout({
     <html
       data-scroll-behavior="smooth"
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="min-h-full">
         <JsonLd data={[organizationJsonLd, websiteJsonLd]} />

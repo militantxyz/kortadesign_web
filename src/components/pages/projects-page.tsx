@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -9,10 +10,14 @@ export function ProjectsPage() {
   return (
     <>
       <section className="relative overflow-hidden bg-[#151411] px-[8%] pb-[6%] pt-28 text-white max-md:px-[4%] max-md:pt-24">
-        <img
-          className="absolute inset-0 size-full object-cover opacity-35"
-          src={projects[0].heroImage}
+        <Image
           alt=""
+          aria-hidden
+          className="absolute inset-0 size-full object-cover opacity-35"
+          fill
+          preload
+          sizes="100vw"
+          src={projects[0].heroImage}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#151411d0] via-[#151411ad] to-[#151411f2]" />
         <div className="relative mx-auto max-w-5xl text-center">
@@ -32,10 +37,12 @@ export function ProjectsPage() {
         <div className="mt-10 grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:grid-cols-1">
           {projects.map((project) => (
             <Link className="group relative block aspect-[4/5] overflow-hidden bg-[#151411]" href={`/projects/${project.slug}`} key={project.slug}>
-              <img
-                className="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-105"
-                src={project.cardImage}
+              <Image
                 alt={project.name}
+                className="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-105"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                src={project.cardImage}
               />
               <div className="absolute inset-0 bg-gradient-to-b from-[#1514111a] via-[#15141144] to-[#151411d9]" />
               <div className="absolute left-4 top-4 border border-white/35 bg-black/35 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-white/90 backdrop-blur">
@@ -43,7 +50,15 @@ export function ProjectsPage() {
               </div>
               <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3">
                 {project.logo ? (
-                  <img className="max-h-16 max-w-[60%] object-contain" src={project.logo} alt={project.name} />
+                  <div className="relative h-16 w-[60%] max-w-[220px]">
+                    <Image
+                      alt={project.name}
+                      className="object-contain"
+                      fill
+                      sizes="220px"
+                      src={project.logo}
+                    />
+                  </div>
                 ) : (
                   <h3 className="max-w-[62%] text-xl font-semibold uppercase tracking-[0.08em] text-white">{project.name}</h3>
                 )}
@@ -63,7 +78,14 @@ export function ProjectDetailPage({ project }: { project: Project }) {
   return (
     <>
       <section className="relative isolate overflow-hidden bg-[#151411] pb-16 pt-24 text-white max-md:pb-10">
-        <img className="absolute inset-0 size-full object-cover opacity-80" src={project.heroImage} alt={project.name} />
+        <Image
+          alt={project.name}
+          className="absolute inset-0 size-full object-cover opacity-80"
+          fill
+          preload
+          sizes="100vw"
+          src={project.heroImage}
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-[#15141177] via-[#15141166] to-[#151411ee]" />
         <div className="relative mx-auto mt-[30vh] w-[84%] max-w-6xl border border-white/30 bg-[#151411d9] p-6 backdrop-blur max-md:w-[92%] max-md:p-5">
           <p className="text-[11px] uppercase tracking-[0.16em] text-[#d6b08b]">Project Reference</p>
@@ -106,7 +128,9 @@ export function ProjectDetailPage({ project }: { project: Project }) {
                 rel="noreferrer noopener"
                 key={`${project.slug}-gallery-${index}`}
               >
-                <img
+                <Image
+                  width={1600}
+                  height={1067}
                   className="block h-auto w-full transition duration-500 group-hover:scale-[1.03]"
                   src={image}
                   alt={`${project.name} gallery image ${index + 1}`}

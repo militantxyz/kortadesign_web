@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -12,15 +13,25 @@ export function ProjectsBand() {
       <div className="mb-9 mt-10 grid grid-cols-3 gap-3 max-xl:grid-cols-2 max-md:grid-cols-1">
         {projects.slice(0, 6).map((project) => (
           <Link className="group relative block aspect-[16/10] overflow-hidden bg-[#151411]" href={`/projects/${project.slug}`} key={project.slug}>
-            <img
-              className="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-105"
-              src={project.cardImage}
+            <Image
               alt={project.name}
+              className="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-105"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              src={project.cardImage}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-[#15141114] via-[#15141129] to-[#151411c2]" />
             <div className="absolute inset-x-4 bottom-4 text-left">
               {project.logo ? (
-                <img className="max-h-12 object-contain" src={project.logo} alt={project.name} />
+                <div className="relative h-12 w-[200px] max-w-[70%]">
+                  <Image
+                    alt={project.name}
+                    className="object-contain"
+                    fill
+                    sizes="200px"
+                    src={project.logo}
+                  />
+                </div>
               ) : (
                 <p className="text-lg font-semibold uppercase tracking-[0.08em] text-white">{project.name}</p>
               )}

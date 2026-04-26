@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -93,7 +94,14 @@ export function SiteFooter() {
       </div>
 
       <Link className="block border-t border-white/12 bg-[#f8f5ef] px-[8%] py-6 max-md:px-[4%]" href="/eu">
-        <img className="mx-auto max-h-20 object-contain" src={asset("2025/01/HR-Sufinancira-EUROPSKA-UNIJA_POS_POS-1024x271-1.png")} alt="European Union co-financing" />
+        <Image
+          alt="European Union co-financing"
+          className="mx-auto h-auto max-h-20 w-auto object-contain"
+          height={271}
+          sizes="(max-width: 768px) 96vw, 1024px"
+          src={asset("2025/01/HR-Sufinancira-EUROPSKA-UNIJA_POS_POS-1024x271-1.png")}
+          width={1024}
+        />
       </Link>
     </footer>
   );

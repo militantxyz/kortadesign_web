@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 export function PageHero({
@@ -7,6 +9,7 @@ export function PageHero({
   image,
   meta,
   titleClassName,
+  preloadImage = true,
 }: {
   eyebrow?: string;
   title: string;
@@ -14,14 +17,20 @@ export function PageHero({
   image: string;
   meta?: string[];
   titleClassName?: string;
+  preloadImage?: boolean;
 }) {
   return (
-    <section
-      className="relative grid min-h-[88vh] overflow-hidden bg-cover bg-center text-white max-md:min-h-[70vh]"
-      style={{
-        backgroundImage: `linear-gradient(90deg, rgba(21,20,17,.72), rgba(21,20,17,.24) 48%, rgba(21,20,17,.08)), url(${image})`,
-      }}
-    >
+    <section className="relative grid min-h-[88vh] overflow-hidden text-white max-md:min-h-[70vh]">
+      <Image
+        alt=""
+        aria-hidden
+        className="absolute inset-0 size-full object-cover"
+        fill
+        preload={preloadImage}
+        sizes="100vw"
+        src={image}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(21,20,17,.72),rgba(21,20,17,.24)_48%,rgba(21,20,17,.08))]" />
       <div className="absolute inset-x-[8%] top-24 h-px bg-white/25 max-md:inset-x-[4%]" />
       <div className="relative z-10 flex items-end px-[8%] pb-[8vh] pt-32 max-md:px-[4%]">
         <div className="max-w-5xl">

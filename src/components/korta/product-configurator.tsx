@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -146,18 +147,22 @@ export function ProductConfigurator({
                 <h4 className="text-2xl text-[#151411] md:text-3xl">
                   {selectedFinish.label}
                 </h4>
-                <div className="mt-5 grid h-[clamp(280px,46vh,560px)] place-items-center border border-[#d8cec3] bg-white p-3 md:h-[clamp(420px,62vh,820px)]">
-                  <img
-                    alt={`${product.title} in ${selectedFinish.label}`}
-                    className="h-full w-full object-contain object-center"
-                    onError={() =>
-                      setBrokenPreviews((current) => ({
-                        ...current,
-                        [selectedFinish.key]: true,
-                      }))
-                    }
-                    src={selectedPreview ?? configurator.fallbackPreviewImage}
-                  />
+                <div className="mt-5 h-[clamp(280px,46vh,560px)] border border-[#d8cec3] bg-white p-3 md:h-[clamp(420px,62vh,820px)]">
+                  <div className="relative h-full w-full">
+                    <Image
+                      alt={`${product.title} in ${selectedFinish.label}`}
+                      className="object-contain object-center"
+                      fill
+                      onError={() =>
+                        setBrokenPreviews((current) => ({
+                          ...current,
+                          [selectedFinish.key]: true,
+                        }))
+                      }
+                      sizes="(max-width: 1024px) 84vw, 44vw"
+                      src={selectedPreview ?? configurator.fallbackPreviewImage}
+                    />
+                  </div>
                 </div>
                 {!hasDedicatedPreview ? (
                   <p className="mt-4 text-sm leading-6 text-[#6f6962]">
@@ -196,15 +201,17 @@ export function ProductConfigurator({
                           >
                             <div className="relative aspect-[5/2] overflow-hidden border border-[#d8cec3] bg-white">
                               {!swatchBroken ? (
-                                <img
+                                <Image
                                   alt={finish.label}
-                                  className="size-full object-cover"
+                                  className="object-cover"
+                                  fill
                                   onError={() =>
                                     setBrokenSwatches((current) => ({
                                       ...current,
                                       [finishKey]: true,
                                     }))
                                   }
+                                  sizes="(max-width: 768px) 42vw, (max-width: 1280px) 22vw, 180px"
                                   src={finish.swatchImage}
                                 />
                               ) : (

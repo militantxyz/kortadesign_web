@@ -12,6 +12,7 @@ const generatedMapFile = path.join(projectRoot, "src", "lib", "generated", "wp-a
 const codeExtensions = new Set([".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"]);
 const assetExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".svg", ".pdf"]);
 const rasterExtensions = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+const targetMaxDimension = 3200;
 
 if (!existsSync(sourceRoot)) {
   throw new Error(`Source uploads folder not found: ${sourceRoot}`);
@@ -78,13 +79,25 @@ const getDirectoryAssets = (relativeDir) => {
   return directoryCache.get(relativeDir);
 };
 
+const normalizedRelativePath = (value) => value.replace(/^\.\//, "");
+
+const withScaledSuffix = (relativePath) => {
+  const ext = path.posix.extname(relativePath);
+  const baseName = path.posix.basename(relativePath, ext);
+  const directory = path.posix.dirname(relativePath);
+  const scaledBaseName = baseName.endsWith("-scaled") ? baseName : `${baseName}-scaled`;
+  const nextPath = path.posix.join(directory, `${scaledBaseName}${ext}`);
+  return normalizedRelativePath(nextPath);
+};
+
 const dimensionCache = new Map();
-const getImageArea = (absolutePath) => {
+const getImageMetrics = (absolutePath) => {
   if (dimensionCache.has(absolutePath)) {
     return dimensionCache.get(absolutePath);
   }
 
-  let area = 0;
+  let width = 0;
+  let height = 0;
   try {
     const output = execFileSync("sips", ["-g", "pixelWidth", "-g", "pixelHeight", absolutePath], {
       encoding: "utf8",
@@ -92,21 +105,62 @@ const getImageArea = (absolutePath) => {
     });
     const widthMatch = output.match(/pixelWidth:\s*(\d+)/);
     const heightMatch = output.match(/pixelHeight:\s*(\d+)/);
-    const width = widthMatch ? Number(widthMatch[1]) : 0;
-    const height = heightMatch ? Number(heightMatch[1]) : 0;
-    area = width > 0 && height > 0 ? width * height : 0;
-  } catch {
-    area = 0;
-  }
+    width = widthMatch ? Number(widthMatch[1]) : 0;
+    height = heightMatch ? Number(heightMatch[1]) : 0;
+  } catch {}
 
-  dimensionCache.set(absolutePath, area);
-  return area;
+  const metrics = {
+    area: width > 0 && height > 0 ? width * height : 0,
+    height,
+    maxDimension: Math.max(width, height),
+    width,
+  };
+
+  dimensionCache.set(absolutePath, metrics);
+  return metrics;
 };
 
 const scoreCandidate = (absolutePath, isRaster) => {
   const fileSize = statSync(absolutePath).size;
-  const area = isRaster ? getImageArea(absolutePath) : 0;
-  return { area, fileSize };
+  if (!isRaster) {
+    return { area: 0, fileSize, maxDimension: 0, oversize: 0 };
+  }
+
+  const metrics = getImageMetrics(absolutePath);
+  const oversize = Math.max(0, metrics.maxDimension - targetMaxDimension);
+  return {
+    area: metrics.area,
+    fileSize,
+    maxDimension: metrics.maxDimension,
+    oversize,
+  };
+};
+
+const isBetterCandidate = (candidateScore, bestScore) => {
+  const candidateWithinTarget = candidateScore.oversize === 0;
+  const bestWithinTarget = bestScore.oversize === 0;
+
+  if (candidateWithinTarget !== bestWithinTarget) {
+    return candidateWithinTarget;
+  }
+
+  if (candidateWithinTarget) {
+    if (candidateScore.area !== bestScore.area) {
+      return candidateScore.area > bestScore.area;
+    }
+    if (candidateScore.fileSize !== bestScore.fileSize) {
+      return candidateScore.fileSize > bestScore.fileSize;
+    }
+    return candidateScore.maxDimension > bestScore.maxDimension;
+  }
+
+  if (candidateScore.oversize !== bestScore.oversize) {
+    return candidateScore.oversize < bestScore.oversize;
+  }
+  if (candidateScore.fileSize !== bestScore.fileSize) {
+    return candidateScore.fileSize < bestScore.fileSize;
+  }
+  return candidateScore.area < bestScore.area;
 };
 
 const pickBestCandidate = (relativeRefPath) => {
@@ -145,12 +199,7 @@ const pickBestCandidate = (relativeRefPath) => {
   for (const candidateName of candidateNames.slice(1)) {
     const candidatePath = path.join(sourceRoot, relativeDir, candidateName);
     const candidateScore = scoreCandidate(candidatePath, true);
-    if (candidateScore.area > bestScore.area) {
-      bestName = candidateName;
-      bestScore = candidateScore;
-      continue;
-    }
-    if (candidateScore.area === bestScore.area && candidateScore.fileSize > bestScore.fileSize) {
+    if (isBetterCandidate(candidateScore, bestScore)) {
       bestName = candidateName;
       bestScore = candidateScore;
     }
@@ -169,6 +218,7 @@ const assetRefs = collectAssetRefs();
 const missing = [];
 const remap = {};
 const copied = new Set();
+const resized = new Set();
 
 for (const ref of assetRefs) {
   const ext = path.posix.extname(ref).toLowerCase();
@@ -182,16 +232,40 @@ for (const ref of assetRefs) {
     continue;
   }
 
-  if (bestMatch !== ref) {
-    remap[ref] = bestMatch;
+  const sourcePath = path.join(sourceRoot, bestMatch);
+  const sourceExt = path.posix.extname(bestMatch).toLowerCase();
+  const sourceMetrics = rasterExtensions.has(sourceExt) ? getImageMetrics(sourcePath) : null;
+  const needsResize = Boolean(
+    sourceMetrics && sourceMetrics.maxDimension > targetMaxDimension
+  );
+  const publishedPath = needsResize ? withScaledSuffix(bestMatch) : bestMatch;
+
+  if (publishedPath !== ref) {
+    remap[ref] = publishedPath;
   }
 
-  if (!copied.has(bestMatch)) {
-    const sourcePath = path.join(sourceRoot, bestMatch);
-    const destinationPath = path.join(targetRoot, bestMatch);
+  if (!copied.has(publishedPath)) {
+    const destinationPath = path.join(targetRoot, publishedPath);
     ensureDirectory(path.dirname(destinationPath));
-    copyFileSync(sourcePath, destinationPath);
-    copied.add(bestMatch);
+
+    if (needsResize) {
+      try {
+        execFileSync(
+          "sips",
+          ["-Z", String(targetMaxDimension), sourcePath, "--out", destinationPath],
+          {
+            stdio: ["ignore", "ignore", "ignore"],
+          }
+        );
+        resized.add(publishedPath);
+      } catch {
+        copyFileSync(sourcePath, destinationPath);
+      }
+    } else {
+      copyFileSync(sourcePath, destinationPath);
+    }
+
+    copied.add(publishedPath);
   }
 }
 
@@ -207,13 +281,14 @@ ensureDirectory(path.dirname(generatedMapFile));
 writeFileSync(
   generatedMapFile,
   `// Auto-generated by scripts/migrate-wp-assets.mjs\n` +
-    `// Maps legacy WordPress-sized asset references to the highest-quality local copy.\n` +
+    `// Maps legacy WordPress-sized asset references to a high-quality local copy with bounded source dimensions.\n` +
     `export const wpAssetRemap: Record<string, string> = ${remapBody};\n`,
   "utf8"
 );
 
 console.log(`Found asset references: ${assetRefs.length}`);
 console.log(`Copied assets: ${copied.size}`);
+console.log(`Resized assets: ${resized.size}`);
 console.log(`Remapped references: ${sortedRemapEntries.length}`);
 
 if (missing.length > 0) {

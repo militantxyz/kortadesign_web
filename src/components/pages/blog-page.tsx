@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -14,7 +15,15 @@ export function BlogPage() {
         <div className="grid grid-cols-3 gap-px bg-[#d8cec3] max-xl:grid-cols-2 max-md:grid-cols-1">
           {blogPosts.map((post) => (
             <Link className="grid bg-[#f8f5ef] transition hover:bg-white" href={`/${post.slug}`} key={post.slug}>
-              <img className="aspect-[1.25/1] w-full object-cover" src={post.image} alt={post.title} />
+              <div className="relative aspect-[1.25/1]">
+                <Image
+                  alt={post.title}
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  src={post.image}
+                />
+              </div>
               <div className="p-6">
                 <span className="mb-3 block text-[11px] font-bold uppercase tracking-[0.22em] text-[#8f6747]">{post.date}</span>
                 <h2 className="font-heading mb-4 text-4xl font-normal leading-[0.95] tracking-normal text-[#151411]">{post.title}</h2>

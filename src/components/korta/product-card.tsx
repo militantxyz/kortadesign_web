@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -19,13 +20,15 @@ export function ProductCard({
         <span className="absolute left-5 top-5 text-[10px] font-bold uppercase tracking-[0.24em] text-[#6f7468]">
           {product.zone}
         </span>
-        <img
-          className={`${
-            compact ? "max-h-72" : "max-h-[380px]"
-          } object-contain transition duration-500 group-hover:scale-[1.04]`}
-          src={product.cardImage}
-          alt={product.title}
-        />
+        <div className={`relative w-full ${compact ? "max-w-72" : "max-w-[380px]"} aspect-square`}>
+          <Image
+            alt={product.title}
+            className="object-contain transition duration-500 group-hover:scale-[1.04]"
+            fill
+            sizes="(max-width: 768px) 90vw, (max-width: 1280px) 45vw, 380px"
+            src={product.cardImage}
+          />
+        </div>
       </div>
       <div className="flex min-h-36 items-end justify-between gap-5 p-6">
         <div>

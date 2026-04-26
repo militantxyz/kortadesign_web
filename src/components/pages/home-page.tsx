@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownToLine, ArrowRight } from "lucide-react";
 
@@ -48,13 +49,18 @@ export function HomePage() {
     <>
       <section className="relative min-h-screen overflow-hidden bg-[#151411] text-white">
         {heroSlides.map((image, index) => (
-          <div
-            className="absolute inset-0 bg-cover bg-center opacity-0"
+          <Image
+            alt=""
+            aria-hidden
+            className="absolute inset-0 size-full object-cover opacity-0"
+            fill
             key={image}
+            preload={index === 0}
+            sizes="100vw"
+            src={image}
             style={{
               animation: "heroFade 18s infinite",
               animationDelay: `${index * 6}s`,
-              backgroundImage: `url(${image})`,
             }}
           />
         ))}
@@ -132,10 +138,12 @@ export function HomePage() {
             href={card.href}
             key={card.label}
           >
-            <img
-              className="absolute inset-0 size-full object-cover opacity-[.72] transition duration-700 group-hover:scale-105 group-hover:opacity-90"
-              src={card.image}
+            <Image
               alt={card.title}
+              className="absolute inset-0 size-full object-cover opacity-[.72] transition duration-700 group-hover:scale-105 group-hover:opacity-90"
+              fill
+              sizes="(max-width: 1024px) 100vw, 33vw"
+              src={card.image}
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(21,20,17,.05),rgba(21,20,17,.84))]" />
             <div className="relative z-10 flex h-full flex-col justify-end p-8">
@@ -158,14 +166,18 @@ export function HomePage() {
       </section>
 
       <section className="grid grid-cols-[1.05fr_0.95fr] bg-[#e8ece6] max-lg:grid-cols-1">
-        <div
-          className="min-h-[760px] bg-cover bg-center max-lg:min-h-[520px]"
-          style={{
-            backgroundImage: `url(${asset(
+        <div className="relative min-h-[760px] max-lg:min-h-[520px]">
+          <Image
+            alt=""
+            aria-hidden
+            className="object-cover"
+            fill
+            sizes="(max-width: 1024px) 100vw, 52vw"
+            src={asset(
               "2025/02/Italiana-wellbeing-shower-Goldenwhite-LUx-4-scaled-1-e1739636924695.jpg"
-            )})`,
-          }}
-        />
+            )}
+          />
+        </div>
         <div className="self-center px-[10%] py-[10%] max-md:px-[4%]">
           <SectionHeading
             eyebrow="Material atelier"
@@ -227,11 +239,15 @@ export function HomePage() {
             <ArrowRight aria-hidden="true" size={16} />
           </KortaButton>
         </div>
-        <img
-          className="h-full min-h-[720px] w-full object-cover max-lg:min-h-[520px]"
-          src={asset("2025/01/CAP-ACC-EXT-21-scaled.jpg")}
-          alt="KORTA outdoor wellness architecture"
-        />
+        <div className="relative min-h-[720px] max-lg:min-h-[520px]">
+          <Image
+            alt="KORTA outdoor wellness architecture"
+            className="object-cover"
+            fill
+            sizes="(max-width: 1024px) 100vw, 52vw"
+            src={asset("2025/01/CAP-ACC-EXT-21-scaled.jpg")}
+          />
+        </div>
       </section>
 
       <ClienteleBand />
@@ -249,11 +265,15 @@ export function HomePage() {
               href={`/${post.slug}`}
               key={post.slug}
             >
-              <img
-                className="aspect-[1.25/1] w-full object-cover"
-                src={post.image}
-                alt={post.title}
-              />
+              <div className="relative aspect-[1.25/1]">
+                <Image
+                  alt={post.title}
+                  className="object-cover"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                  src={post.image}
+                />
+              </div>
               <div className="p-6">
                 <span className="mb-3 block text-[11px] font-bold uppercase tracking-[0.22em] text-[#8f6747]">
                   {post.date}

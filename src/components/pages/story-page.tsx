@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { DesignerSection } from "@/components/korta/designer-section";
 import { PageHero } from "@/components/korta/page-hero";
 import { asset, localAsset } from "@/lib/korta-data";
@@ -99,11 +101,15 @@ export function StoryPage() {
           </div>
         </article>
         <div className="space-y-7">
-          <img
-            alt="KORTA lifestyle by the pool"
-            className="w-full border border-[#d8cec3] object-cover"
-            src={localAsset("story/aaa2-min.png")}
-          />
+          <div className="relative aspect-[16/10] w-full overflow-hidden border border-[#d8cec3]">
+            <Image
+              alt="KORTA lifestyle by the pool"
+              className="object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 52vw"
+              src={localAsset("story/aaa2-min.png")}
+            />
+          </div>
           <div className="space-y-4 text-lg leading-8 text-[#5b554f]">
             <p>
               KORTA is based on Mediterranean heritage and the joy of outdoor living. It
@@ -152,21 +158,33 @@ export function StoryPage() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-px bg-[#d8cec3]">
-            <img
-              alt="KORTA heritage landscape"
-              className="col-span-2 aspect-[16/10] size-full object-cover"
-              src={localAsset("story/nautre3.png")}
-            />
-            <img
-              alt="Mediterranean nature texture"
-              className="aspect-[4/5] size-full object-cover"
-              src={localAsset("story/nature1.png")}
-            />
-            <img
-              alt="Istrian stone tones"
-              className="aspect-[4/5] size-full object-cover"
-              src={localAsset("story/nature2.png")}
-            />
+            <div className="relative col-span-2 aspect-[16/10] size-full">
+              <Image
+                alt="KORTA heritage landscape"
+                className="object-cover"
+                fill
+                sizes="(max-width: 1024px) 100vw, 52vw"
+                src={localAsset("story/nautre3.png")}
+              />
+            </div>
+            <div className="relative aspect-[4/5] size-full">
+              <Image
+                alt="Mediterranean nature texture"
+                className="object-cover"
+                fill
+                sizes="(max-width: 1024px) 50vw, 25vw"
+                src={localAsset("story/nature1.png")}
+              />
+            </div>
+            <div className="relative aspect-[4/5] size-full">
+              <Image
+                alt="Istrian stone tones"
+                className="object-cover"
+                fill
+                sizes="(max-width: 1024px) 50vw, 25vw"
+                src={localAsset("story/nature2.png")}
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -229,11 +247,15 @@ export function StoryPage() {
               </p>
             </div>
           </article>
-          <img
-            alt="KORTA project image"
-            className="w-full border border-[#d8cec3] object-cover"
-            src={localAsset("gallery/marbella/korta-baoli-dubai-marbella.jpg")}
-          />
+          <div className="relative aspect-[4/3] w-full overflow-hidden border border-[#d8cec3]">
+            <Image
+              alt="KORTA project image"
+              className="object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 54vw"
+              src={localAsset("gallery/marbella/korta-baoli-dubai-marbella.jpg")}
+            />
+          </div>
         </div>
       </section>
 
