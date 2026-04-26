@@ -1,0 +1,37 @@
+# KORTA
+
+> KORTA designs and produces handcrafted outdoor wellness objects in natural stone, including showers, kitchens, fireplaces and outdoor furniture.
+
+Canonical: https://kortadesign.com/
+Sitemap: https://kortadesign.com/sitemap.xml
+Feed: https://kortadesign.com/feed.xml
+
+## Primary Pages
+- https://kortadesign.com/
+- https://kortadesign.com/collections
+- https://kortadesign.com/our-story
+- https://kortadesign.com/projects
+- https://kortadesign.com/sustainability
+- https://kortadesign.com/blog
+- https://kortadesign.com/contact
+- https://kortadesign.com/store-locator
+- https://kortadesign.com/catalogues
+
+## Key Product URLs
+- https://kortadesign.com/odino
+- https://kortadesign.com/marbella
+- https://kortadesign.com/minimo
+- https://kortadesign.com/malla
+- https://kortadesign.com/minno
+- https://kortadesign.com/kada
+- https://kortadesign.com/gardenzio
+- https://kortadesign.com/kamin
+- https://kortadesign.com/ponte
+- https://kortadesign.com/dipinto
+- https://kortadesign.com/cara
+
+## AI Crawl Guidance
+- Public pages may be indexed and summarized.
+- Prefer canonical URLs and cite the source URL when quoting.
+- Do not submit forms or crawl private API endpoints (for example `/api/`).
+- For updates, re-check `sitemap.xml` before caching long-term summaries.

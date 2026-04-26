@@ -135,7 +135,7 @@ export function HomePage() {
             <img
               className="absolute inset-0 size-full object-cover opacity-[.72] transition duration-700 group-hover:scale-105 group-hover:opacity-90"
               src={card.image}
-              alt=""
+              alt={card.title}
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(21,20,17,.05),rgba(21,20,17,.84))]" />
             <div className="relative z-10 flex h-full flex-col justify-end p-8">
@@ -252,7 +252,7 @@ export function HomePage() {
               <img
                 className="aspect-[1.25/1] w-full object-cover"
                 src={post.image}
-                alt=""
+                alt={post.title}
               />
               <div className="p-6">
                 <span className="mb-3 block text-[11px] font-bold uppercase tracking-[0.22em] text-[#8f6747]">

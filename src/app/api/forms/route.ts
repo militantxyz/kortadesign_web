@@ -105,13 +105,20 @@ function respondWithStatus(
   message: string,
   code: number
 ) {
+  const headers = {
+    "X-Robots-Tag": "noindex, nofollow, noarchive",
+  };
+
   const refererUrl = getSafeReferer(request);
   if (refererUrl) {
     refererUrl.searchParams.set("formStatus", status);
-    return NextResponse.redirect(refererUrl, { status: 303 });
+    return NextResponse.redirect(refererUrl, { status: 303, headers });
   }
 
-  return NextResponse.json({ ok: status === "success", message }, { status: code });
+  return NextResponse.json(
+    { ok: status === "success", message },
+    { status: code, headers }
+  );
 }
 
 export async function POST(request: Request) {

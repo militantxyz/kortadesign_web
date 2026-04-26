@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { FloatingContact } from "@/components/korta/floating-contact";
+import { JsonLd } from "@/components/seo/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import {
+  buildOrganizationJsonLd,
+  buildRootMetadata,
+  buildWebSiteJsonLd,
+} from "@/lib/seo";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,11 +21,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "KORTA - Outdoor Wellness Design",
-  description:
-    "KORTA creates timeless outdoor showers, kitchens, fire pieces and outdoor wellness objects in natural stone.",
-};
+const organizationJsonLd = buildOrganizationJsonLd();
+const websiteJsonLd = buildWebSiteJsonLd();
+
+export const metadata: Metadata = buildRootMetadata();
 
 export default function RootLayout({
   children,
@@ -33,6 +38,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full">
+        <JsonLd data={[organizationJsonLd, websiteJsonLd]} />
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />
