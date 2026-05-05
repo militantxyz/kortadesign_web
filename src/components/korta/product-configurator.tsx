@@ -5,6 +5,7 @@ import { X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import { KortaButton } from "@/components/korta/korta-button";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/korta-data";
 
@@ -23,10 +24,13 @@ function defaultSelectionKey(finishes: FlattenedFinish[]) {
 export function ProductConfigurator({
   product,
   buttonClassName,
+  locale,
 }: {
   product: Product;
   buttonClassName?: string;
+  locale: Locale;
 }) {
+  const dict = getDictionary(locale);
   const configurator = product.configurator;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKey, setSelectedKey] = useState("");
@@ -123,14 +127,14 @@ export function ProductConfigurator({
             <header className="flex items-center justify-between border-b border-[#d8cec3] px-5 py-4 md:px-7">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8f6747]">
-                  Configuration
+                  {dict.product.configurationEyebrow}
                 </p>
                 <h3 className="font-heading text-2xl leading-none text-[#151411] md:text-4xl">
                   {product.title} Configurator
                 </h3>
               </div>
               <button
-                aria-label="Close configurator"
+                aria-label={dict.product.closeConfigurator}
                 className="rounded-full border border-[#d8cec3] p-2 text-[#151411] transition hover:bg-white"
                 onClick={() => setIsOpen(false)}
                 type="button"
@@ -166,8 +170,7 @@ export function ProductConfigurator({
                 </div>
                 {!hasDedicatedPreview ? (
                   <p className="mt-4 text-sm leading-6 text-[#6f6962]">
-                    Dedicated preview is not available for this finish yet. You can
-                    still select it for your quote request.
+                    {dict.product.dedicatedPreviewFallback}
                   </p>
                 ) : null}
               </div>

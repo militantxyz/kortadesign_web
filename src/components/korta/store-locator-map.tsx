@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { getDictionary, type Locale } from "@/lib/i18n";
 import {
   getStoreRegion,
   storeLocations,
@@ -91,10 +92,10 @@ function detailAsMarkup(value: string) {
   return `<span>${safeValue}</span>`;
 }
 
-function popupMarkup(store: StoreLocation) {
+function popupMarkup(store: StoreLocation, emptyLabel: string) {
   const details = store.details.length
     ? `<ul class="korta-store-popup__list">${store.details.map((detail) => `<li>${detailAsMarkup(detail)}</li>`).join("")}</ul>`
-    : `<p class="korta-store-popup__empty">Contact info available on request.</p>`;
+    : `<p class="korta-store-popup__empty">${escapeHtml(emptyLabel)}</p>`;
 
   return `<article class="korta-store-popup"><h3 class="korta-store-popup__name">${escapeHtml(store.name)}</h3>${details}</article>`;
 }
@@ -156,7 +157,8 @@ function loadLeaflet() {
   return leafletLoader;
 }
 
-export function StoreLocatorMap() {
+export function StoreLocatorMap({ locale }: { locale: Locale }) {
+  const dict = getDictionary(locale);
   const mapElementRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<LeafletMap | null>(null);
   const markerLayerRef = useRef<LeafletLayerGroup | null>(null);
@@ -241,7 +243,7 @@ export function StoreLocatorMap() {
         fillOpacity: 1,
       });
 
-      marker.bindPopup(popupMarkup(store), {
+      marker.bindPopup(popupMarkup(store, dict.storeLocator.emptyPopup), {
         maxWidth: 320,
         className: "korta-store-popup-shell",
       });
@@ -252,13 +254,13 @@ export function StoreLocatorMap() {
     if (bounds.isValid()) {
       mapInstance.fitBounds(bounds.pad(0.14), { animate: false, maxZoom: 8 });
     }
-  }, [filteredStores, isMapReady]);
+  }, [dict.storeLocator.emptyPopup, filteredStores, isMapReady]);
 
   if (hasError) {
     return (
       <div className="grid min-h-[420px] place-items-center border border-[#d6c6b7] bg-[#f4eee7] px-6 text-center max-md:min-h-[360px]">
         <p className="max-w-2xl text-base leading-7 text-[#5b554f]">
-          We could not load the interactive map right now. Please refresh and try again.
+          {dict.storeLocator.mapError}
         </p>
       </div>
     );
@@ -282,13 +284,13 @@ export function StoreLocatorMap() {
               }`}
               aria-pressed={isActive}
             >
-              {filterOption}
+              {dict.storeLocator.regions[filterOption]}
             </button>
           );
         })}
       </div>
       <p className="mb-5 text-center text-[11px] font-bold uppercase tracking-[0.24em] text-[#8f6747]/85">
-        {filteredStores.length} of {storeLocations.length} locations shown
+        {filteredStores.length} / {storeLocations.length}
       </p>
       <div className="korta-store-map overflow-hidden border border-[#d6c6b7] bg-[#f4eee7] shadow-[0_24px_60px_-38px_rgba(21,20,17,0.7)]">
         <div

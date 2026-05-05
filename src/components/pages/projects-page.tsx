@@ -3,10 +3,13 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { SectionHeading } from "@/components/korta/section-heading";
+import { getDictionary, localizePath, type Locale } from "@/lib/i18n";
 import type { Project } from "@/lib/projects-data";
 import { projects } from "@/lib/projects-data";
 
-export function ProjectsPage() {
+export function ProjectsPage({ locale }: { locale: Locale }) {
+  const dict = getDictionary(locale);
+
   return (
     <>
       <section className="relative overflow-hidden bg-[#151411] px-[8%] pb-[6%] pt-28 text-white max-md:px-[4%] max-md:pt-24">
@@ -21,22 +24,21 @@ export function ProjectsPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#151411d0] via-[#151411ad] to-[#151411f2]" />
         <div className="relative mx-auto max-w-5xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d6b08b]">KORTA Lifestyle</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#d6b08b]">{dict.projects.heroEyebrow}</p>
           <h1 className="mt-4 text-5xl font-semibold uppercase tracking-[0.08em] text-[#f7f3eb] max-md:text-3xl">
-            Iconic Projects
+            {dict.projects.heroTitle}
           </h1>
           <p className="mx-auto mt-6 max-w-3xl text-balance text-sm leading-7 text-white/80">
-            Hospitality destinations, private villas, and signature residences shaped with natural stone.
-            Explore every reference in full detail.
+            {dict.projects.heroCopy}
           </p>
         </div>
       </section>
 
       <section className="bg-[#ece6de] px-[8%] py-[7%] max-md:px-[4%]">
-        <SectionHeading align="center" eyebrow="References" title="Some of Our Iconic Projects" />
+        <SectionHeading align="center" eyebrow={dict.projects.referencesEyebrow} title={dict.projects.referencesTitle} />
         <div className="mt-10 grid grid-cols-3 gap-6 max-lg:grid-cols-2 max-md:grid-cols-1">
           {projects.map((project) => (
-            <Link className="group relative block aspect-[4/5] overflow-hidden bg-[#151411]" href={`/projects/${project.slug}`} key={project.slug}>
+            <Link className="group relative block aspect-[4/5] overflow-hidden bg-[#151411]" href={localizePath(locale, `/projects/${project.slug}`)} key={project.slug}>
               <Image
                 alt={project.name}
                 className="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-105"
@@ -63,7 +65,7 @@ export function ProjectsPage() {
                   <h3 className="max-w-[62%] text-xl font-semibold uppercase tracking-[0.08em] text-white">{project.name}</h3>
                 )}
                 <span className="inline-flex min-h-11 items-center justify-center border border-white/65 bg-black/35 px-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-white transition group-hover:bg-white group-hover:text-[#151411]">
-                  Read More
+                  {dict.projects.readMore}
                 </span>
               </div>
             </Link>
@@ -74,7 +76,15 @@ export function ProjectsPage() {
   );
 }
 
-export function ProjectDetailPage({ project }: { project: Project }) {
+export function ProjectDetailPage({
+  project,
+  locale,
+}: {
+  project: Project;
+  locale: Locale;
+}) {
+  const dict = getDictionary(locale);
+
   return (
     <>
       <section className="relative isolate overflow-hidden bg-[#151411] pb-16 pt-24 text-white max-md:pb-10">
@@ -88,7 +98,7 @@ export function ProjectDetailPage({ project }: { project: Project }) {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#15141177] via-[#15141166] to-[#151411ee]" />
         <div className="relative mx-auto mt-[30vh] w-[84%] max-w-6xl border border-white/30 bg-[#151411d9] p-6 backdrop-blur max-md:w-[92%] max-md:p-5">
-          <p className="text-[11px] uppercase tracking-[0.16em] text-[#d6b08b]">Project Reference</p>
+          <p className="text-[11px] uppercase tracking-[0.16em] text-[#d6b08b]">{dict.projects.projectReference}</p>
           <h1 className="mt-3 text-4xl font-semibold uppercase tracking-[0.08em] text-[#f7f3eb] max-md:text-2xl">{project.name}</h1>
           <p className="mt-2 text-sm uppercase tracking-[0.16em] text-white/80">{project.location}</p>
           <a
@@ -97,7 +107,7 @@ export function ProjectDetailPage({ project }: { project: Project }) {
             target="_blank"
             rel="noreferrer noopener"
           >
-            Visit Location
+            {dict.projects.visitLocation}
             <ArrowUpRight aria-hidden="true" size={16} />
           </a>
         </div>
@@ -105,7 +115,7 @@ export function ProjectDetailPage({ project }: { project: Project }) {
 
       <section className="bg-[#ece6de] px-[8%] py-[6%] max-md:px-[4%]">
         <div className="mx-auto max-w-6xl">
-          <SectionHeading align="left" eyebrow="Project Story" title={project.name} />
+          <SectionHeading align="left" eyebrow={dict.projects.storyEyebrow} title={project.name} />
           <div className="mt-8 columns-1 gap-10 text-[15px] leading-8 text-[#221f1a] md:columns-2">
             {project.description.map((paragraph, index) => (
               <p className="mb-7 break-inside-avoid" key={`${project.slug}-paragraph-${index}`}>
@@ -118,7 +128,7 @@ export function ProjectDetailPage({ project }: { project: Project }) {
 
       <section className="bg-[#f6f3ee] px-[8%] py-[6%] max-md:px-[4%]">
         <div className="mx-auto max-w-6xl">
-          <SectionHeading align="left" eyebrow="Gallery" title="Project Highlights" />
+          <SectionHeading align="left" eyebrow={dict.projects.galleryEyebrow} title={dict.projects.galleryTitle} />
           <div className="mt-8 columns-1 gap-3 md:columns-2 xl:columns-3">
             {project.gallery.map((image, index) => (
               <a

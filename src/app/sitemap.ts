@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { locales, localizePath } from "@/lib/i18n";
 import { blogPosts, products } from "@/lib/korta-data";
 import { projects } from "@/lib/projects-data";
 import { absoluteUrl } from "@/lib/seo";
@@ -31,36 +32,44 @@ const latestBlogDate =
     .sort((a, b) => b.getTime() - a.getTime())[0] ?? new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((path) => ({
-    url: absoluteUrl(path),
-    lastModified: latestBlogDate,
-    changeFrequency: path === "/" ? "weekly" : "monthly",
-    priority: path === "/" ? 1 : path === "/collections" ? 0.95 : 0.8,
-  }));
+  const staticEntries: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    staticRoutes.map((path) => ({
+      url: absoluteUrl(localizePath(locale, path)),
+      lastModified: latestBlogDate,
+      changeFrequency: path === "/" ? "weekly" : "monthly",
+      priority: path === "/" ? 1 : path === "/collections" ? 0.95 : 0.8,
+    }))
+  );
 
-  const productEntries: MetadataRoute.Sitemap = products.map((product) => ({
-    url: absoluteUrl(`/${product.slug}`),
-    lastModified: latestBlogDate,
-    changeFrequency: "weekly",
-    priority: 0.88,
-    images: [absoluteUrl(product.heroImage)],
-  }));
+  const productEntries: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    products.map((product) => ({
+      url: absoluteUrl(localizePath(locale, `/${product.slug}`)),
+      lastModified: latestBlogDate,
+      changeFrequency: "weekly",
+      priority: 0.88,
+      images: [absoluteUrl(product.heroImage)],
+    }))
+  );
 
-  const blogEntries: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: absoluteUrl(`/${post.slug}`),
-    lastModified: parseDate(post.date) ?? latestBlogDate,
-    changeFrequency: "monthly",
-    priority: 0.72,
-    images: [absoluteUrl(post.image)],
-  }));
+  const blogEntries: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    blogPosts.map((post) => ({
+      url: absoluteUrl(localizePath(locale, `/${post.slug}`)),
+      lastModified: parseDate(post.date) ?? latestBlogDate,
+      changeFrequency: "monthly",
+      priority: 0.72,
+      images: [absoluteUrl(post.image)],
+    }))
+  );
 
-  const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: absoluteUrl(`/projects/${project.slug}`),
-    lastModified: latestBlogDate,
-    changeFrequency: "monthly",
-    priority: 0.76,
-    images: [absoluteUrl(project.heroImage)],
-  }));
+  const projectEntries: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    projects.map((project) => ({
+      url: absoluteUrl(localizePath(locale, `/projects/${project.slug}`)),
+      lastModified: latestBlogDate,
+      changeFrequency: "monthly",
+      priority: 0.76,
+      images: [absoluteUrl(project.heroImage)],
+    }))
+  );
 
   return [...staticEntries, ...productEntries, ...blogEntries, ...projectEntries];
 }

@@ -4,17 +4,20 @@ import { ArrowRight } from "lucide-react";
 
 import { PageHero } from "@/components/korta/page-hero";
 import { SectionHeading } from "@/components/korta/section-heading";
+import { getDictionary, localizePath, type Locale } from "@/lib/i18n";
 import { asset, blogPosts } from "@/lib/korta-data";
 
-export function BlogPage() {
+export function BlogPage({ locale }: { locale: Locale }) {
+  const dict = getDictionary(locale);
+
   return (
     <>
-      <PageHero title="Journal" eyebrow="KORTA Journal" copy="Design notes for outdoor showers, stone wellness and open-air living." image={asset("2025/01/IMG_0180-scaled-1-1024x683.jpg")} />
+      <PageHero title={dict.blog.heroTitle} eyebrow={dict.blog.heroEyebrow} copy={dict.blog.heroCopy} image={asset("2025/01/IMG_0180-scaled-1-1024x683.jpg")} />
       <section className="px-[8%] py-[8%] max-md:px-[4%]">
-        <SectionHeading eyebrow="Latest articles" title="Outdoor wellness, made practical." />
+        <SectionHeading eyebrow={dict.blog.latestEyebrow} title={dict.blog.latestTitle} />
         <div className="grid grid-cols-3 gap-px bg-[#d8cec3] max-xl:grid-cols-2 max-md:grid-cols-1">
           {blogPosts.map((post) => (
-            <Link className="grid bg-[#f8f5ef] transition hover:bg-white" href={`/${post.slug}`} key={post.slug}>
+            <Link className="grid bg-[#f8f5ef] transition hover:bg-white" href={localizePath(locale, `/${post.slug}`)} key={post.slug}>
               <div className="relative aspect-[1.25/1]">
                 <Image
                   alt={post.title}
@@ -37,7 +40,15 @@ export function BlogPage() {
   );
 }
 
-export function BlogArticlePage({ post }: { post: (typeof blogPosts)[number] }) {
+export function BlogArticlePage({
+  post,
+  locale,
+}: {
+  post: (typeof blogPosts)[number];
+  locale: Locale;
+}) {
+  const dict = getDictionary(locale);
+
   return (
     <>
       <PageHero
@@ -53,8 +64,8 @@ export function BlogArticlePage({ post }: { post: (typeof blogPosts)[number] }) 
             {paragraph}
           </p>
         ))}
-        <Link className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#8f6747]" href="/blog">
-          Back to Blog
+        <Link className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#8f6747]" href={localizePath(locale, "/blog")}>
+          {dict.blog.backToBlog}
           <ArrowRight aria-hidden="true" size={16} />
         </Link>
       </section>

@@ -1,5 +1,6 @@
 import { blogContentMap } from "@/lib/blog-content";
 import { wpAssetRemap } from "@/lib/generated/wp-asset-remap";
+import { getDictionary, type Locale } from "@/lib/i18n";
 
 export const asset = (assetPath: string) =>
   `/assets/uploads/${wpAssetRemap[assetPath] ?? assetPath}`;
@@ -857,3 +858,47 @@ export const designerCopy = [
   "In 2023, he wrote a piece of American history by redesigning Delmonico's Restaurant in Manhattan, New York, the first fine dining restaurant in the US and a New York landmark.",
   "Now he is actively pursuing the ideal of perfection in technical solutions by exploring unexpected and innovative paths of creativity.",
 ];
+
+const designerCopyHr = [
+  "Sandro Užila rođen je u Puli 6. rujna 1991. godine. Nakon osnovne škole napustio je dom s 14 godina kako bi započeo svoj obrazovni put u Italiji, gdje je studirao geodeziju, inženjerstvo, arhitekturu i dizajn u Trstu i Veneciji.",
+  "U kolovozu 2017., s 25 godina, otvorio je vlastiti studio u Poreču, a kasnije i drugi u Fažani.",
+  "Godine 2023. ispisao je dio američke povijesti redizajnom restorana Delmonico's na Manhattanu u New Yorku, prvog fine dining restorana u SAD-u i njujorške znamenitosti.",
+  "Danas aktivno slijedi ideal savršenstva u tehničkim rješenjima istražujući neočekivane i inovativne puteve kreativnosti.",
+];
+
+export function getLocalizedDesignerCopy(locale: Locale) {
+  return locale === "hr" ? designerCopyHr : designerCopy;
+}
+
+export function getLocalizedProduct(product: Product, locale: Locale): Product {
+  const dict = getDictionary(locale);
+  const translateMaterialGroup = (title: string) =>
+    dict.product.materialGroups[title] ?? title;
+  const translateDocLabel = (label: string) => dict.product.docLabels[label] ?? label;
+  const translateAddition = (label: string) => dict.product.additions[label] ?? label;
+
+  return {
+    ...product,
+    type: dict.product.types[product.type] ?? product.type,
+    formTitle: dict.product.formTitles[product.formTitle] ?? product.formTitle,
+    materials: product.materials.map((group) => ({
+      ...group,
+      title: translateMaterialGroup(group.title),
+    })),
+    additions: product.additions?.map(translateAddition),
+    docs: product.docs?.map((doc) => ({
+      ...doc,
+      label: translateDocLabel(doc.label),
+    })),
+    configurator: product.configurator
+      ? {
+          ...product.configurator,
+          buttonLabel: dict.product.startConfigurator,
+          groups: product.configurator.groups.map((group) => ({
+            ...group,
+            title: translateMaterialGroup(group.title),
+          })),
+        }
+      : undefined,
+  };
+}

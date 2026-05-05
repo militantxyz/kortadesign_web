@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { getDictionary, type Locale } from "@/lib/i18n";
 import { asset } from "@/lib/korta-data";
 
 const clientele = [
@@ -13,11 +14,13 @@ const clientele = [
   { name: "LaMaison", image: asset("2025/01/clientele/la-maison.png") },
 ];
 
-export function ClienteleBand() {
+export function ClienteleBand({ locale }: { locale: Locale }) {
+  const dict = getDictionary(locale);
+
   return (
     <section className="bg-[#e8ece6] px-[8%] py-[8%] text-center max-md:px-[4%]">
       <h2 className="mb-12 text-[clamp(1.45rem,3vw,2.35rem)] font-bold uppercase tracking-[0.18em] text-[#151411]">
-        Clientele
+        {dict.clientele.title}
       </h2>
       <div className="grid grid-cols-4 gap-px bg-[#cfd6ca] max-xl:grid-cols-2 max-md:grid-cols-1">
         {clientele.map((client) => (

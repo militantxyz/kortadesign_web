@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { defaultLocale, getDictionary, localeInfo, localizePath, type Locale } from "@/lib/i18n";
 import type { BlogPost, Product } from "@/lib/korta-data";
 import type { Project } from "@/lib/projects-data";
 
@@ -7,7 +8,7 @@ export const DEFAULT_SITE_URL = "https://kortadesign.com";
 export const SITE_NAME = "KORTA";
 export const SITE_TITLE = "KORTA | Outdoor Wellness Design";
 export const DEFAULT_DESCRIPTION =
-  "KORTA creates timeless outdoor showers, kitchens, fire pieces and outdoor wellness objects in natural stone.";
+  "KORTA creates timeless outdoor showers, kitchens, fire pieces and objects for private villas, resorts, hotels and gardens where architecture meets open air.";
 export const DEFAULT_SHARE_IMAGE_PATH =
   "/assets/social/korta-baoli-dubai-marbella-share.jpg";
 export const DEFAULT_SHARE_IMAGE_ALT =
@@ -92,6 +93,7 @@ type PageMetadataOptions = {
   keywords?: string[];
   noindex?: boolean;
   openGraphType?: "website" | "article";
+  locale?: Locale;
 };
 
 export function buildPageMetadata({
@@ -104,23 +106,32 @@ export function buildPageMetadata({
   keywords = [],
   noindex = false,
   openGraphType = "website",
+  locale = defaultLocale,
 }: PageMetadataOptions): Metadata {
   const normalizedPath = normalizePath(path);
   const normalizedCanonical = normalizePath(canonicalPath ?? path);
   const resolvedImageAlt = imageAlt ?? title;
+  const localizedCanonical = localizePath(locale, normalizedCanonical);
+  const alternateLocale = locale === "en" ? "hr" : "en";
 
   return {
     title,
     description,
     keywords: uniqueKeywords(keywords),
     alternates: {
-      canonical: normalizedCanonical,
+      canonical: localizedCanonical,
+      languages: {
+        en: localizePath("en", normalizedCanonical),
+        hr: localizePath("hr", normalizedCanonical),
+        "x-default": localizePath("en", normalizedCanonical),
+      },
     },
     openGraph: {
       type: openGraphType,
       siteName: SITE_NAME,
-      locale: "en_US",
-      url: normalizedPath,
+      locale: localeInfo[locale].ogLocale,
+      alternateLocale: [localeInfo[alternateLocale].ogLocale],
+      url: localizePath(locale, normalizedPath),
       title,
       description,
       images: [
@@ -154,7 +165,8 @@ export function buildPageMetadata({
   };
 }
 
-export function buildRootMetadata(): Metadata {
+export function buildRootMetadata(locale: Locale = defaultLocale): Metadata {
+  const dict = getDictionary(locale);
   const googleVerification =
     process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ??
     process.env.GOOGLE_SITE_VERIFICATION;
@@ -176,13 +188,18 @@ export function buildRootMetadata(): Metadata {
     metadataBase: METADATA_BASE,
     applicationName: SITE_NAME,
     title: {
-      default: SITE_TITLE,
+      default: dict.seo.siteTitle,
       template: "%s | KORTA",
     },
-    description: DEFAULT_DESCRIPTION,
+    description: dict.seo.defaultDescription,
     keywords: DEFAULT_KEYWORDS,
     alternates: {
-      canonical: "/",
+      canonical: localizePath(locale, "/"),
+      languages: {
+        en: localizePath("en", "/"),
+        hr: localizePath("hr", "/"),
+        "x-default": localizePath("en", "/"),
+      },
       types: {
         "application/rss+xml": "/feed.xml",
       },
@@ -198,10 +215,11 @@ export function buildRootMetadata(): Metadata {
     openGraph: {
       type: "website",
       siteName: SITE_NAME,
-      locale: "en_US",
-      url: "/",
-      title: SITE_TITLE,
-      description: DEFAULT_DESCRIPTION,
+      locale: localeInfo[locale].ogLocale,
+      alternateLocale: [localeInfo[locale === "en" ? "hr" : "en"].ogLocale],
+      url: localizePath(locale, "/"),
+      title: dict.seo.siteTitle,
+      description: dict.seo.defaultDescription,
       images: [
         {
           url: DEFAULT_SHARE_IMAGE_PATH,
@@ -213,8 +231,8 @@ export function buildRootMetadata(): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title: SITE_TITLE,
-      description: DEFAULT_DESCRIPTION,
+      title: dict.seo.siteTitle,
+      description: dict.seo.defaultDescription,
       images: [
         {
           url: DEFAULT_SHARE_IMAGE_PATH,
@@ -263,13 +281,13 @@ export function buildOrganizationJsonLd() {
   };
 }
 
-export function buildWebSiteJsonLd() {
+export function buildWebSiteJsonLd(locale: Locale = defaultLocale) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
-    url: SITE_URL,
-    inLanguage: "en",
+    url: absoluteUrl(localizePath(locale, "/")),
+    inLanguage: localeInfo[locale].htmlLang,
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
@@ -283,6 +301,7 @@ type WebPageJsonLdOptions = {
   description: string;
   path: string;
   imagePath?: string;
+  locale?: Locale;
 };
 
 export function buildWebPageJsonLd({
@@ -290,18 +309,20 @@ export function buildWebPageJsonLd({
   description,
   path,
   imagePath,
+  locale = defaultLocale,
 }: WebPageJsonLdOptions) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
     name,
     description,
-    url: absoluteUrl(path),
+    inLanguage: localeInfo[locale].htmlLang,
+    url: absoluteUrl(localizePath(locale, path)),
     ...(imagePath ? { primaryImageOfPage: absoluteUrl(imagePath) } : {}),
     isPartOf: {
       "@type": "WebSite",
       name: SITE_NAME,
-      url: SITE_URL,
+      url: absoluteUrl(localizePath(locale, "/")),
     },
     publisher: {
       "@type": "Organization",
@@ -316,7 +337,7 @@ type BreadcrumbItem = {
   path: string;
 };
 
-export function buildBreadcrumbJsonLd(items: BreadcrumbItem[]) {
+export function buildBreadcrumbJsonLd(items: BreadcrumbItem[], locale: Locale = defaultLocale) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -324,12 +345,12 @@ export function buildBreadcrumbJsonLd(items: BreadcrumbItem[]) {
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: absoluteUrl(item.path),
+      item: absoluteUrl(localizePath(locale, item.path)),
     })),
   };
 }
 
-export function buildProductJsonLd(product: Product) {
+export function buildProductJsonLd(product: Product, locale: Locale = defaultLocale) {
   const images = [product.heroImage, product.cardImage, ...product.gallery]
     .map((image) => absoluteUrl(image))
     .filter((value, index, array) => array.indexOf(value) === index);
@@ -360,11 +381,11 @@ export function buildProductJsonLd(product: Product) {
         value: product.zone,
       },
     ],
-    url: absoluteUrl(`/${product.slug}`),
+    url: absoluteUrl(localizePath(locale, `/${product.slug}`)),
   };
 }
 
-export function buildBlogPostingJsonLd(post: BlogPost) {
+export function buildBlogPostingJsonLd(post: BlogPost, locale: Locale = defaultLocale) {
   const publishedDate = toIsoDateString(post.date);
 
   return {
@@ -372,8 +393,9 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
+    inLanguage: localeInfo[locale].htmlLang,
     image: [absoluteUrl(post.image)],
-    url: absoluteUrl(`/${post.slug}`),
+    url: absoluteUrl(localizePath(locale, `/${post.slug}`)),
     ...(publishedDate ? { datePublished: publishedDate, dateModified: publishedDate } : {}),
     author: {
       "@type": "Organization",
@@ -388,12 +410,12 @@ export function buildBlogPostingJsonLd(post: BlogPost) {
         url: absoluteUrl(ORGANIZATION_LOGO_PATH),
       },
     },
-    mainEntityOfPage: absoluteUrl(`/${post.slug}`),
+    mainEntityOfPage: absoluteUrl(localizePath(locale, `/${post.slug}`)),
     articleSection: "Outdoor wellness",
   };
 }
 
-export function buildProjectJsonLd(project: Project) {
+export function buildProjectJsonLd(project: Project, locale: Locale = defaultLocale) {
   const images = [project.heroImage, ...project.gallery]
     .map((image) => absoluteUrl(image))
     .filter((value, index, array) => array.indexOf(value) === index);
@@ -404,7 +426,8 @@ export function buildProjectJsonLd(project: Project) {
     name: `${project.name} Project Reference`,
     description: project.description[0] ?? `${project.name} reference project by KORTA.`,
     image: images,
-    url: absoluteUrl(`/projects/${project.slug}`),
+    inLanguage: localeInfo[locale].htmlLang,
+    url: absoluteUrl(localizePath(locale, `/projects/${project.slug}`)),
     creator: {
       "@type": "Organization",
       name: SITE_NAME,

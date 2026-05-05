@@ -4,15 +4,18 @@ import { ArrowRight } from "lucide-react";
 
 import { KortaButton } from "@/components/korta/korta-button";
 import { SectionHeading } from "@/components/korta/section-heading";
+import { getDictionary, localizePath, type Locale } from "@/lib/i18n";
 import { projects } from "@/lib/projects-data";
 
-export function ProjectsBand() {
+export function ProjectsBand({ locale }: { locale: Locale }) {
+  const dict = getDictionary(locale);
+
   return (
     <section className="bg-[#e8ece6] px-[8%] py-[8%] text-center max-md:px-[4%]">
-      <SectionHeading align="center" eyebrow="Selected references" title="Placed in villas, resorts and quiet private retreats." />
+      <SectionHeading align="center" eyebrow={dict.projectsBand.eyebrow} title={dict.projectsBand.title} />
       <div className="mb-9 mt-10 grid grid-cols-3 gap-3 max-xl:grid-cols-2 max-md:grid-cols-1">
         {projects.slice(0, 6).map((project) => (
-          <Link className="group relative block aspect-[16/10] overflow-hidden bg-[#151411]" href={`/projects/${project.slug}`} key={project.slug}>
+          <Link className="group relative block aspect-[16/10] overflow-hidden bg-[#151411]" href={localizePath(locale, `/projects/${project.slug}`)} key={project.slug}>
             <Image
               alt={project.name}
               className="absolute inset-0 size-full object-cover transition duration-500 group-hover:scale-105"
@@ -39,8 +42,8 @@ export function ProjectsBand() {
           </Link>
         ))}
       </div>
-      <KortaButton href="/projects">
-        Read More
+      <KortaButton href={localizePath(locale, "/projects")}>
+        {dict.projectsBand.readMore}
         <ArrowRight aria-hidden="true" size={17} />
       </KortaButton>
     </section>
