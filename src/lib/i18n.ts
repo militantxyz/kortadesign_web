@@ -739,14 +739,14 @@ const en: Dictionary = {
       "Dedicated preview is not available for this finish yet. You can still select it for your quote request.",
     closeConfigurator: "Close configurator",
     materialGroups: {
-      "Natural Stone Kanfanar": "Natural Stone Kanfanar",
-      "Marazzi Porcelain Stoneware": "Marazzi Porcelain Stoneware",
+      "Natural Stone Kanfanar": "Natural Stone",
+      "Marazzi Porcelain Stoneware": "Porcelain Stoneware",
       "Handle Finishes (PVD Coating)": "Handle Finishes (PVD Coating)",
     },
     additionsTitle: "Additions",
     finishOptions: {
-      naturalStone: "Natural Stone Kanfanar",
-      porcelain: "Marazzi Porcelain Stoneware",
+      naturalStone: "Natural Stone",
+      porcelain: "Porcelain Stoneware",
       customRequest: "Custom Request",
     },
     types: {
@@ -1240,14 +1240,14 @@ const hr: Dictionary = {
       "Namjenski prikaz za ovu završnu obradu još nije dostupan. I dalje je možete odabrati za svoj upit.",
     closeConfigurator: "Zatvori konfigurator",
     materialGroups: {
-      "Natural Stone Kanfanar": "Prirodni kamen Kanfanar",
-      "Marazzi Porcelain Stoneware": "Marazzi porculanska keramika",
+      "Natural Stone Kanfanar": "Prirodni kamen",
+      "Marazzi Porcelain Stoneware": "Porculanska keramika",
       "Handle Finishes (PVD Coating)": "Završne obrade ručki (PVD premaz)",
     },
     additionsTitle: "Dodatci",
     finishOptions: {
-      naturalStone: "Prirodni kamen Kanfanar",
-      porcelain: "Marazzi porculanska keramika",
+      naturalStone: "Prirodni kamen",
+      porcelain: "Porculanska keramika",
       customRequest: "Prilagođeni zahtjev",
     },
     types: {

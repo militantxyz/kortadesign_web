@@ -1,4 +1,4 @@
-import { asset } from "@/lib/korta-data";
+import { asset, localAsset } from "@/lib/korta-data";
 
 export type Project = {
   slug: string;
@@ -325,15 +325,15 @@ export const projects: Project[] = [
       "In the village of Cirkoti, near Zavrsje, sits the Istrian gem, Casa Rea, offering a captivating view of olive groves and the historic town of Motovun. Architect and designer Sandro Uzila shared how he embraced simplicity in his design and why it was so easy to integrate it into the natural environment.",
       "Probably one of the best things I've done in my life was a road trip through Istria (if you haven't yet, be sure to treat yourself to this pleasure). The soothing dance of local roads winding through the hills of Istria's interior never allows the scenery to become dull. It's clear to me why many have wished for a holiday home in this part of the world. One of the latest projects by architect and designer Sandro Uzila is Casa Rea, a house located in the small village of Cirkoti, near Zavrsje (in my opinion, one of the most charming corners of Istria), between Groznjan and Motovun. You might think of Rea as a queen, which this house indeed is at first glance (if you ask us), but it's actually a blend of the names Rene and Andrea, a beautiful tribute to the owners' sons. Although they invested in a holiday home they plan to rent out, the owners have left time for themselves to enjoy this piece of family paradise. \"I sketched the house in one night. After visiting the location, on the way to the office, I had a clear vision of how I wanted the house to look and didn't want to go to sleep until it was completely finished. The floor plan and facades were ready that same night,\" Sandro tells us, owner of one of the busiest Istrian architectural-design offices, WAVE Design Studio, whom the investors entrusted with this construction and design project. He also explains that for unique signature projects, he works under his own brand, Sandro Uzila. \"Some projects are more commercial than others, but I often have the opportunity to create such unique projects with carefully designed details and aesthetics, and the freedom to follow, of course in collaboration with the investor, ideas that I believe will turn out well.\"",
     ],
-    cardImage: asset("2025/11/1.jpeg"),
-    heroImage: asset("2025/11/1.jpeg"),
+    cardImage: localAsset("gallery/casa-rea/casa-rea-09-1050x700-1.jpg.webp"),
+    heroImage: localAsset("gallery/casa-rea/casa-rea-09-1050x700-1.jpg.webp"),
     gallery: [
-      asset("2025/11/2.webp"),
-      asset("2025/11/4.webp"),
-      asset("2025/11/6.webp"),
-      asset("2025/11/3.webp"),
-      asset("2025/11/1.jpeg"),
-      asset("2025/11/5.webp"),
+      localAsset("gallery/casa-rea/casa-rea-09-1050x700-1.jpg.webp"),
+      localAsset("gallery/casa-rea/022.jpg"),
+      localAsset("gallery/casa-rea/0865.jpg"),
+      localAsset("gallery/casa-rea/casa-rea-06-1050x700-1.jpg.webp"),
+      localAsset("gallery/casa-rea/post-2.webp"),
+      localAsset("gallery/casa-rea/korta-minimo-black-granite.jpg"),
     ],
   },
   {
@@ -347,7 +347,6 @@ export const projects: Project[] = [
     cardImage: asset("2025/11/1.jpg"),
     heroImage: asset("2025/11/1.jpg"),
     gallery: [
-      asset("2025/11/4.jpg"),
       asset("2025/11/3-scaled.jpg"),
       asset("2025/11/2-scaled.jpg"),
       asset("2025/11/1.jpg"),
@@ -421,7 +420,6 @@ export const projects: Project[] = [
       asset("2025/11/6-1.jpg"),
       asset("2025/11/3-1.jpg"),
       asset("2025/11/714702941.jpg"),
-      asset("2025/11/5.jpg"),
       asset("2025/11/714702847.jpg"),
       asset("2025/11/4-1.jpg"),
       asset("2025/11/2-1.jpg"),
