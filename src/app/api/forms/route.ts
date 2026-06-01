@@ -15,6 +15,14 @@ type TurnstileResult = {
   hostname?: string;
   success?: boolean;
 };
+type FormErrorReason =
+  | "config"
+  | "empty"
+  | "honeypot"
+  | "origin"
+  | "rate-limit"
+  | "smtp"
+  | "verification";
 
 let cachedTransporter: MailTransporter | null = null;
 const rateLimitBuckets = new Map<string, RateLimitBucket>();
@@ -244,7 +252,8 @@ function respondWithStatus(
   request: Request,
   status: "success" | "error",
   message: string,
-  code: number
+  code: number,
+  reason?: FormErrorReason
 ) {
   const headers = {
     "X-Robots-Tag": "noindex, nofollow, noarchive",
@@ -253,13 +262,29 @@ function respondWithStatus(
   const refererUrl = getSafeReferer(request);
   if (refererUrl) {
     refererUrl.searchParams.set("formStatus", status);
+    if (reason) {
+      refererUrl.searchParams.set("formReason", reason);
+    } else {
+      refererUrl.searchParams.delete("formReason");
+    }
     return NextResponse.redirect(refererUrl, { status: 303, headers });
   }
 
   return NextResponse.json(
-    { ok: status === "success", message },
+    { ok: status === "success", message, reason },
     { status: code, headers }
   );
+}
+
+function getFormErrorReason(error: unknown): FormErrorReason {
+  if (
+    error instanceof Error &&
+    error.message.toLowerCase().includes("missing smtp")
+  ) {
+    return "config";
+  }
+
+  return "smtp";
 }
 
 export async function POST(request: Request) {
@@ -272,7 +297,8 @@ export async function POST(request: Request) {
         request,
         "error",
         "Unable to send form right now.",
-        400
+        400,
+        "honeypot"
       );
     }
 
@@ -285,7 +311,8 @@ export async function POST(request: Request) {
         request,
         "error",
         "Invalid form submission.",
-        403
+        403,
+        "origin"
       );
     }
 
@@ -294,7 +321,8 @@ export async function POST(request: Request) {
         request,
         "error",
         "Too many submissions. Please try again later.",
-        429
+        429,
+        "rate-limit"
       );
     }
 
@@ -309,7 +337,8 @@ export async function POST(request: Request) {
         request,
         "error",
         "Verification failed. Please try again.",
-        400
+        400,
+        "verification"
       );
     }
 
@@ -342,7 +371,8 @@ export async function POST(request: Request) {
         request,
         "error",
         "No form values were provided.",
-        400
+        400,
+        "empty"
       );
     }
 
@@ -387,12 +417,14 @@ export async function POST(request: Request) {
 
     return respondWithStatus(request, "success", "Submitted.", 200);
   } catch (error) {
-    console.error("Form submission failed:", error);
+    const reason = getFormErrorReason(error);
+    console.error(`Form submission failed (${reason}):`, error);
     return respondWithStatus(
       request,
       "error",
       "Unable to send form right now.",
-      500
+      500,
+      reason
     );
   }
 }

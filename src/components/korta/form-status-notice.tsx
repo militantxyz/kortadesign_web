@@ -11,6 +11,7 @@ type FormStatusNoticeProps = {
 export function FormStatusNotice({ locale }: FormStatusNoticeProps) {
   const searchParams = useSearchParams();
   const status = searchParams.get("formStatus");
+  const reason = searchParams.get("formReason");
 
   if (status !== "success" && status !== "error") {
     return null;
@@ -20,14 +21,19 @@ export function FormStatusNotice({ locale }: FormStatusNoticeProps) {
     locale === "hr"
       ? {
           error: "Poruku trenutno nije moguce poslati. Pokusajte ponovno ili nam pisite izravno.",
+          errorPrefix: "Sifra greske",
+          smtp: "Provjera je prosla, ali email servis nije poslao poruku.",
           success: "Poruka je poslana. Javit cemo vam se uskoro.",
         }
       : {
           error: "We could not send the message right now. Please try again or email us directly.",
+          errorPrefix: "Error code",
+          smtp: "Verification passed, but the email service could not send the message.",
           success: "Your message was sent. We will reply soon.",
         };
 
   const isSuccess = status === "success";
+  const message = reason === "smtp" || reason === "config" ? copy.smtp : copy.error;
 
   return (
     <p
@@ -38,7 +44,12 @@ export function FormStatusNotice({ locale }: FormStatusNoticeProps) {
       }`}
       role="status"
     >
-      {isSuccess ? copy.success : copy.error}
+      {isSuccess ? copy.success : message}
+      {!isSuccess && reason ? (
+        <span className="mt-2 block text-xs uppercase tracking-[0.14em] opacity-70">
+          {copy.errorPrefix}: {reason}
+        </span>
+      ) : null}
     </p>
   );
 }
