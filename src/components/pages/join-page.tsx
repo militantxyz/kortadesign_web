@@ -50,10 +50,9 @@ export function JoinPage({ locale }: { locale: Locale }) {
         </div>
         <form action="/api/forms" className="relative grid gap-3.5" method="post">
           <input type="hidden" name="form-type" value="join" />
-          <SpamProtection action="join" />
-          <Field label={dict.contact.fields.nameAndSurname} />
-          <Field label={dict.contact.fields.email} type="email" />
-          <select aria-label={copy.department} className="min-h-12 w-full border-b border-[#151411]/35 bg-transparent px-0 py-3 text-[#151411] outline-none focus:border-[#8f6747]" defaultValue="" name="department">
+          <Field label={dict.contact.fields.nameAndSurname} required />
+          <Field label={dict.contact.fields.email} required type="email" />
+          <select aria-label={copy.department} className="min-h-12 w-full border-b border-[#151411]/35 bg-transparent px-0 py-3 text-[#151411] outline-none focus:border-[#8f6747]" defaultValue="" name="department" required>
             <option value="" disabled>
               {copy.department}
             </option>
@@ -61,7 +60,8 @@ export function JoinPage({ locale }: { locale: Locale }) {
               <option key={department}>{department}</option>
             ))}
           </select>
-          <Field label={dict.contact.fields.message} as="textarea" />
+          <Field label={dict.contact.fields.message} as="textarea" required />
+          <SpamProtection action="join" />
           <KortaButton className="mt-4" type="submit">
             {copy.send}
           </KortaButton>

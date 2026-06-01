@@ -35,7 +35,7 @@ The route forwards submissions from:
 
 ## Spam protection
 
-Every form includes a hidden honeypot field (`website`). The API route also blocks cross-site submissions and rate-limits repeated submissions from the same IP address.
+Every form includes a hidden honeypot field (`korta-url`). The API route also blocks cross-site submissions and rate-limits repeated submissions from the same IP address.
 
 For stronger CAPTCHA-style protection, create a Cloudflare Turnstile widget and add both Turnstile keys to the environment:
 

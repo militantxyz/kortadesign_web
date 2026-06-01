@@ -266,9 +266,14 @@ export async function POST(request: Request) {
   try {
     const formData = await request.formData();
 
-    // Honeypot: silently accept bot submissions but do not send mail.
-    if (toText(formData.get("website"))) {
-      return respondWithStatus(request, "success", "Submitted.", 200);
+    // Honeypot: reject submissions that filled an offscreen spam field.
+    if (toText(formData.get("korta-url")) || toText(formData.get("website"))) {
+      return respondWithStatus(
+        request,
+        "error",
+        "Unable to send form right now.",
+        400
+      );
     }
 
     const formType = toText(formData.get("form-type")) || "general";
@@ -310,6 +315,7 @@ export async function POST(request: Request) {
 
     const hiddenKeys = new Set([
       "cf-turnstile-response",
+      "korta-url",
       "website",
       "form-type",
       "product",

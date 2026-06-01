@@ -12,12 +12,14 @@ export function Field({
   as = "input",
   tone = "dark",
   options,
+  required = false,
 }: {
   label: string;
   type?: string;
   as?: "input" | "textarea" | "select";
   tone?: "dark" | "light";
   options?: string[];
+  required?: boolean;
 }) {
   const name = fieldName(label);
   const controlClass =
@@ -29,7 +31,7 @@ export function Field({
     const values = options ?? [];
 
     return (
-      <select aria-label={label} className={controlClass} defaultValue="" name={name}>
+      <select aria-label={label} className={controlClass} defaultValue="" name={name} required={required}>
         <option value="" disabled>
           {label}
         </option>
@@ -41,10 +43,10 @@ export function Field({
   }
 
   if (as === "textarea") {
-    return <textarea aria-label={label} className={controlClass} name={name} placeholder={label} rows={5} />;
+    return <textarea aria-label={label} className={controlClass} name={name} placeholder={label} required={required} rows={5} />;
   }
 
-  return <input aria-label={label} className={controlClass} name={name} placeholder={label} type={type} />;
+  return <input aria-label={label} className={controlClass} name={name} placeholder={label} required={required} type={type} />;
 }
 
 export function QuoteForm({ product, locale }: { product: Product; locale: Locale }) {
@@ -62,9 +64,8 @@ export function QuoteForm({ product, locale }: { product: Product; locale: Local
       <form action="/api/forms" className="relative grid gap-4" method="post">
         <input type="hidden" name="form-type" value="quote" />
         <input type="hidden" name="product" value={product.slug} />
-        <SpamProtection action="quote" theme="dark" />
-        <Field label={dict.quoteForm.name} tone="light" />
-        <Field label={dict.quoteForm.email} type="email" tone="light" />
+        <Field label={dict.quoteForm.name} required tone="light" />
+        <Field label={dict.quoteForm.email} required type="email" tone="light" />
         <Field label={dict.quoteForm.phone} tone="light" />
         <Field label={dict.quoteForm.location} tone="light" />
         <Field label={dict.quoteForm.quantity} type="number" tone="light" />
@@ -89,6 +90,7 @@ export function QuoteForm({ product, locale }: { product: Product; locale: Local
             ))}
           </div>
         ) : null}
+        <SpamProtection action="quote" theme="dark" />
         <button className="mt-3 min-h-12 bg-[#d6b08b] px-5 py-3.5 text-xs font-bold uppercase tracking-[0.16em] text-[#151411] transition hover:bg-white" type="submit">
           {dict.quoteForm.submit}
         </button>
