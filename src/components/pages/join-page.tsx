@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/korta/page-hero";
 import { KortaButton } from "@/components/korta/korta-button";
 import { Field } from "@/components/korta/quote-form";
+import { SpamProtection } from "@/components/korta/spam-protection";
 import { getDictionary, type Locale } from "@/lib/i18n";
 import { asset } from "@/lib/korta-data";
 
@@ -49,14 +50,7 @@ export function JoinPage({ locale }: { locale: Locale }) {
         </div>
         <form action="/api/forms" className="relative grid gap-3.5" method="post">
           <input type="hidden" name="form-type" value="join" />
-          <input
-            aria-hidden="true"
-            autoComplete="off"
-            className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
-            name="website"
-            tabIndex={-1}
-            type="text"
-          />
+          <SpamProtection action="join" />
           <Field label={dict.contact.fields.nameAndSurname} />
           <Field label={dict.contact.fields.email} type="email" />
           <select aria-label={copy.department} className="min-h-12 w-full border-b border-[#151411]/35 bg-transparent px-0 py-3 text-[#151411] outline-none focus:border-[#8f6747]" defaultValue="" name="department">

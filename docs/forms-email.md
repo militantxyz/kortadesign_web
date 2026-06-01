@@ -10,6 +10,8 @@ SMTP_USER=info@kortadesign.com
 SMTP_PASS=YOUR_MAILBOX_PASSWORD
 SMTP_FROM="KORTA Website <info@kortadesign.com>"
 FORMS_TO=info@kortadesign.com
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=YOUR_CLOUDFLARE_TURNSTILE_SITE_KEY
+TURNSTILE_SECRET_KEY=YOUR_CLOUDFLARE_TURNSTILE_SECRET_KEY
 ```
 
 ## Values you need from cPanel
@@ -31,4 +33,13 @@ The route forwards submissions from:
 - Product quote forms
 - Footer newsletter form
 
-It also includes a basic honeypot anti-spam field (`website`).
+## Spam protection
+
+Every form includes a hidden honeypot field (`website`). The API route also blocks cross-site submissions and rate-limits repeated submissions from the same IP address.
+
+For stronger CAPTCHA-style protection, create a Cloudflare Turnstile widget and add both Turnstile keys to the environment:
+
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY` renders the Turnstile widget in forms. Because it is public, set it before building the site.
+- `TURNSTILE_SECRET_KEY` is used only by the server to verify `cf-turnstile-response` before any email is sent.
+
+If `TURNSTILE_SECRET_KEY` is missing, forms still work with the honeypot and rate limit layers. Once the secret is configured, submissions without a valid Turnstile token are rejected.

@@ -5,8 +5,24 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type MailTransporter = ReturnType<typeof nodemailer.createTransport>;
+type RateLimitBucket = {
+  count: number;
+  resetAt: number;
+};
+type TurnstileResult = {
+  action?: string;
+  "error-codes"?: string[];
+  hostname?: string;
+  success?: boolean;
+};
 
 let cachedTransporter: MailTransporter | null = null;
+const rateLimitBuckets = new Map<string, RateLimitBucket>();
+
+const formRateLimitMax = 8;
+const formRateLimitWindowMs = 15 * 60 * 1000;
+const turnstileVerifyUrl =
+  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
 function getEnv(name: string) {
   const value = process.env[name];
@@ -92,10 +108,135 @@ function getSafeReferer(request: Request) {
 
   try {
     const refererUrl = new URL(referer);
-    const requestUrl = new URL(request.url);
-    return refererUrl.origin === requestUrl.origin ? refererUrl : undefined;
+    return refererUrl.hostname === getRequestHostname(request)
+      ? refererUrl
+      : undefined;
   } catch {
     return undefined;
+  }
+}
+
+function hasSafeSubmissionOrigin(request: Request) {
+  const requestHostname = getRequestHostname(request);
+  const origin = request.headers.get("origin");
+  const referer = request.headers.get("referer");
+
+  if (origin) {
+    try {
+      if (new URL(origin).hostname !== requestHostname) {
+        return false;
+      }
+    } catch {
+      return false;
+    }
+  }
+
+  if (referer) {
+    try {
+      if (new URL(referer).hostname !== requestHostname) {
+        return false;
+      }
+    } catch {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function getClientIp(request: Request) {
+  return (
+    request.headers.get("cf-connecting-ip") ??
+    request.headers.get("x-real-ip") ??
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    "unknown"
+  );
+}
+
+function getRequestHostname(request: Request) {
+  const forwardedHost = request.headers.get("x-forwarded-host");
+  const host = forwardedHost ?? request.headers.get("host");
+  return (
+    host?.split(",")[0]?.trim().split(":")[0] ?? new URL(request.url).hostname
+  );
+}
+
+function isRateLimited(key: string) {
+  const now = Date.now();
+  const currentBucket = rateLimitBuckets.get(key);
+
+  if (!currentBucket || currentBucket.resetAt <= now) {
+    rateLimitBuckets.set(key, {
+      count: 1,
+      resetAt: now + formRateLimitWindowMs,
+    });
+    return false;
+  }
+
+  currentBucket.count += 1;
+  return currentBucket.count > formRateLimitMax;
+}
+
+function toTurnstileAction(formType: string) {
+  const action = formType.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 32);
+  return action || "general";
+}
+
+async function verifyTurnstile(
+  request: Request,
+  formData: FormData,
+  formType: string,
+  ip: string
+) {
+  const secret = getEnv("TURNSTILE_SECRET_KEY");
+  if (!secret) {
+    return true;
+  }
+
+  const token = toText(formData.get("cf-turnstile-response"));
+  if (!token) {
+    return false;
+  }
+
+  try {
+    const payload: Record<string, string> = {
+      response: token,
+      secret,
+    };
+    if (ip !== "unknown") {
+      payload.remoteip = ip;
+    }
+
+    const response = await fetch(turnstileVerifyUrl, {
+      body: JSON.stringify(payload),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+    const result = (await response.json()) as TurnstileResult;
+
+    if (!response.ok || !result.success) {
+      console.warn("Turnstile verification failed:", result["error-codes"]);
+      return false;
+    }
+
+    const requestHostname = getRequestHostname(request);
+    if (result.hostname && result.hostname !== requestHostname) {
+      console.warn("Turnstile hostname mismatch:", result.hostname);
+      return false;
+    }
+
+    const expectedAction = toTurnstileAction(formType);
+    if (result.action && result.action !== expectedAction) {
+      console.warn("Turnstile action mismatch:", result.action);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Turnstile verification failed:", error);
+    return false;
   }
 }
 
@@ -132,8 +273,47 @@ export async function POST(request: Request) {
 
     const formType = toText(formData.get("form-type")) || "general";
     const product = toText(formData.get("product"));
+    const ip = getClientIp(request);
 
-    const hiddenKeys = new Set(["website", "form-type", "product"]);
+    if (!hasSafeSubmissionOrigin(request)) {
+      return respondWithStatus(
+        request,
+        "error",
+        "Invalid form submission.",
+        403
+      );
+    }
+
+    if (isRateLimited(`${ip}:${formType}`)) {
+      return respondWithStatus(
+        request,
+        "error",
+        "Too many submissions. Please try again later.",
+        429
+      );
+    }
+
+    const hasVerifiedChallenge = await verifyTurnstile(
+      request,
+      formData,
+      formType,
+      ip
+    );
+    if (!hasVerifiedChallenge) {
+      return respondWithStatus(
+        request,
+        "error",
+        "Verification failed. Please try again.",
+        400
+      );
+    }
+
+    const hiddenKeys = new Set([
+      "cf-turnstile-response",
+      "website",
+      "form-type",
+      "product",
+    ]);
     const fields = new Map<string, string[]>();
 
     for (const [key, rawValue] of formData.entries()) {
@@ -168,11 +348,6 @@ export async function POST(request: Request) {
       throw new Error("Missing SMTP_FROM or SMTP_USER value.");
     }
 
-    const ip =
-      request.headers
-        .get("x-forwarded-for")
-        ?.split(",")[0]
-        ?.trim() ?? "unknown";
     const userAgent = request.headers.get("user-agent") ?? "unknown";
 
     const textLines: string[] = [

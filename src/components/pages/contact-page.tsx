@@ -1,6 +1,7 @@
 import { PageHero } from "@/components/korta/page-hero";
 import { KortaButton } from "@/components/korta/korta-button";
 import { Field } from "@/components/korta/quote-form";
+import { SpamProtection } from "@/components/korta/spam-protection";
 import { getDictionary, type Locale } from "@/lib/i18n";
 import { asset } from "@/lib/korta-data";
 
@@ -33,14 +34,7 @@ export function ContactPage({ locale }: { locale: Locale }) {
           <p className="mb-8 text-lg leading-8 text-[#5b554f]">{dict.contact.assistanceCopy}</p>
           <form action="/api/forms" className="relative grid gap-3.5" method="post">
             <input type="hidden" name="form-type" value="contact" />
-            <input
-              aria-hidden="true"
-              autoComplete="off"
-              className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
-              name="website"
-              tabIndex={-1}
-              type="text"
-            />
+            <SpamProtection action="contact" />
             <Field label={dict.contact.fields.nameAndSurname} />
             <Field label={dict.contact.fields.email} type="email" />
             <Field label={dict.contact.fields.message} as="textarea" />

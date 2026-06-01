@@ -1,5 +1,6 @@
 import { getDictionary, type Locale } from "@/lib/i18n";
 import type { Product } from "@/lib/korta-data";
+import { SpamProtection } from "@/components/korta/spam-protection";
 
 function fieldName(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -61,14 +62,7 @@ export function QuoteForm({ product, locale }: { product: Product; locale: Local
       <form action="/api/forms" className="relative grid gap-4" method="post">
         <input type="hidden" name="form-type" value="quote" />
         <input type="hidden" name="product" value={product.slug} />
-        <input
-          aria-hidden="true"
-          autoComplete="off"
-          className="absolute -left-[9999px] top-auto h-px w-px overflow-hidden"
-          name="website"
-          tabIndex={-1}
-          type="text"
-        />
+        <SpamProtection action="quote" theme="dark" />
         <Field label={dict.quoteForm.name} tone="light" />
         <Field label={dict.quoteForm.email} type="email" tone="light" />
         <Field label={dict.quoteForm.phone} tone="light" />
