@@ -22,7 +22,18 @@ type FormErrorReason =
   | "origin"
   | "rate-limit"
   | "smtp"
-  | "verification";
+  | "verification"
+  | "turnstile-action"
+  | "turnstile-bad-request"
+  | "turnstile-duplicate"
+  | "turnstile-hostname"
+  | "turnstile-invalid-secret"
+  | "turnstile-invalid-token"
+  | "turnstile-missing-token";
+type TurnstileVerification = {
+  ok: boolean;
+  reason?: FormErrorReason;
+};
 
 let cachedTransporter: MailTransporter | null = null;
 const rateLimitBuckets = new Map<string, RateLimitBucket>();
@@ -190,20 +201,50 @@ function toTurnstileAction(formType: string) {
   return action || "general";
 }
 
+function getTurnstileErrorReason(result: TurnstileResult): FormErrorReason {
+  const errorCodes = result["error-codes"] ?? [];
+
+  if (errorCodes.includes("missing-input-response")) {
+    return "turnstile-missing-token";
+  }
+
+  if (errorCodes.includes("invalid-input-secret")) {
+    return "turnstile-invalid-secret";
+  }
+
+  if (errorCodes.includes("missing-input-secret")) {
+    return "config";
+  }
+
+  if (errorCodes.includes("timeout-or-duplicate")) {
+    return "turnstile-duplicate";
+  }
+
+  if (errorCodes.includes("invalid-input-response")) {
+    return "turnstile-invalid-token";
+  }
+
+  if (errorCodes.includes("bad-request")) {
+    return "turnstile-bad-request";
+  }
+
+  return "verification";
+}
+
 async function verifyTurnstile(
   request: Request,
   formData: FormData,
   formType: string,
   ip: string
-) {
+): Promise<TurnstileVerification> {
   const secret = getEnv("TURNSTILE_SECRET_KEY");
   if (!secret) {
-    return true;
+    return { ok: true };
   }
 
   const token = toText(formData.get("cf-turnstile-response"));
   if (!token) {
-    return false;
+    return { ok: false, reason: "turnstile-missing-token" };
   }
 
   try {
@@ -226,25 +267,25 @@ async function verifyTurnstile(
 
     if (!response.ok || !result.success) {
       console.warn("Turnstile verification failed:", result["error-codes"]);
-      return false;
+      return { ok: false, reason: getTurnstileErrorReason(result) };
     }
 
     const requestHostname = getRequestHostname(request);
     if (result.hostname && result.hostname !== requestHostname) {
       console.warn("Turnstile hostname mismatch:", result.hostname);
-      return false;
+      return { ok: false, reason: "turnstile-hostname" };
     }
 
     const expectedAction = toTurnstileAction(formType);
     if (result.action && result.action !== expectedAction) {
       console.warn("Turnstile action mismatch:", result.action);
-      return false;
+      return { ok: false, reason: "turnstile-action" };
     }
 
-    return true;
+    return { ok: true };
   } catch (error) {
     console.error("Turnstile verification failed:", error);
-    return false;
+    return { ok: false, reason: "verification" };
   }
 }
 
@@ -326,19 +367,19 @@ export async function POST(request: Request) {
       );
     }
 
-    const hasVerifiedChallenge = await verifyTurnstile(
+    const turnstileVerification = await verifyTurnstile(
       request,
       formData,
       formType,
       ip
     );
-    if (!hasVerifiedChallenge) {
+    if (!turnstileVerification.ok) {
       return respondWithStatus(
         request,
         "error",
         "Verification failed. Please try again.",
         400,
-        "verification"
+        turnstileVerification.reason ?? "verification"
       );
     }
 

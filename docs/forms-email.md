@@ -43,3 +43,14 @@ For stronger CAPTCHA-style protection, create a Cloudflare Turnstile widget and 
 - `TURNSTILE_SECRET_KEY` is used only by the server to verify `cf-turnstile-response` before any email is sent.
 
 If `TURNSTILE_SECRET_KEY` is missing, forms still work with the honeypot and rate limit layers. Once the secret is configured, submissions without a valid Turnstile token are rejected.
+
+### Local development
+
+Cloudflare error `110200` means the current domain is not authorized for the widget sitekey. For local development, either add `localhost` and `127.0.0.1` in the widget's Cloudflare Hostname Management settings, or use Cloudflare's test keys in `.env.local`:
+
+```bash
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=1x00000000000000000000AA
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+```
+
+After changing `.env.local`, restart `npm run dev`.

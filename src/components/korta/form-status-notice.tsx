@@ -23,17 +23,28 @@ export function FormStatusNotice({ locale }: FormStatusNoticeProps) {
           error: "Poruku trenutno nije moguce poslati. Pokusajte ponovno ili nam pisite izravno.",
           errorPrefix: "Sifra greske",
           smtp: "Provjera je prosla, ali email servis nije poslao poruku.",
+          turnstile:
+            "Cloudflare provjera nije prosla na serveru. Osvjezite stranicu i pokusajte ponovno.",
           success: "Poruka je poslana. Javit cemo vam se uskoro.",
         }
       : {
           error: "We could not send the message right now. Please try again or email us directly.",
           errorPrefix: "Error code",
           smtp: "Verification passed, but the email service could not send the message.",
+          turnstile:
+            "Cloudflare verification failed on the server. Refresh the page and try again.",
           success: "Your message was sent. We will reply soon.",
         };
 
   const isSuccess = status === "success";
-  const message = reason === "smtp" || reason === "config" ? copy.smtp : copy.error;
+  const isTurnstileReason =
+    reason === "verification" || reason?.startsWith("turnstile-");
+  const message =
+    reason === "smtp" || reason === "config"
+      ? copy.smtp
+      : isTurnstileReason
+        ? copy.turnstile
+        : copy.error;
 
   return (
     <p
