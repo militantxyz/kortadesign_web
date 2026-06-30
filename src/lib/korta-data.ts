@@ -135,6 +135,8 @@ export const porcelainFinishes = [
   "Corten",
 ];
 
+export const dektonFinishes = ["Awake", "Kira", "Laurent", "Marmorio", "Morpheus"];
+
 export const handleFinishes = [
   "Inox",
   "Graphite",
@@ -166,12 +168,14 @@ const showerAdditions = [
 const showerMaterials = [
   { title: "Natural Stone Kanfanar", items: naturalStoneFinishes },
   { title: "Marazzi Porcelain Stoneware", items: porcelainFinishes },
+  { title: "Dekton", items: dektonFinishes },
   { title: "Handle Finishes (PVD Coating)", items: handleFinishes },
 ];
 
 const furnitureMaterials = [
   { title: "Natural Stone Kanfanar", items: naturalStoneFinishes },
   { title: "Marazzi Porcelain Stoneware", items: porcelainFinishes },
+  { title: "Dekton", items: dektonFinishes },
 ];
 
 type FinishPreviewMap = Partial<Record<string, string>>;
@@ -193,6 +197,11 @@ const finishSwatchByName: Record<string, string> = {
   "Verde Aver": localAsset("configurator/samples/verde-aver.jpg"),
   "Sodalite Blu": localAsset("configurator/samples/sodalite-blu.jpg"),
   Corten: localAsset("configurator/samples/corten.jpg"),
+  Awake: localAsset("configurator/samples/awake.avif"),
+  Kira: localAsset("configurator/samples/kira.avif"),
+  Laurent: localAsset("configurator/samples/laurent.avif"),
+  Marmorio: localAsset("configurator/samples/marmorio.avif"),
+  Morpheus: localAsset("configurator/samples/morpheus.avif"),
   Inox: asset("2025/02/inox.png"),
   Graphite: asset("2025/02/graphite.png"),
   GunMetal: asset("2025/02/gunmetal.png"),
@@ -229,6 +238,11 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
     "Verde Aver": localAsset("configurator/odino/verde-aver.png"),
     "Sodalite Blu": localAsset("configurator/odino/sodalite-blu.png"),
     Corten: localAsset("configurator/odino/corten.png"),
+    Awake: localAsset("configurator/odino/awake.png"),
+    Kira: localAsset("configurator/odino/kira.png"),
+    Laurent: localAsset("configurator/odino/laurent.png"),
+    Marmorio: localAsset("configurator/odino/marmorio.png"),
+    Morpheus: localAsset("configurator/odino/morpheus.png"),
   },
   marbella: {
     Brushed: localAsset("configurator/marbella/brushed.jpeg"),
@@ -247,6 +261,11 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
     "Verde Aver": localAsset("configurator/marbella/verde-aver.png"),
     "Sodalite Blu": localAsset("configurator/marbella/sodalite-blu.png"),
     Corten: localAsset("configurator/marbella/corten.png"),
+    Awake: localAsset("configurator/marbella/awake.png"),
+    Kira: localAsset("configurator/marbella/kira.png"),
+    Laurent: localAsset("configurator/marbella/laurent.png"),
+    Marmorio: localAsset("configurator/marbella/marmorio.png"),
+    Morpheus: localAsset("configurator/marbella/morpheus.png"),
   },
   minimo: {
     Brushed: localAsset("configurator/minimo/brushed.jpg"),
@@ -265,6 +284,11 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
     "Verde Aver": localAsset("configurator/minimo/verde-aver.png"),
     "Sodalite Blu": localAsset("configurator/minimo/sodalite-blu.png"),
     Corten: localAsset("configurator/minimo/corten.png"),
+    Awake: localAsset("configurator/minimo/awake.png"),
+    Kira: localAsset("configurator/minimo/kira.png"),
+    Laurent: localAsset("configurator/minimo/laurent.png"),
+    Marmorio: localAsset("configurator/minimo/marmorio.png"),
+    Morpheus: localAsset("configurator/minimo/morpheus.png"),
   },
   malla: {
     Brushed: localAsset("configurator/malla/brushed.jpg"),
@@ -283,6 +307,11 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
     "Verde Aver": localAsset("configurator/malla/verde-aver.jpg"),
     "Sodalite Blu": localAsset("configurator/malla/sodalite-blu.jpg"),
     Corten: localAsset("configurator/malla/corten.jpg"),
+    Awake: localAsset("configurator/malla/awake.png"),
+    Kira: localAsset("configurator/malla/kira.png"),
+    Laurent: localAsset("configurator/malla/laurent.png"),
+    Marmorio: localAsset("configurator/malla/marmorio.png"),
+    Morpheus: localAsset("configurator/malla/morpheus.png"),
   },
   minno: {
     Brushed: localAsset("configurator/minno/brushed.jpg"),
@@ -301,6 +330,11 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
     "Verde Aver": localAsset("configurator/minno/verde-aver.png"),
     "Sodalite Blu": localAsset("configurator/minno/sodalite-blu.png"),
     Corten: localAsset("configurator/minno/corten.png"),
+    Awake: localAsset("configurator/minno/awake.png"),
+    Kira: localAsset("configurator/minno/kira.png"),
+    Laurent: localAsset("configurator/minno/laurent.png"),
+    Marmorio: localAsset("configurator/minno/marmorio.png"),
+    Morpheus: localAsset("configurator/minno/morpheus.png"),
   },
   ponte: {
     Brushed: asset("2025/01/PONTE-POLISHED-e1739222710984.png"),
@@ -362,7 +396,7 @@ function buildProductConfigurator(product: Product): ProductConfigurator | undef
             return null;
           }
 
-          const previewImage = previews[item];
+          const previewImage = previews[item] ?? (dektonFinishes.includes(item) ? swatchImage : undefined);
 
           return previewImage
             ? {

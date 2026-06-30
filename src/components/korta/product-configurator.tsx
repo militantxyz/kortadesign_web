@@ -181,7 +181,12 @@ export function ProductConfigurator({
                     <h4 className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-[#8f6747]">
                       {group.title}
                     </h4>
-                    <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                    <div
+                      className={cn(
+                        "grid grid-cols-2 gap-3",
+                        group.title !== "Natural Stone" && group.title !== "Porcelain Stoneware" ? "md:grid-cols-2" : "md:grid-cols-3"
+                      )}
+                    >
                       {group.finishes.map((finish) => {
                         const finishKey = `${group.title}::${finish.label}`;
                         const isActive = finishKey === selectedFinish.key;
