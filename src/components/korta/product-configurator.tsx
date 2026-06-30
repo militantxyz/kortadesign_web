@@ -18,7 +18,11 @@ type FlattenedFinish = {
 };
 
 function defaultSelectionKey(finishes: FlattenedFinish[]) {
-  return finishes.find((finish) => finish.previewImage)?.key ?? finishes[0]?.key ?? "";
+  return (
+    finishes.find((finish) => finish.previewImage)?.key ??
+    finishes[0]?.key ??
+    ""
+  );
 }
 
 export function ProductConfigurator({
@@ -34,8 +38,12 @@ export function ProductConfigurator({
   const configurator = product.configurator;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedKey, setSelectedKey] = useState("");
-  const [brokenPreviews, setBrokenPreviews] = useState<Record<string, true>>({});
-  const [brokenSwatches, setBrokenSwatches] = useState<Record<string, true>>({});
+  const [brokenPreviews, setBrokenPreviews] = useState<Record<string, true>>(
+    {},
+  );
+  const [brokenSwatches, setBrokenSwatches] = useState<Record<string, true>>(
+    {},
+  );
 
   const allFinishes = useMemo(
     () =>
@@ -46,9 +54,9 @@ export function ProductConfigurator({
           label: finish.label,
           previewImage: finish.previewImage,
           swatchImage: finish.swatchImage,
-        }))
+        })),
       ) ?? [],
-    [configurator]
+    [configurator],
   );
 
   useEffect(() => {
@@ -100,7 +108,7 @@ export function ProductConfigurator({
       <KortaButton
         className={cn(
           "mt-8 w-full border-[#151411] text-sm tracking-[0.12em]",
-          buttonClassName
+          buttonClassName,
         )}
         onClick={() => setIsOpen(true)}
         type="button"
@@ -184,7 +192,10 @@ export function ProductConfigurator({
                     <div
                       className={cn(
                         "grid grid-cols-2 gap-3",
-                        group.title !== "Natural Stone" && group.title !== "Porcelain Stoneware" ? "md:grid-cols-2" : "md:grid-cols-3"
+                        group.title !== "Natural Stone" &&
+                          group.title !== "Porcelain Stoneware"
+                          ? "md:grid-cols-2"
+                          : "md:grid-cols-3",
                       )}
                     >
                       {group.finishes.map((finish) => {
@@ -192,7 +203,7 @@ export function ProductConfigurator({
                         const isActive = finishKey === selectedFinish.key;
                         const swatchBroken = Boolean(brokenSwatches[finishKey]);
                         const hasPreview = Boolean(
-                          finish.previewImage && !brokenPreviews[finishKey]
+                          finish.previewImage && !brokenPreviews[finishKey],
                         );
 
                         return (

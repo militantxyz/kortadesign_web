@@ -135,7 +135,13 @@ export const porcelainFinishes = [
   "Corten",
 ];
 
-export const dektonFinishes = ["Awake", "Kira", "Laurent", "Marmorio", "Morpheus"];
+export const dektonFinishes = [
+  "Awake",
+  "Kira",
+  "Laurent",
+  "Marmorio",
+  "Morpheus",
+];
 
 export const handleFinishes = [
   "Inox",
@@ -183,8 +189,12 @@ type FinishPreviewMap = Partial<Record<string, string>>;
 const finishSwatchByName: Record<string, string> = {
   Brushed: localAsset("configurator/samples/brushed.jpg"),
   "Flamed Brushed": localAsset("configurator/samples/flamed-brushed.jpg"),
-  "Sandblasted Brushed": localAsset("configurator/samples/sandblasted-brushed.jpg"),
-  "Bush Hammered Brushed": localAsset("configurator/samples/bush-hammered-brushed.jpg"),
+  "Sandblasted Brushed": localAsset(
+    "configurator/samples/sandblasted-brushed.jpg",
+  ),
+  "Bush Hammered Brushed": localAsset(
+    "configurator/samples/bush-hammered-brushed.jpg",
+  ),
   Rigato: localAsset("configurator/samples/rigato.jpg"),
   "Golden White": localAsset("configurator/samples/golden-white.jpg"),
   Statuario: localAsset("configurator/samples/statuario.jpg"),
@@ -218,14 +228,19 @@ const finishSwatchByName: Record<string, string> = {
   MultiColor: asset("2025/02/multicolor.png"),
 };
 
-export const getFinishSwatch = (finishName: string) => finishSwatchByName[finishName];
+export const getFinishSwatch = (finishName: string) =>
+  finishSwatchByName[finishName];
 
 const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
   odino: {
     Brushed: localAsset("configurator/odino/brushed.png"),
     "Flamed Brushed": localAsset("configurator/odino/flamed-brushed.png"),
-    "Sandblasted Brushed": localAsset("configurator/odino/sandblasted-brushed.png"),
-    "Bush Hammered Brushed": localAsset("configurator/odino/bush-hammered-brushed.png"),
+    "Sandblasted Brushed": localAsset(
+      "configurator/odino/sandblasted-brushed.png",
+    ),
+    "Bush Hammered Brushed": localAsset(
+      "configurator/odino/bush-hammered-brushed.png",
+    ),
     Rigato: localAsset("configurator/odino/rigato.png"),
     "Golden White": localAsset("configurator/odino/golden-white.png"),
     Statuario: localAsset("configurator/odino/statuario.jpg"),
@@ -247,8 +262,12 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
   marbella: {
     Brushed: localAsset("configurator/marbella/brushed.jpeg"),
     "Flamed Brushed": localAsset("configurator/marbella/flamed-brushed.jpeg"),
-    "Sandblasted Brushed": localAsset("configurator/marbella/sandblasted-brushed.jpeg"),
-    "Bush Hammered Brushed": localAsset("configurator/marbella/bush-hammered-brushed.png"),
+    "Sandblasted Brushed": localAsset(
+      "configurator/marbella/sandblasted-brushed.jpeg",
+    ),
+    "Bush Hammered Brushed": localAsset(
+      "configurator/marbella/bush-hammered-brushed.png",
+    ),
     Rigato: localAsset("configurator/marbella/rigato.png"),
     "Golden White": localAsset("configurator/marbella/golden-white.jpeg"),
     Statuario: localAsset("configurator/marbella/statuario.jpeg"),
@@ -270,8 +289,12 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
   minimo: {
     Brushed: localAsset("configurator/minimo/brushed.jpg"),
     "Flamed Brushed": localAsset("configurator/minimo/flamed-brushed.jpg"),
-    "Sandblasted Brushed": localAsset("configurator/minimo/sandblasted-brushed.jpg"),
-    "Bush Hammered Brushed": localAsset("configurator/minimo/bush-hammered-brushed.png"),
+    "Sandblasted Brushed": localAsset(
+      "configurator/minimo/sandblasted-brushed.jpg",
+    ),
+    "Bush Hammered Brushed": localAsset(
+      "configurator/minimo/bush-hammered-brushed.png",
+    ),
     Rigato: localAsset("configurator/minimo/rigato.png"),
     "Golden White": localAsset("configurator/minimo/golden-white.jpg"),
     Statuario: localAsset("configurator/minimo/statuario.jpg"),
@@ -293,8 +316,12 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
   malla: {
     Brushed: localAsset("configurator/malla/brushed.jpg"),
     "Flamed Brushed": localAsset("configurator/malla/flamed-brushed.jpg"),
-    "Sandblasted Brushed": localAsset("configurator/malla/sandblasted-brushed.jpg"),
-    "Bush Hammered Brushed": localAsset("configurator/malla/bush-hammered-brushed.jpg"),
+    "Sandblasted Brushed": localAsset(
+      "configurator/malla/sandblasted-brushed.jpg",
+    ),
+    "Bush Hammered Brushed": localAsset(
+      "configurator/malla/bush-hammered-brushed.jpg",
+    ),
     Rigato: localAsset("configurator/malla/rigato.jpg"),
     "Golden White": localAsset("configurator/malla/golden-white.jpg"),
     Statuario: localAsset("configurator/malla/statuario.jpg"),
@@ -316,8 +343,12 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
   minno: {
     Brushed: localAsset("configurator/minno/brushed.jpg"),
     "Flamed Brushed": localAsset("configurator/minno/flamed-brushed.jpg"),
-    "Sandblasted Brushed": localAsset("configurator/minno/sandblasted-brushed.jpg"),
-    "Bush Hammered Brushed": localAsset("configurator/minno/bush-hammered-brushed.png"),
+    "Sandblasted Brushed": localAsset(
+      "configurator/minno/sandblasted-brushed.jpg",
+    ),
+    "Bush Hammered Brushed": localAsset(
+      "configurator/minno/bush-hammered-brushed.png",
+    ),
     Rigato: localAsset("configurator/minno/rigato.png"),
     "Golden White": localAsset("configurator/minno/golden-white.jpg"),
     Statuario: localAsset("configurator/minno/statuario.jpg"),
@@ -371,7 +402,9 @@ const configuratorPreviewsBySlug: Partial<Record<string, FinishPreviewMap>> = {
   },
 };
 
-function buildProductConfigurator(product: Product): ProductConfigurator | undefined {
+function buildProductConfigurator(
+  product: Product,
+): ProductConfigurator | undefined {
   if (["ponte", "dipinto", "cara"].includes(product.slug)) {
     return undefined;
   }
@@ -396,7 +429,9 @@ function buildProductConfigurator(product: Product): ProductConfigurator | undef
             return null;
           }
 
-          const previewImage = previews[item] ?? (dektonFinishes.includes(item) ? swatchImage : undefined);
+          const previewImage =
+            previews[item] ??
+            (dektonFinishes.includes(item) ? swatchImage : undefined);
 
           return previewImage
             ? {
@@ -445,7 +480,7 @@ const baseProducts: Product[] = [
     ],
     cardImage: asset("2025/02/odino.png"),
     heroImage: asset(
-      "2025/01/PRODUCT-OUTDOOR-SHOWER-ODINO-MATERIAL-PORCELAIN-MARAZZI-SAMPLE-GOLDEN-WHITE-PROJECT-LOCATION-CROATIA-CLIENT-GRAND-PARK-HOTEL-1-1024x684.jpg"
+      "2025/01/PRODUCT-OUTDOOR-SHOWER-ODINO-MATERIAL-PORCELAIN-MARAZZI-SAMPLE-GOLDEN-WHITE-PROJECT-LOCATION-CROATIA-CLIENT-GRAND-PARK-HOTEL-1-1024x684.jpg",
     ),
     gallery: [
       localAsset("gallery/odino/111-odino-xxl.jpg"),
@@ -455,31 +490,40 @@ const baseProducts: Product[] = [
       localAsset("gallery/odino/8b3e7f30-b2cf-4398-ba39-60cba8925240.jpg"),
       localAsset("gallery/odino/odino-99.jpg"),
       localAsset(
-        "gallery/odino/product-outdoor-shower-marbella-material-limestone-kanfanar-sample-polished-project-location-croatia-client-la-maison-2.jpg"
+        "gallery/odino/product-outdoor-shower-marbella-material-limestone-kanfanar-sample-polished-project-location-croatia-client-la-maison-2.jpg",
       ),
       localAsset(
-        "gallery/odino/product-outdoor-shower-marbella-material-limestone-kanfanar-sample-polished-project-location-croatia-client-la-maison.jpg"
+        "gallery/odino/product-outdoor-shower-marbella-material-limestone-kanfanar-sample-polished-project-location-croatia-client-la-maison.jpg",
       ),
       localAsset(
-        "gallery/odino/product-outdoor-shower-odino-material-porcelain-marazzi-sample-golden-white-project-location-croatia-client-grand-park-hotel-1.jpg"
+        "gallery/odino/product-outdoor-shower-odino-material-porcelain-marazzi-sample-golden-white-project-location-croatia-client-grand-park-hotel-1.jpg",
       ),
       localAsset(
-        "gallery/odino/product-outdoor-shower-odino-material-porcelain-marazzi-sample-golden-white-project-location-croatia-client-grand-park-hotel.jpg"
+        "gallery/odino/product-outdoor-shower-odino-material-porcelain-marazzi-sample-golden-white-project-location-croatia-client-grand-park-hotel.jpg",
       ),
       localAsset(
-        "gallery/odino/product-outdoor-shower-odino-material-porcelain-marazzi-sample-golden-white-project-location-croatia-client-private-villa-svp.jpg"
+        "gallery/odino/product-outdoor-shower-odino-material-porcelain-marazzi-sample-golden-white-project-location-croatia-client-private-villa-svp.jpg",
       ),
       localAsset(
-        "gallery/odino/product-outdoor-shower-odino-xxl-material-limestone-kanfanar-sample-polished-project-location-croatia-client-lioqa-resort.jpg"
+        "gallery/odino/product-outdoor-shower-odino-xxl-material-limestone-kanfanar-sample-polished-project-location-croatia-client-lioqa-resort.jpg",
       ),
     ],
     formTitle: "Create Your Perfect Shower",
     materials: showerMaterials,
     additions: showerAdditions,
     docs: [
-      { label: "Spec Sheet", href: asset("2025/11/SPEC.-SHEET-ODINO-REV3.pdf") },
-      { label: "Install Instructions", href: asset("2025/01/ODINO-INSTALL.-INSTR-1.pdf") },
-      { label: "How to Unload", href: asset("2025/01/How-to-unload-Odino-2.pdf") },
+      {
+        label: "Spec Sheet",
+        href: asset("2025/11/SPEC.-SHEET-ODINO-REV3.pdf"),
+      },
+      {
+        label: "Install Instructions",
+        href: asset("2025/01/ODINO-INSTALL.-INSTR-1.pdf"),
+      },
+      {
+        label: "How to Unload",
+        href: asset("2025/01/How-to-unload-Odino-2.pdf"),
+      },
     ],
     designedBy: true,
   },
@@ -494,31 +538,42 @@ const baseProducts: Product[] = [
     ],
     cardImage: asset("2025/02/marbella.png"),
     heroImage: asset(
-      "2025/02/PRODUCT-OUTDOOR-SHOWER-MARBELLA-MATERIAL-LIMESTONE-KANFANAR-SAMPLE-RIGATO-PROJECT-LOCATION-CROATIA-CLIENT-VILLA-PANORAMICA-11-1024x683.jpg"
+      "2025/02/PRODUCT-OUTDOOR-SHOWER-MARBELLA-MATERIAL-LIMESTONE-KANFANAR-SAMPLE-RIGATO-PROJECT-LOCATION-CROATIA-CLIENT-VILLA-PANORAMICA-11-1024x683.jpg",
     ),
     gallery: [
       localAsset("gallery/marbella/1715246233613.jpg"),
-      localAsset("gallery/marbella/590846396-17915642844238249-2078726481190346290-n.jpg"),
+      localAsset(
+        "gallery/marbella/590846396-17915642844238249-2078726481190346290-n.jpg",
+      ),
       localAsset("gallery/marbella/korta-baoli-dubai-marbella.jpg"),
       localAsset("gallery/marbella/mk-residences.jpeg"),
       localAsset("gallery/marbella/mood-6.jpg"),
       localAsset(
-        "gallery/marbella/product-outdoor-shower-marbella-material-granite-sample-brushed-project-location-croatia-client-villa-v.jpg"
+        "gallery/marbella/product-outdoor-shower-marbella-material-granite-sample-brushed-project-location-croatia-client-villa-v.jpg",
       ),
       localAsset(
-        "gallery/marbella/product-outdoor-shower-marbella-material-limestone-kanfanar-sample-polished-project-location-croatia-client-maiora-luxury-suites.webp"
+        "gallery/marbella/product-outdoor-shower-marbella-material-limestone-kanfanar-sample-polished-project-location-croatia-client-maiora-luxury-suites.webp",
       ),
       localAsset(
-        "gallery/marbella/product-outdoor-shower-marbella-material-limestone-kanfanar-sample-rigato-project-location-croatia-client-villa-panoramica-1111.jpg"
+        "gallery/marbella/product-outdoor-shower-marbella-material-limestone-kanfanar-sample-rigato-project-location-croatia-client-villa-panoramica-1111.jpg",
       ),
     ],
     formTitle: "Create Your Perfect Shower",
     materials: showerMaterials,
     additions: showerAdditions.slice(0, 6),
     docs: [
-      { label: "Spec Sheet", href: asset("2025/11/SPEC.-SHEET-MARBELLA-REV3.pdf") },
-      { label: "Install Instructions", href: asset("2025/01/MARBELLA-INSTALL.-INSTR-1.pdf") },
-      { label: "Foundation Preparation", href: asset("2025/01/MARBELLA-FOUNDATION-PREPARATION-1.pdf") },
+      {
+        label: "Spec Sheet",
+        href: asset("2025/11/SPEC.-SHEET-MARBELLA-REV3.pdf"),
+      },
+      {
+        label: "Install Instructions",
+        href: asset("2025/01/MARBELLA-INSTALL.-INSTR-1.pdf"),
+      },
+      {
+        label: "Foundation Preparation",
+        href: asset("2025/01/MARBELLA-FOUNDATION-PREPARATION-1.pdf"),
+      },
     ],
   },
   {
@@ -539,16 +594,25 @@ const baseProducts: Product[] = [
       localAsset("gallery/minimo/img-20250902-wa0011.jpg"),
       localAsset("gallery/minimo/img-20250902-wa0030.jpg"),
       localAsset(
-        "gallery/minimo/product-outdoor-shower-minimo-material-porcelain-marazzi-sample-limestone-ivory-project-location-caribbean-client-belmond-hotels.jpg"
+        "gallery/minimo/product-outdoor-shower-minimo-material-porcelain-marazzi-sample-limestone-ivory-project-location-caribbean-client-belmond-hotels.jpg",
       ),
     ],
     formTitle: "Create Your Perfect Shower",
     materials: showerMaterials,
     additions: showerAdditions.slice(0, 5),
     docs: [
-      { label: "Spec Sheet", href: asset("2025/11/SPEC.-SHEET-MINIMO-REV3.pdf") },
-      { label: "Install Instructions", href: asset("2025/01/MINIMO-INSTALL.-INSTR-1.pdf") },
-      { label: "Foundation Preparation", href: asset("2025/01/MINIMO-FOUNDATION-PREPARATION-1.pdf") },
+      {
+        label: "Spec Sheet",
+        href: asset("2025/11/SPEC.-SHEET-MINIMO-REV3.pdf"),
+      },
+      {
+        label: "Install Instructions",
+        href: asset("2025/01/MINIMO-INSTALL.-INSTR-1.pdf"),
+      },
+      {
+        label: "Foundation Preparation",
+        href: asset("2025/01/MINIMO-FOUNDATION-PREPARATION-1.pdf"),
+      },
     ],
     designedBy: true,
   },
@@ -572,7 +636,12 @@ const baseProducts: Product[] = [
     formTitle: "Create Your Perfect Shower",
     materials: showerMaterials,
     additions: showerAdditions,
-    docs: [{ label: "Spec Sheet", href: asset("2025/11/SPEC.-SHEET-MALLA-REV-0.pdf") }],
+    docs: [
+      {
+        label: "Spec Sheet",
+        href: asset("2025/11/SPEC.-SHEET-MALLA-REV-0.pdf"),
+      },
+    ],
     designedBy: true,
   },
   {
@@ -598,7 +667,12 @@ const baseProducts: Product[] = [
     formTitle: "Create Your Perfect Shower",
     materials: showerMaterials,
     additions: showerAdditions,
-    docs: [{ label: "Spec Sheet", href: asset("2025/11/SPEC.-SHEET-MINNO-REV1.pdf") }],
+    docs: [
+      {
+        label: "Spec Sheet",
+        href: asset("2025/11/SPEC.-SHEET-MINNO-REV1.pdf"),
+      },
+    ],
     designedBy: true,
   },
   {
@@ -647,7 +721,9 @@ const baseProducts: Product[] = [
       "It is built to become an addition to outdoor dining: timeless, durable and ready for endless use.",
     ],
     cardImage: asset("2025/02/gardenzio-1.png"),
-    heroImage: asset("2025/01/G2-Elegante-Kanfanar-and-White-Stained-Oak-scaled-1.jpg"),
+    heroImage: asset(
+      "2025/01/G2-Elegante-Kanfanar-and-White-Stained-Oak-scaled-1.jpg",
+    ),
     gallery: [
       asset("2025/02/gardenzio.png"),
       asset("2025/01/G2-Elegante-St.Laurent-and-IPE-002-scaled-1.jpg"),
@@ -656,8 +732,14 @@ const baseProducts: Product[] = [
     ],
     formTitle: "Create Your Perfect Outdoor Kitchen",
     materials: [
-      { title: "Wood", items: ["European Oak", "Brazilian IPE", "Siberian Larch", "Laminate"] },
-      { title: "Metal", items: ["Black", "Anthracite", "Grey", "Latte", "Mocha"] },
+      {
+        title: "Wood",
+        items: ["European Oak", "Brazilian IPE", "Siberian Larch", "Laminate"],
+      },
+      {
+        title: "Metal",
+        items: ["Black", "Anthracite", "Grey", "Latte", "Mocha"],
+      },
       {
         title: "Stone",
         items: [
@@ -675,8 +757,22 @@ const baseProducts: Product[] = [
         ],
       },
     ],
-    additions: ["Flat Back", "Wall Adjacent", "Island", "Robusta", "Elegante", "Compatto", "Medio", "Grande"],
-    docs: [{ label: "Spec Sheet", href: asset("2025/02/KORTA_Gardenzio-Product-specification_ENGV3.pdf") }],
+    additions: [
+      "Flat Back",
+      "Wall Adjacent",
+      "Island",
+      "Robusta",
+      "Elegante",
+      "Compatto",
+      "Medio",
+      "Grande",
+    ],
+    docs: [
+      {
+        label: "Spec Sheet",
+        href: asset("2025/02/KORTA_Gardenzio-Product-specification_ENGV3.pdf"),
+      },
+    ],
   },
   {
     slug: "kamin",
@@ -695,10 +791,18 @@ const baseProducts: Product[] = [
       asset("2025/01/eldoform-184-R-min-1536x1151-1.jpg"),
     ],
     formTitle: "Create Your Perfect Fireplace",
-    materials: [{ title: "Natural Stone Kanfanar", items: naturalStoneFinishes }],
+    materials: [
+      { title: "Natural Stone Kanfanar", items: naturalStoneFinishes },
+    ],
     docs: [
-      { label: "Installation Instructions", href: asset("2025/02/KAMIN-install-instructions-1.pdf") },
-      { label: "Technical Drawings", href: asset("2025/02/KAMIN-techical-drawings.pdf") },
+      {
+        label: "Installation Instructions",
+        href: asset("2025/02/KAMIN-install-instructions-1.pdf"),
+      },
+      {
+        label: "Technical Drawings",
+        href: asset("2025/02/KAMIN-techical-drawings.pdf"),
+      },
     ],
   },
   {
@@ -719,7 +823,9 @@ const baseProducts: Product[] = [
     ],
     formTitle: "Create Your Perfect Table",
     materials: furnitureMaterials,
-    docs: [{ label: "Spec Sheet", href: asset("2025/01/PONTE-spec-sheet-1.pdf") }],
+    docs: [
+      { label: "Spec Sheet", href: asset("2025/01/PONTE-spec-sheet-1.pdf") },
+    ],
   },
   {
     slug: "dipinto",
@@ -739,7 +845,9 @@ const baseProducts: Product[] = [
     ],
     formTitle: "Create Your Perfect Table",
     materials: furnitureMaterials,
-    docs: [{ label: "Spec Sheet", href: asset("2025/01/DIPINTO-SPEC-SHEET.pdf") }],
+    docs: [
+      { label: "Spec Sheet", href: asset("2025/01/DIPINTO-SPEC-SHEET.pdf") },
+    ],
   },
   {
     slug: "cara",
@@ -759,7 +867,9 @@ const baseProducts: Product[] = [
     ],
     formTitle: "Create Your Perfect Planter",
     materials: furnitureMaterials,
-    docs: [{ label: "Spec Sheet", href: asset("2025/01/CARA-spec-sheet-1.pdf") }],
+    docs: [
+      { label: "Spec Sheet", href: asset("2025/01/CARA-spec-sheet-1.pdf") },
+    ],
   },
 ];
 
@@ -768,20 +878,31 @@ export const products: Product[] = baseProducts.map((product) => ({
   configurator: buildProductConfigurator(product),
 }));
 
-export const productMap = new Map(products.map((product) => [product.slug, product]));
+export const productMap = new Map(
+  products.map((product) => [product.slug, product]),
+);
 
 export const projects = [
   { name: "Baoli Dubai", image: asset("2025/01/logo-baoli-dubai.svg") },
   { name: "Aman", image: asset("2025/01/image-2.png") },
   { name: "Spindler", image: asset("2025/01/spindler_logo-transformed-1.png") },
-  { name: "Diamond Villa Korcula", image: asset("2025/01/diamondvillakorcula.png") },
+  {
+    name: "Diamond Villa Korcula",
+    image: asset("2025/01/diamondvillakorcula.png"),
+  },
   { name: "Villa Project", image: asset("2025/01/image-3.png") },
   { name: "Maiora", image: asset("2025/01/maiora-logo-kategorizacija-3.png") },
   { name: "V", image: asset("2025/01/vlogo2-removebg-preview.png") },
   { name: "Themis", image: asset("2025/01/Themis-logo-removebg-preview.png") },
   { name: "Private Residence", image: asset("2025/01/logo.b30c6336.svg") },
-  { name: "Primosten Resort", image: asset("2025/02/Primosten-Resort-Logo-Top-min.png") },
-  { name: "LIOQA Resort", image: asset("2025/02/LIOQA_Resort_logo_transparent-removebg-preview.png") },
+  {
+    name: "Primosten Resort",
+    image: asset("2025/02/Primosten-Resort-Logo-Top-min.png"),
+  },
+  {
+    name: "LIOQA Resort",
+    image: asset("2025/02/LIOQA_Resort_logo_transparent-removebg-preview.png"),
+  },
 ];
 
 export const blogPosts: BlogPost[] = [
@@ -790,9 +911,10 @@ export const blogPosts: BlogPost[] = [
     title: "Changing the way you see outdoor showers forever",
     date: "February 8, 2026",
     image: asset(
-      "2026/02/00_PRODUCT-OUTDOOR-SHOWER-MARBELLA-MATERIAL-PORCELAIN-MARAZZI-SAMPLE-SAINT-LAURENT-PROJECT-LOCATION-SAUDI-ARABIA-CLIENT-PRIVATE-VILLA--1024x768.jpg"
+      "2026/02/00_PRODUCT-OUTDOOR-SHOWER-MARBELLA-MATERIAL-PORCELAIN-MARAZZI-SAMPLE-SAINT-LAURENT-PROJECT-LOCATION-SAUDI-ARABIA-CLIENT-PRIVATE-VILLA--1024x768.jpg",
     ),
-    excerpt: "A look at outdoor showers as sculptural, architectural wellness pieces.",
+    excerpt:
+      "A look at outdoor showers as sculptural, architectural wellness pieces.",
     content: blogContentMap["changing-the-way-you-see-outdoor-showers-forever"],
   },
   {
@@ -808,7 +930,8 @@ export const blogPosts: BlogPost[] = [
     title: "Where Is the Best Place to Put an Outdoor Shower?",
     date: "February 27, 2025",
     image: asset("2025/01/IMG_0180-scaled-1-1024x683.jpg"),
-    excerpt: "Practical considerations for placing a shower near pools, gardens or spa zones.",
+    excerpt:
+      "Practical considerations for placing a shower near pools, gardens or spa zones.",
     content: blogContentMap["where-is-the-best-place-to-put-an-outdoor-shower"],
   },
   {
@@ -832,7 +955,7 @@ export const blogPosts: BlogPost[] = [
     title: "Do Outdoor Showers Require a Drain?",
     date: "February 26, 2025",
     image: asset(
-      "2025/01/PRODUCT-OUTDOOR-SHOWER-ODINO-MATERIAL-PORCELAIN-MARAZZI-SAMPLE-GOLDEN-WHITE-PROJECT-LOCATION-CROATIA-CLIENT-GRAND-PARK-HOTEL-1-1024x684.jpg"
+      "2025/01/PRODUCT-OUTDOOR-SHOWER-ODINO-MATERIAL-PORCELAIN-MARAZZI-SAMPLE-GOLDEN-WHITE-PROJECT-LOCATION-CROATIA-CLIENT-GRAND-PARK-HOTEL-1-1024x684.jpg",
     ),
     excerpt: "Drainage, location and installation basics for exterior showers.",
     content: blogContentMap["do-outdoor-showers-require-a-drain"],
@@ -851,7 +974,10 @@ export const blogPosts: BlogPost[] = [
     date: "February 18, 2025",
     image: asset("2025/02/Pool-Area-1024x576.jpg"),
     excerpt: "A guide to outdoor living investments with long-term appeal.",
-    content: blogContentMap["how-outdoor-living-spaces-can-boost-your-propertys-value"],
+    content:
+      blogContentMap[
+        "how-outdoor-living-spaces-can-boost-your-propertys-value"
+      ],
   },
   {
     slug: "outdoor-wellness-the-ultimate-guide",
@@ -865,7 +991,9 @@ export const blogPosts: BlogPost[] = [
     slug: "explore-exclusive-stone-shower-ideas",
     title: "Explore Exclusive Stone Shower Ideas",
     date: "February 18, 2025",
-    image: asset("2025/01/457191069_18238192813287149_6995055244974915748_n-1024x622.jpg"),
+    image: asset(
+      "2025/01/457191069_18238192813287149_6995055244974915748_n-1024x622.jpg",
+    ),
     excerpt: "Inspiration for stone, landscape and architectural detail.",
     content: blogContentMap["explore-exclusive-stone-shower-ideas"],
   },
@@ -879,12 +1007,18 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "how-to-enhance-poolside-experience-with-kortas-stylish-poolside-showers",
-    title: "How To Enhance Poolside Experience With Korta's Stylish Poolside Showers",
+    title:
+      "How To Enhance Poolside Experience With Korta's Stylish Poolside Showers",
     date: "February 14, 2025",
-    image: asset("2025/02/Italiana-wellbeing-shower-Goldenwhite-LUx-2-scaled-2.jpg"),
-    excerpt: "How a well-designed poolside shower improves comfort, hygiene and visual impact.",
+    image: asset(
+      "2025/02/Italiana-wellbeing-shower-Goldenwhite-LUx-2-scaled-2.jpg",
+    ),
+    excerpt:
+      "How a well-designed poolside shower improves comfort, hygiene and visual impact.",
     content:
-      blogContentMap["how-to-enhance-poolside-experience-with-kortas-stylish-poolside-showers"],
+      blogContentMap[
+        "how-to-enhance-poolside-experience-with-kortas-stylish-poolside-showers"
+      ],
   },
 ];
 
@@ -912,8 +1046,10 @@ export function getLocalizedProduct(product: Product, locale: Locale): Product {
   const dict = getDictionary(locale);
   const translateMaterialGroup = (title: string) =>
     dict.product.materialGroups[title] ?? title;
-  const translateDocLabel = (label: string) => dict.product.docLabels[label] ?? label;
-  const translateAddition = (label: string) => dict.product.additions[label] ?? label;
+  const translateDocLabel = (label: string) =>
+    dict.product.docLabels[label] ?? label;
+  const translateAddition = (label: string) =>
+    dict.product.additions[label] ?? label;
 
   return {
     ...product,

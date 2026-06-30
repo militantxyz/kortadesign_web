@@ -1,4 +1,10 @@
-export const storeRegionFilters = ["All", "Europe", "North America", "Middle East", "Oceania"] as const;
+export const storeRegionFilters = [
+  "All",
+  "Europe",
+  "North America",
+  "Middle East",
+  "Oceania",
+] as const;
 
 export type StoreRegionFilter = (typeof storeRegionFilters)[number];
 export type StoreRegion = Exclude<StoreRegionFilter, "All">;
@@ -12,7 +18,8 @@ export type StoreLocation = {
   details: string[];
 };
 
-export const getStoreRegion = (store: StoreLocation): StoreRegion => store.region ?? "Europe";
+export const getStoreRegion = (store: StoreLocation): StoreRegion =>
+  store.region ?? "Europe";
 
 // Editable source of truth for Store Locator markers.
 // Add/remove entries here to update the map.
@@ -22,63 +29,106 @@ export const storeLocations: StoreLocation[] = [
     name: "KERATERM Zagreb",
     lat: 45.7681524,
     lng: 15.9300745,
-    details: ["Jadranska avenija 9", "+385 (1) 2092 720", "info@kera-term.hr", "https://kera-term.hr/"],
+    details: [
+      "Jadranska avenija 9",
+      "+385 (1) 2092 720",
+      "info@kera-term.hr",
+      "https://kera-term.hr/",
+    ],
   },
   {
     id: "keraterm-pula",
     name: "KERATERM Pula",
     lat: 44.8778981,
     lng: 13.8651229,
-    details: ["Divkovićeva 2A", "+385 (0)52 393 70", "pula@kera-term.hr", "https://kera-term.hr/"],
+    details: [
+      "Divkovićeva 2A",
+      "+385 (0)52 393 70",
+      "pula@kera-term.hr",
+      "https://kera-term.hr/",
+    ],
   },
   {
     id: "keraterm-zadar",
     name: "KERATERM Zadar",
     lat: 44.108519,
     lng: 15.261122,
-    details: ["4. Gardijske brigade 43", "+385 (0)23 643 691", "zadar@kera-term.hr", "https://kera-term.hr/"],
+    details: [
+      "4. Gardijske brigade 43",
+      "+385 (0)23 643 691",
+      "zadar@kera-term.hr",
+      "https://kera-term.hr/",
+    ],
   },
   {
     id: "keraterm-split",
     name: "KERATERM Split",
     lat: 43.5410005,
     lng: 16.466078,
-    details: ["Salonitanska 34 (Solin)", "+385 (0)21 217 574", "split@kera-term.hr", "https://kera-term.hr/"],
+    details: [
+      "Salonitanska 34 (Solin)",
+      "+385 (0)21 217 574",
+      "split@kera-term.hr",
+      "https://kera-term.hr/",
+    ],
   },
   {
     id: "ri-pool-rijeka",
     name: "Ri Pool Rijeka",
     lat: 45.3220909,
     lng: 14.4653111,
-    details: ["Kvaternikova 3", "+385 98 9681 113", "info@ri-pool.com", "https://www.ri-pool.com/"],
+    details: [
+      "Kvaternikova 3",
+      "+385 98 9681 113",
+      "info@ri-pool.com",
+      "https://www.ri-pool.com/",
+    ],
   },
   {
     id: "aperto-mari-rijeka",
     name: "APERTO MARI Rijeka",
     lat: 45.3802,
     lng: 14.3592337,
-    details: ["Žegoti 36 (Kastav)", "+385 (0)51 256 880", "info@apertomari.com"],
+    details: [
+      "Žegoti 36 (Kastav)",
+      "+385 (0)51 256 880",
+      "info@apertomari.com",
+    ],
   },
   {
     id: "istra-relax-porec",
     name: "ISTRA RELAX Poreč",
     lat: 45.2493439,
     lng: 13.6120476,
-    details: ["Gornji Špadići 7", "+385 (0)52 553 695", "info@istra-relax.hr", "https://istra-relax.hr/kontakt/"],
+    details: [
+      "Gornji Špadići 7",
+      "+385 (0)52 553 695",
+      "info@istra-relax.hr",
+      "https://istra-relax.hr/kontakt/",
+    ],
   },
   {
     id: "ivano-bazeni-zadar",
     name: "IVANO BAZENI Zadar",
     lat: 44.1228601,
     lng: 15.2808697,
-    details: ["Crno 5, Crno", "+385 (0)98 94 77 340", "info@ivanobazeni.hr", "https://www.ivanobazeni.hr/"],
+    details: [
+      "Crno 5, Crno",
+      "+385 (0)98 94 77 340",
+      "info@ivanobazeni.hr",
+      "https://www.ivanobazeni.hr/",
+    ],
   },
   {
     id: "instalacije-vidovic",
     name: "INSTALACIJE VIDOVIC",
     lat: 43.558957,
     lng: 16.3647501,
-    details: ["Put Gospe od Dračin 1, Kaštel Lukšić", "+385989274766", "info@instalacije-vidovic.hr"],
+    details: [
+      "Put Gospe od Dračin 1, Kaštel Lukšić",
+      "+385989274766",
+      "info@instalacije-vidovic.hr",
+    ],
   },
   {
     id: "bazeni-jure",
@@ -92,14 +142,24 @@ export const storeLocations: StoreLocation[] = [
     name: "ENTEXT Podgorica",
     lat: 42.416736,
     lng: 19.207708,
-    details: ["Bulevar 21.maja 47., Donja Gorica", "+382(20)260 833", "info@entext.me", "https://www.entext.me/"],
+    details: [
+      "Bulevar 21.maja 47., Donja Gorica",
+      "+382(20)260 833",
+      "info@entext.me",
+      "https://www.entext.me/",
+    ],
   },
   {
     id: "entext-radanovici",
     name: "ENTEXT Radanovići",
     lat: 42.3881582,
     lng: 18.740592,
-    details: ["Radanovići bb, Kotor", "+382 (32) 328 621", "salonko@entext.me", "https://www.entext.me/"],
+    details: [
+      "Radanovići bb, Kotor",
+      "+382 (32) 328 621",
+      "salonko@entext.me",
+      "https://www.entext.me/",
+    ],
   },
   {
     id: "a-cielo-abierto-estepona",
@@ -120,7 +180,12 @@ export const storeLocations: StoreLocation[] = [
     name: "A Cielo Abierto Finestrat",
     lat: 38.5348746,
     lng: -0.1819955,
-    details: ["Avinguda Pais Valencia Nº 28", "+34 966 83 53 81", "info@acieloabierto.net", "https://acieloabierto.net/"],
+    details: [
+      "Avinguda Pais Valencia Nº 28",
+      "+34 966 83 53 81",
+      "info@acieloabierto.net",
+      "https://acieloabierto.net/",
+    ],
   },
   {
     id: "a-cielo-abierto-marbella",
@@ -155,21 +220,33 @@ export const storeLocations: StoreLocation[] = [
     name: "Hydropolis La Seyne sur Mer",
     lat: 43.108974,
     lng: 5.850577,
-    details: ["14 avenue de Rome", "+33 4 98 00 93 40", "contact@hydropolis.fr"],
+    details: [
+      "14 avenue de Rome",
+      "+33 4 98 00 93 40",
+      "contact@hydropolis.fr",
+    ],
   },
   {
     id: "interaxion",
     name: "Interaxion",
     lat: 52.1431468,
     lng: 5.2848634,
-    details: ["+31 (0)6 5415 9866", "info@interaxion.bz", "https://interaxion.bz/"],
+    details: [
+      "+31 (0)6 5415 9866",
+      "info@interaxion.bz",
+      "https://interaxion.bz/",
+    ],
   },
   {
     id: "interaxion-2",
     name: "Interaxion",
     lat: 50.817614,
     lng: 4.4169435,
-    details: ["+31 (0)6 5415 9866", "info@interaxion.bz", "https://interaxion.bz/"],
+    details: [
+      "+31 (0)6 5415 9866",
+      "info@interaxion.bz",
+      "https://interaxion.bz/",
+    ],
   },
   {
     id: "spavision",
@@ -198,7 +275,11 @@ export const storeLocations: StoreLocation[] = [
     name: "Rocks Gardens Design",
     lat: 45.734111,
     lng: 8.750353,
-    details: ["+39 389 482 3177", "rocksgardens@gmail.com", "arredorocksgardens@gmail.com"],
+    details: [
+      "+39 389 482 3177",
+      "rocksgardens@gmail.com",
+      "arredorocksgardens@gmail.com",
+    ],
   },
   {
     id: "ceramic4living-gmbh",
@@ -219,14 +300,22 @@ export const storeLocations: StoreLocation[] = [
     name: "RADECOM",
     lat: 52.4301377,
     lng: 16.9467122,
-    details: ["1. Naramowicka 38 61-622 Poznań", "+48 509 400 330", "biuro@radecom.pl"],
+    details: [
+      "1. Naramowicka 38 61-622 Poznań",
+      "+48 509 400 330",
+      "biuro@radecom.pl",
+    ],
   },
   {
     id: "gardenzio",
     name: "Gardenzio",
     lat: 48.669026,
     lng: 19.699024,
-    details: ["+421 918 401 528", "hello@gardenzio.com", "https://gardenzio.com/en/korta/"],
+    details: [
+      "+421 918 401 528",
+      "hello@gardenzio.com",
+      "https://gardenzio.com/en/korta/",
+    ],
   },
   {
     id: "point-26",
@@ -256,7 +345,12 @@ export const storeLocations: StoreLocation[] = [
     lat: 25.2048493,
     lng: 55.2707828,
     region: "Middle East",
-    details: ["Ape Grupo", "https://apegrupo.com/ae/", "Area 51", "https://www.area51dxb.com/"],
+    details: [
+      "Ape Grupo",
+      "https://apegrupo.com/ae/",
+      "Area 51",
+      "https://www.area51dxb.com/",
+    ],
   },
   {
     id: "portugal",
@@ -280,7 +374,11 @@ export const storeLocations: StoreLocation[] = [
     lat: 31.9561973,
     lng: 35.9257043,
     region: "Middle East",
-    details: ["+96265344599", "info@water-reflection.com", "www.water-reflection.com"],
+    details: [
+      "+96265344599",
+      "info@water-reflection.com",
+      "www.water-reflection.com",
+    ],
   },
   {
     id: "natural-stone-resources-inc",
@@ -304,7 +402,12 @@ export const storeLocations: StoreLocation[] = [
     lat: -36.9823974,
     lng: 174.7770296,
     region: "Oceania",
-    details: ["11 Pavilion Drive, Airport Oaks, Auckland", "+64 9 254 4500", "sales@glowbal.co.nz", "https://www.glowbal.co.nz/"],
+    details: [
+      "11 Pavilion Drive, Airport Oaks, Auckland",
+      "+64 9 254 4500",
+      "sales@glowbal.co.nz",
+      "https://www.glowbal.co.nz/",
+    ],
   },
   {
     id: "glowbal-2",
@@ -312,7 +415,11 @@ export const storeLocations: StoreLocation[] = [
     lat: -34.442426,
     lng: 150.1053554,
     region: "Oceania",
-    details: ["+64 9 254 4500", "sales@glowbal.co.nz", "https://www.glowbal.co.nz/"],
+    details: [
+      "+64 9 254 4500",
+      "sales@glowbal.co.nz",
+      "https://www.glowbal.co.nz/",
+    ],
   },
   {
     id: "reset-tiles-and-more",
