@@ -451,10 +451,12 @@ const en: Dictionary = {
     introTitle: "A natural stone collection for water, fire and open air.",
     introCopy:
       "Every KORTA piece is designed as a quiet architectural object: precise in silhouette, tactile in material, and made to age with the landscape.",
-    dearClient: "Dear Client,",
+    dearClient: "",
     introParagraphs: [
-      "Welcome to KORTA, where your search for the perfect outdoor shower ends. We understand the importance of finding a design that complements your space and meets your expectations.",
-      "Our outdoor showers transform your outdoor space into a sanctuary of relaxation and enjoyment. Whether for family, friends, guests, clients or business partners, our showers are designed to elevate every moment spent outdoors.",
+      "Welcome to KORTA.",
+      "We design outdoor showers that become part of the architecture.",
+      "Crafted in Europe and trusted by luxury residences, resorts and wellness destinations around the world, every KORTA collection balances timeless design, exceptional materials and lasting performance.",
+      "From private gardens to five star hospitality projects, our products are created to elevate the outdoor experience and complement the spaces where life is best enjoyed.",
     ],
     zoneCards: [
       {

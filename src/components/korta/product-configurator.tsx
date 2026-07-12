@@ -193,7 +193,8 @@ export function ProductConfigurator({
                       className={cn(
                         "grid grid-cols-2 gap-3",
                         group.title !== "Natural Stone" &&
-                          group.title !== "Porcelain Stoneware"
+                          group.title !== "Porcelain Stoneware" &&
+                          group.title !== "Dekton"
                           ? "md:grid-cols-2"
                           : "md:grid-cols-3",
                       )}

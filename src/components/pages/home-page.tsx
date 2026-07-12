@@ -104,9 +104,16 @@ export function HomePage({ locale }: { locale: Locale }) {
           />
         </div>
         <div className="flex flex-col gap-4 pb-4 text-base leading-8 text-[#5b554f] max-md:pb-8 md:text-lg">
-          <p className="font-semibold text-[#151411]">{dict.home.dearClient}</p>
+          {dict.home.dearClient ? (
+            <p className="font-semibold text-[#151411]">{dict.home.dearClient}</p>
+          ) : null}
           {dict.home.introParagraphs.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
+            <p
+              className={paragraph === "Welcome to KORTA." ? "font-semibold text-[#151411]" : undefined}
+              key={paragraph}
+            >
+              {paragraph}
+            </p>
           ))}
         </div>
       </section>

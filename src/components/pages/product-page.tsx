@@ -23,7 +23,9 @@ export function ProductPage({
   const pairs = products
     .filter((item) => ["cara", "dipinto", "ponte"].includes(item.slug) && item.slug !== product.slug)
     .map((pair) => ({ ...pair, type: pair.type }));
-  const showGallery = product.gallery.length > 0;
+  const aquaSliderImages = product.zone === "AQUA" ? product.gallery.slice(0, 3) : [];
+  const showAquaSlider = aquaSliderImages.length > 0;
+  const showGallery = product.zone !== "AQUA" && product.gallery.length > 0;
   const showMaterials = product.materials.length > 0 && !["gardenzio", "kada"].includes(product.slug);
 
   return (
@@ -59,6 +61,25 @@ export function ProductPage({
           </div>
         </div>
       </section>
+
+      {showAquaSlider ? (
+        <section className="relative min-h-[520px] overflow-hidden bg-[#151411] md:min-h-[680px] lg:min-h-[760px]">
+          {aquaSliderImages.map((image, index) => (
+            <Image
+              alt={`${product.title} view ${index + 1}`}
+              className="absolute inset-0 size-full object-cover opacity-0"
+              fill
+              key={image}
+              sizes="100vw"
+              src={image}
+              style={{
+                animation: "productGalleryFade 18s infinite",
+                animationDelay: `${index * 6}s`,
+              }}
+            />
+          ))}
+        </section>
+      ) : null}
 
       {showGallery ? (
         <section className="grid grid-cols-4 gap-px bg-[#d8cec3] max-lg:grid-cols-2 max-md:grid-cols-1">
