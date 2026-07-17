@@ -7,7 +7,7 @@ import { KortaButton } from "@/components/korta/korta-button";
 import { ProductCard } from "@/components/korta/product-card";
 import { SectionHeading } from "@/components/korta/section-heading";
 import { getDictionary, localizePath, type Locale } from "@/lib/i18n";
-import { asset, blogPosts, getLocalizedProduct, products } from "@/lib/korta-data";
+import { asset, blogPosts, getLocalizedProduct, localAsset, products } from "@/lib/korta-data";
 
 export function HomePage({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
@@ -40,8 +40,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section className="relative min-h-screen overflow-hidden bg-[#151411] text-white">
         {heroSlides.map((image, index) => (
           <Image
-            alt=""
-            aria-hidden
+            alt="ODINO outdoor shower in a tropical wellness setting"
             className="absolute inset-0 size-full object-cover opacity-0"
             fill
             key={image}
@@ -160,9 +159,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             className="object-cover"
             fill
             sizes="(max-width: 1024px) 100vw, 52vw"
-            src={asset(
-              "2025/02/Italiana-wellbeing-shower-Goldenwhite-LUx-4-scaled-1-e1739636924695.jpg"
-            )}
+            src={localAsset("odino-wellness.png")}
           />
         </div>
         <div className="self-center px-[10%] py-[10%] max-md:px-[4%]">

@@ -1,14 +1,13 @@
 import Image from "next/image";
-import { FileText } from "lucide-react";
+import { ArrowDownToLine, FileText } from "lucide-react";
 
 import { DesignerSection } from "@/components/korta/designer-section";
-import { KortaButton } from "@/components/korta/korta-button";
 import { PageHero } from "@/components/korta/page-hero";
 import { ProductConfigurator } from "@/components/korta/product-configurator";
 import { ProductCard } from "@/components/korta/product-card";
 import { QuoteForm } from "@/components/korta/quote-form";
 import { SectionHeading } from "@/components/korta/section-heading";
-import { getDictionary, localizePath, type Locale } from "@/lib/i18n";
+import { getDictionary, type Locale } from "@/lib/i18n";
 import type { Product } from "@/lib/korta-data";
 import { getFinishSwatch, products } from "@/lib/korta-data";
 
@@ -23,8 +22,8 @@ export function ProductPage({
   const pairs = products
     .filter((item) => ["cara", "dipinto", "ponte"].includes(item.slug) && item.slug !== product.slug)
     .map((pair) => ({ ...pair, type: pair.type }));
-  const aquaSliderImages = product.zone === "AQUA" ? product.gallery.slice(0, 3) : [];
-  const showAquaSlider = aquaSliderImages.length > 0;
+  const aquaGalleryImages = product.zone === "AQUA" ? product.gallery.slice(0, 3) : [];
+  const showAquaGallery = aquaGalleryImages.length > 0;
   const showGallery = product.zone !== "AQUA" && product.gallery.length > 0;
   const showMaterials = product.materials.length > 0 && !["gardenzio", "kada"].includes(product.slug);
 
@@ -48,6 +47,27 @@ export function ProductPage({
               </div>
             ))}
           </div>
+          {product.docs?.length ? (
+            <div className="mt-10 border-t border-[#d8cec3] pt-7">
+              <div className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8f6747]">
+                <FileText aria-hidden="true" size={16} />
+                {dict.product.documentationTitle}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {product.docs.map((doc) => (
+                  <a
+                    className="inline-flex min-h-11 items-center gap-2 border border-[#cbb9a9] bg-white px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-[#151411] transition hover:border-[#8f6747] hover:bg-[#f2ede7]"
+                    href={doc.href}
+                    key={doc.label}
+                    target="_blank"
+                  >
+                    {doc.label}
+                    <ArrowDownToLine aria-hidden="true" size={14} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
         <div className="border border-[#d8cec3] bg-white p-10">
           <div className="relative m-auto aspect-square w-full max-w-[620px]">
@@ -62,21 +82,29 @@ export function ProductPage({
         </div>
       </section>
 
-      {showAquaSlider ? (
-        <section className="relative min-h-[520px] overflow-hidden bg-[#151411] md:min-h-[680px] lg:min-h-[760px]">
-          {aquaSliderImages.map((image, index) => (
-            <Image
-              alt={`${product.title} view ${index + 1}`}
-              className="absolute inset-0 size-full object-cover opacity-0"
-              fill
+      {showAquaGallery ? (
+        <section className="grid grid-cols-2 gap-px bg-[#d8cec3] max-md:grid-cols-1">
+          {aquaGalleryImages.map((image, index) => (
+            <div
+              className={
+                index === 0
+                  ? "relative col-span-2 min-h-[clamp(560px,62vw,920px)] overflow-hidden bg-[#151411] max-md:col-span-1 max-md:min-h-[72svh]"
+                  : "relative min-h-[clamp(520px,50vw,760px)] overflow-hidden bg-[#151411] max-md:min-h-[68svh]"
+              }
               key={image}
-              sizes="100vw"
-              src={image}
-              style={{
-                animation: "productGalleryFade 18s infinite",
-                animationDelay: `${index * 6}s`,
-              }}
-            />
+            >
+              <Image
+                alt={`${product.title} view ${index + 1}`}
+                className={
+                  image.endsWith("/minimo/slide-1.jpg") || image.endsWith("/malla/slide-1.png")
+                    ? "object-contain"
+                    : "object-cover"
+                }
+                fill
+                sizes={index === 0 ? "100vw" : "(max-width: 768px) 100vw, 50vw"}
+                src={image}
+              />
+            </div>
           ))}
         </section>
       ) : null}
@@ -165,23 +193,6 @@ export function ProductPage({
               <ProductCard compact key={pair.slug} locale={locale} product={pair} />
             ))}
           </div>
-        </section>
-      ) : null}
-
-      {product.docs?.length ? (
-        <section className="border-t border-[#d8cec3] px-[8%] py-[8%] max-md:px-[4%]">
-          <SectionHeading eyebrow={dict.product.architectResourcesEyebrow} title={dict.product.documentationTitle} />
-          <div className="grid grid-cols-3 gap-px bg-[#d8cec3] max-xl:grid-cols-2 max-md:grid-cols-1">
-            {product.docs.map((doc) => (
-              <a className="flex min-h-28 items-center gap-3 bg-[#f8f5ef] p-6 text-sm font-bold uppercase tracking-[0.14em] text-[#151411] transition hover:bg-white" href={doc.href} key={doc.label} target="_blank">
-                <FileText aria-hidden="true" size={22} />
-                {doc.label}
-              </a>
-            ))}
-          </div>
-          <KortaButton className="mt-8" href={localizePath(locale, "/catalogues")} variant="outline">
-            {dict.product.allCatalogues}
-          </KortaButton>
         </section>
       ) : null}
 

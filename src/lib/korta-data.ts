@@ -550,8 +550,8 @@ const baseProducts: Product[] = [
     cardImage: asset("2025/02/minimo.png"),
     heroImage: localAsset("aqua-products/minimo/hero.png"),
     gallery: [
-      localAsset("aqua-products/minimo/slide-1.jpg"),
       localAsset("aqua-products/minimo/slide-2.webp"),
+      localAsset("aqua-products/minimo/slide-1.jpg"),
       localAsset("aqua-products/minimo/slide-3.png"),
     ],
     formTitle: "Create Your Perfect Shower",
@@ -585,8 +585,8 @@ const baseProducts: Product[] = [
     cardImage: asset("2025/11/Sandblasted-664x1024.png"),
     heroImage: localAsset("aqua-products/malla/hero.jpg"),
     gallery: [
-      localAsset("aqua-products/malla/slide-1.png"),
       localAsset("aqua-products/malla/slide-2.png"),
+      localAsset("aqua-products/malla/slide-1.png"),
       localAsset("aqua-products/malla/slide-3.jpg"),
     ],
     formTitle: "Create Your Perfect Shower",

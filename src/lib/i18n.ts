@@ -279,6 +279,17 @@ type Dictionary = {
     closeConfigurator: string;
     materialGroups: Record<string, string>;
     additionsTitle: string;
+    tailoredProject: {
+      eyebrow: string;
+      title: string;
+      intro: string[];
+      categories: Array<{
+        title: string;
+        items: string[];
+      }>;
+      visionTitle: string;
+      visionCopy: string[];
+    };
     finishOptions: {
       naturalStone: string;
       porcelain: string;
@@ -745,7 +756,44 @@ const en: Dictionary = {
       "Marazzi Porcelain Stoneware": "Porcelain Stoneware",
       "Handle Finishes (PVD Coating)": "Handle Finishes (PVD Coating)",
     },
-    additionsTitle: "Additions",
+    additionsTitle: "Tailored for Your Project",
+    tailoredProject: {
+      eyebrow: "Project customization",
+      title: "Tailored for Your Project",
+      intro: [
+        "Every exceptional project has its own architectural language.",
+        "Selected KORTA products can be configured through considered materials, branded detailing, integrated technology and project-specific features to complement the wider design vision.",
+      ],
+      categories: [
+        {
+          title: "Brand Personalization",
+          items: ["Logo engraving", "Custom project requests"],
+        },
+        {
+          title: "Integrated Technology",
+          items: [
+            "Motion activated water control",
+            "Heating cable",
+            "Solar heated water system",
+            "Integrated lighting",
+          ],
+        },
+        {
+          title: "Project Configuration",
+          items: [
+            "Floor decking",
+            "XL shower-head",
+            "Handle selection",
+            "Site specific adaptations",
+          ],
+        },
+      ],
+      visionTitle: "Designed Around Your Vision",
+      visionCopy: [
+        "Whether selecting for a private residence, boutique hotel, resort or wellness destination, our team works alongside architects, designers, hotel operators and developers to ensure each KORTA product complements the overall design intent.",
+        "From material selection and branded engraving to integrated technology and project-specific adaptations, every detail is considered as part of the wider project.",
+      ],
+    },
     finishOptions: {
       naturalStone: "Natural Stone",
       porcelain: "Porcelain Stoneware",
@@ -1246,7 +1294,44 @@ const hr: Dictionary = {
       "Marazzi Porcelain Stoneware": "Porculanska keramika",
       "Handle Finishes (PVD Coating)": "Završne obrade ručki (PVD premaz)",
     },
-    additionsTitle: "Dodatci",
+    additionsTitle: "Prilagođeno vašem projektu",
+    tailoredProject: {
+      eyebrow: "Prilagodba projekta",
+      title: "Prilagođeno vašem projektu",
+      intro: [
+        "Svaki izniman projekt ima vlastiti arhitektonski jezik.",
+        "Odabrani KORTA proizvodi mogu se konfigurirati promišljenim materijalima, brendiranim detaljima, integriranom tehnologijom i značajkama prilagođenima projektu kako bi upotpunili širu dizajnersku viziju.",
+      ],
+      categories: [
+        {
+          title: "Personalizacija brenda",
+          items: ["Graviranje logotipa", "Posebni projektni zahtjevi"],
+        },
+        {
+          title: "Integrirana tehnologija",
+          items: [
+            "Aktivacija vode pokretom",
+            "Grijaći kabel",
+            "Solarni sustav grijanja vode",
+            "Integrirana rasvjeta",
+          ],
+        },
+        {
+          title: "Konfiguracija projekta",
+          items: [
+            "Podna obloga",
+            "XL glava tuša",
+            "Odabir ručke",
+            "Prilagodbe specifične lokaciji",
+          ],
+        },
+      ],
+      visionTitle: "Dizajnirano prema vašoj viziji",
+      visionCopy: [
+        "Bilo da odabirete proizvode za privatnu rezidenciju, boutique hotel, resort ili wellness destinaciju, naš tim surađuje s arhitektima, dizajnerima, hotelskim operaterima i developerima kako bi svaki KORTA proizvod upotpunio cjelokupnu dizajnersku namjeru.",
+        "Od odabira materijala i brendiranog graviranja do integrirane tehnologije i prilagodbi specifičnih projektu, svaki se detalj razmatra kao dio šireg projekta.",
+      ],
+    },
     finishOptions: {
       naturalStone: "Prirodni kamen",
       porcelain: "Porculanska keramika",
